@@ -53,16 +53,10 @@
 /* macros */
 #define BUTTONMASK              (ButtonPressMask|ButtonReleaseMask)
 #define CLEANMASK(mask)         (mask & ~(numlockmask|LockMask) & (ShiftMask|ControlMask|Mod1Mask|Mod2Mask|Mod3Mask|Mod4Mask|Mod5Mask))
-#define GETINC(X)               ((X) - 2000)
-#define INC(X)                  ((X) + 2000)
 #define INTERSECT(x,y,w,h,m)    (MAX(0, MIN((x)+(w),(m)->wx+(m)->ww) - MAX((x),(m)->wx)) \
                                * MAX(0, MIN((y)+(h),(m)->wy+(m)->wh) - MAX((y),(m)->wy)))
-#define ISINC(X)                ((X) > 1000 && (X) < 3000)
-#define ISVISIBLEONTAG(C, T)    ((C->tags & T) || C->issticky)
-#define ISVISIBLE(C)            ISVISIBLEONTAG(C, C->mon->tagset[C->mon->seltags])
-#define PREVSEL                 3000
+#define ISVISIBLE(C)            ((C->tags & C->mon->tagset[C->mon->seltags]) || C->issticky)
 #define LENGTH(X)               (sizeof X / sizeof X[0])
-#define MOD(N,M)                ((N)%(M) < 0 ? (N)%(M) + (M) : (N)%(M))
 #define MOUSEMASK               (BUTTONMASK|PointerMotionMask)
 #define WIDTH(X)                ((X)->w + 2 * (X)->bw)
 #define HEIGHT(X)               ((X)->h + 2 * (X)->bw)
@@ -71,7 +65,6 @@
 #define SPTAG(i)                ((1 << LENGTH(tags)) << (i))
 #define SPTAGMASK               (((1 << LENGTH(scratchpads))-1) << LENGTH(tags))
 #define TEXTW(X)                (drw_fontset_getwidth(drw, (X)) + lrpad)
-#define TRUNC(X,A,B)            (MAX((A), MIN((X), (B))))
 
 #define SYSTEM_TRAY_REQUEST_DOCK    0
 
@@ -198,11 +191,6 @@ static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interac
 static void arrange(Monitor *m);
 static void arrangemon(Monitor *m);
 static void attach(Client *c);
-static void attachabove(Client *c);
-static void attachaside(Client *c);
-static void attachbelow(Client *c);
-static void attachbottom(Client *c);
-static void attachtop(Client *c);
 static void attachstack(Client *c);
 static void buttonpress(XEvent *e);
 static void checkotherwm(void);
@@ -220,6 +208,8 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
+static void enqueue(Client *c);
+static void enqueuestack(Client *c);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
@@ -240,11 +230,9 @@ static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
-static Client *nexttagged(Client *c);
 static Client *nexttiled(Client *c);
 static void pop(Client *);
 static void propertynotify(XEvent *e);
-static void pushstack(const Arg *arg);
 static void quit(const Arg *arg);
 static Monitor *recttomon(int x, int y, int w, int h);
 static void removesystrayicon(Client *i);
@@ -254,6 +242,7 @@ static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
+static void rotatestack(const Arg *arg);
 static void run(void);
 static void runAutostart(void);
 static void scan(void);
@@ -276,7 +265,6 @@ static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
 static Monitor *systraytomon(Monitor *m);
-static int stackpos(const Arg *arg);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tagnextmon(const Arg *arg);
@@ -516,73 +504,6 @@ attach(Client *c)
 {
     c->next         = c->mon->clients;
     c->mon->clients = c;
-}
-
-void
-attachabove(Client *c)
-{
-	if (c->mon->sel == NULL || c->mon->sel == c->mon->clients || c->mon->sel->isfloating) {
-		attach(c);
-		return;
-	}
-
-	Client *at;
-	for (at = c->mon->clients; at->next != c->mon->sel; at = at->next);
-	c->next = at->next;
-	at->next = c;
-}
-
-void
-attachaside(Client *c) {
-	Client *at = nexttagged(c);
-	if(!at) {
-		attach(c);
-		return;
-		}
-	c->next = at->next;
-	at->next = c;
-}
-
-void
-attachbelow(Client *c)
-{
-	if(c->mon->sel == NULL || c->mon->sel == c || c->mon->sel->isfloating) {
-		attach(c);
-		return;
-	}
-	c->next = c->mon->sel->next;
-	c->mon->sel->next = c;
-}
- 
-void
-attachbottom(Client *c)
-{
-	Client *below = c->mon->clients;
-	for (; below && below->next; below = below->next);
-	c->next = NULL;
-	if (below)
-		below->next = c;
-	else
-		c->mon->clients = c;
-}
-
-void
-attachtop(Client *c)
-{
-	int n;
-	Monitor *m = selmon;
-	Client *below;
-
-	for (n = 1, below = c->mon->clients;
-		below && below->next && (below->isfloating || !ISVISIBLEONTAG(below, c->tags) || n != m->nmaster);
-		n = below->isfloating || !ISVISIBLEONTAG(below, c->tags) ? n + 0 : n + 1, below = below->next);
-	c->next = NULL;
-	if (below) {
-		c->next = below->next;
-		below->next = c;
-	}
-	else
-		c->mon->clients = c;
 }
 
 void
@@ -1124,6 +1045,28 @@ drawbars(void)
 }
 
 void
+enqueue(Client *c)
+{
+	Client *l;
+	for (l = c->mon->clients; l && l->next; l = l->next);
+	if (l) {
+		l->next = c;
+		c->next = NULL;
+	}
+}
+
+void
+enqueuestack(Client *c)
+{
+	Client *l;
+	for (l = c->mon->stack; l && l->snext; l = l->snext);
+	if (l) {
+		l->snext = c;
+		c->snext = NULL;
+	}
+}
+
+void
 enternotify(XEvent *e)
 {
     Client *        c;
@@ -1207,15 +1150,27 @@ focusmon(const Arg *arg)
 void
 focusstack(const Arg *arg)
 {
-    int     i = stackpos(arg);
-    Client *c, *p;
+    Client *c = NULL, *i;
 
-    if (i < 0 || !selmon->sel || selmon->sel->isfullscreen)
+    if (!selmon->sel || selmon->sel->isfullscreen)
         return;
-    for (p = NULL, c                  = selmon->clients; c && (i || !ISVISIBLE(c));
-         i -= ISVISIBLE(c) ? 1 : 0, p = c, c = c->next);
-    focus(c ? c : p);
-    restack(selmon);
+	if (arg->i > 0) {
+		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
+		if (!c)
+			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
+	} else {
+		for (i = selmon->clients; i != selmon->sel; i = i->next)
+			if (ISVISIBLE(i))
+				c = i;
+		if (!c)
+			for (; i; i = i->next)
+				if (ISVISIBLE(i))
+					c = i;
+	}
+	if (c) {
+		focus(c);
+		restack(selmon);
+	}
     XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
 }
 
@@ -1462,25 +1417,7 @@ manage(Window w, XWindowAttributes *wa)
         c->isfloating = c->oldstate = trans != None || c->isfixed;
     if (c->isfloating)
         XRaiseWindow(dpy, c->win);
-    switch (attachdirection) {
-    case 1:
-        attachabove(c);
-        break;
-    case 2:
-        attachaside(c);
-        break;
-    case 3:
-        attachbelow(c);
-        break;
-    case 4:
-        attachbottom(c);
-        break;
-    case 5:
-        attachtop(c);
-        break;
-    default:
-        attach(c);
-    }
+    attach(c);
     attachstack(c);
     XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
                     (unsigned char *)&(c->win), 1);
@@ -1603,16 +1540,6 @@ movemouse(const Arg *arg)
 }
 
 Client *
-nexttagged(Client *c) {
-	Client *walked = c->mon->clients;
-	for(;
-		walked && (walked->isfloating || !ISVISIBLEONTAG(walked, c->tags));
-		walked = walked->next
-	);
-	return walked;
-}
-
-Client *
 nexttiled(Client *c)
 {
     for (; c && (c->isfloating || !ISVISIBLE(c)); c = c->next);
@@ -1674,29 +1601,6 @@ propertynotify(XEvent *e)
         if (ev->atom == netatom[NetWMWindowType])
             updatewindowtype(c);
     }
-}
-
-void
-pushstack(const Arg *arg) 
-{
-    int     i   = stackpos(arg);
-    Client *sel = selmon->sel, *c, *p;
-
-    if (i < 0)
-        return;
-    else if (i == 0) {
-        detach(sel);
-        attach(sel);
-    } else {
-        for (p = NULL, c = selmon->clients; c; p = c, c = c->next)
-            if (!(i -= (ISVISIBLE(c) && c != sel)))
-                break;
-        c = c ? c : p;
-        detach(sel);
-        sel->next = c->next;
-        c->next   = sel;
-    }
-    arrange(selmon);
 }
 
 void
@@ -1888,6 +1792,38 @@ restack(Monitor *m)
 }
 
 void
+rotatestack(const Arg *arg)
+{
+	Client *c = NULL, *f;
+
+    if (!selmon->sel)
+        return;
+	f = selmon->sel;
+	if (arg->i > 0) {
+		for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
+		if (c){
+			detach(c);
+			attach(c);
+			detachstack(c);
+			attachstack(c);
+		}
+	} else {
+		if ((c = nexttiled(selmon->clients))){
+			detach(c);
+			enqueue(c);
+			detachstack(c);
+			enqueuestack(c);
+		}
+	}
+	if (c){
+		arrange(selmon);
+		//unfocus(f, 1);
+		focus(f);
+		restack(selmon);
+	}
+}
+
+void
 run(void)
 {
     XEvent ev;
@@ -1939,25 +1875,7 @@ sendmon(Client *c, Monitor *m)
     detachstack(c);
     c->mon  = m;
     c->tags = m->tagset[m->seltags]; /* assign tags of target monitor */
-	switch(attachdirection){
-		case 1:
-			attachabove(c);
-			break;
-		case 2:
-			attachaside(c);
-			break;
-		case 3:
-			attachbelow(c);
-			break;
-		case 4:
-			attachbottom(c);
-			break;
-		case 5:
-			attachtop(c);
-			break;
-		default:
-			attach(c);
-	}
+    attach(c);
     attachstack(c);
     focus(NULL);
     arrange(NULL);
@@ -2255,34 +2173,6 @@ spawn(const Arg *arg)
         perror(" failed");
         exit(EXIT_SUCCESS);
     }
-}
-
-int
-stackpos(const Arg *arg) 
-{
-    int     n, i;
-    Client *c, *l;
-
-    if (!selmon->clients)
-        return -1;
-
-    if (arg->i == PREVSEL) {
-        for (l = selmon->stack; l && (!ISVISIBLE(l) || l == selmon->sel); l = l->snext);
-        if (!l)
-            return -1;
-        for (i = 0, c = selmon->clients; c != l; i += ISVISIBLE(c) ? 1 : 0, c = c->next);
-        return i;
-    } else if (ISINC(arg->i)) {
-        if (!selmon->sel)
-            return -1;
-        for (i = 0, c = selmon->clients; c != selmon->sel; i += ISVISIBLE(c) ? 1 : 0, c = c->next);
-        for (n = i; c; n += ISVISIBLE(c) ? 1 : 0, c = c->next);
-        return MOD(i + GETINC(arg->i), n);
-    } else if (arg->i < 0) {
-        for (i = 0, c = selmon->clients; c; i += ISVISIBLE(c) ? 1 : 0, c = c->next);
-        return MAX(i + arg->i, 0);
-    } else
-        return arg->i;
 }
 
 void
@@ -2608,25 +2498,7 @@ updategeom(void)
                     m->clients = c->next;
                     detachstack(c);
                     c->mon = mons;
-                    switch(attachdirection){
-                        case 1:
-                            attachabove(c);
-                            break;
-                        case 2:
-                            attachaside(c);
-                            break;
-                        case 3:
-                            attachbelow(c);
-                            break;
-                        case 4:
-                            attachbottom(c);
-                            break;
-                        case 5:
-                            attachtop(c);
-                            break;
-                        default:
-                            attach(c);
-                    }
+                    attach(c);
                     attachstack(c);
                 }
                 if (m == selmon)

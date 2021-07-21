@@ -17,7 +17,6 @@ static const unsigned int systraypinning = 0;  /* 0: sloppy systray follows sele
 static const unsigned int systrayonleft  = 0;  /* 0: systray in the right corner, >0: systray on left of status text */
 static const unsigned int systrayspacing = 2;  /* systray spacing */
 static const unsigned int sysgap         = 8; /* systray gap */
-static const int attachdirection         = 5;  /* 0 default, 1 above, 2 aside, 3 below, 4 bottom, 5 top */
 static const int systraypinningfailfirst = 1;  /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray             = 1;  /* 0 means no systray */
 static const int swallowfloating         = 0;  /* 1 means swallow floating windows by default */
@@ -77,7 +76,7 @@ static Sp scratchpads[] = {
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
-/* static const char *tags[] = { "", "", "", "", "", "", "", "ﭮ", "" }; */
+/* static const char *tags[] = { "", "", "", "", "", "", "", "ﭮ", "" }; */
 
 static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 5;	/* thickness / height of the underline */
@@ -92,7 +91,7 @@ static const Rule rules[] = {
     /* class                    instance                  title                   tags mask   isfloating   isterminal     noswallow   monitor */
     { "Gimp",                   NULL,                     NULL,                   1 << 8,     0,           0,             0,          -1 },
     { "Brave",                  NULL,                     NULL,                   1 << 2,     0,           0,             0,          -1 },
-    { NULL,                     NULL,                     "Picture-in-picture",   0,          1,           0,             1,          -1 },
+    { "MATLAB R2021a - academic use",   NULL,             NULL,                   1 << 4,          0,           0,             1,          -1 },
     { NULL,                     NULL,                     "Picture in picture",   0,          1,           0,             1,          -1 },
     { "org-tlauncher-tlauncher-rmo-TLauncher",    NULL,   NULL,                   1 << 2,     1,           0,             0,          -1 },
     { "discord",                NULL,                     NULL,                   1 << 7,     0,           0,             0,          -1 },
@@ -144,15 +143,6 @@ static const Layout layouts[] = {
     { MODKEY|Mod1Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
     { MODKEY|Mod1Mask|ShiftMask,    KEY,      tagprevmon,     {.ui = 1 << TAG} },
 
-#define STACKKEYS(MOD,ACTION) \
-  { MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-  { MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-  { MOD, XK_grave, ACTION##stack, {.i = PREVSEL } }, \
-  /* { MOD, XK_v,     ACTION##stack, {.i = 0 } }, \ */
-  /* { MOD, XK_a,     ACTION##stack, {.i = 1 } }, \ */
-  /* { MOD, XK_z,     ACTION##stack, {.i = 2 } }, \ */
-  /* { MOD, XK_x,     ACTION##stack, {.i = -1 } }, */
-
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
@@ -164,8 +154,6 @@ static const char *termcmd[]  = { TERMINAL, NULL };
 
 static Key keys[] = {
     /* modifier                     key                     function        argument */
-    STACKKEYS(MODKEY,                                       focus)
-    STACKKEYS(MODKEY|ShiftMask,                             push)
     /* { MODKEY|ShiftMask,                XK_Escape,        spawn,        SHCMD("") }, */
     /* { MODKEY,                       XK_grave,               spawn,        SHCMD("") }, */
     /* { MODKEY|ShiftMask,             XK_grave,               spawn,        SHCMD("") }, */
@@ -178,6 +166,10 @@ static Key keys[] = {
     TAGKEYS(                        XK_7,                   6)
     TAGKEYS(                        XK_8,                   7)
     TAGKEYS(                        XK_9,                   8)
+    { MODKEY,                       XK_j,                   focusstack,             {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_j,                   rotatestack,            {.i = +1 } },
+    { MODKEY,                       XK_k,                   focusstack,             {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_k,                   rotatestack,            {.i = -1 } },
     { MODKEY,                       XK_0,                   view,                   {.ui = ~0 } },
     { MODKEY|ShiftMask,             XK_0,                   tag,                    {.ui = ~0 } },
     { MODKEY,                       XK_minus,               spawn,                  SHCMD("mpc volume -3; kill -44 $(pidof dwmblocks)") },
