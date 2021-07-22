@@ -98,6 +98,7 @@ static const Rule rules[] = {
     { "zoom",                   NULL,                     NULL,                   1 << 3,     0,           0,             0,          -1 },
     { "Deskreen",               NULL,                     NULL,                   1 << 3,     0,           0,             0,          -1 },
     { TERMCLASS,                NULL,                     NULL,                   0,          0,           1,             0,          -1 },
+    { "Zathura",                NULL,                     NULL,                   0,          0,           0,             1,          -1 },
     { NULL,                     NULL,                     "Event Tester",         0,          0,           0,             1,          -1 },
     { "Dragon-drag-and-drop",   NULL,                     NULL,                   0,          0,           0,             1,          -1 },
     { NULL,                     "floated",                NULL,                   0,          1,           1,             0,          -1 },
@@ -108,7 +109,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int nmaxmaster  = 3;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
@@ -214,7 +215,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_a,                   defaultgaps,            {0} },
     { MODKEY,                       XK_s,                   togglesticky,           {0} },
     /* { MODKEY|ShiftMask,             XK_s,                   spawn,                  SHCMD("") }, */
-    { MODKEY,                       XK_d,                   spawn,                  SHCMD("rofilauncher") },
+    { MODKEY,                       XK_d,                   spawn,                  SHCMD("j4-dmenu-desktop") },
     { MODKEY|ShiftMask,             XK_d,                   spawn,                  SHCMD("rofi-pass") },
     { MODKEY,                       XK_f,                   togglefullscr,          {0} },
     { MODKEY|ShiftMask,             XK_f,                   setlayout,              {.v = &layouts[8]} },
@@ -258,7 +259,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_Page_Down,           shifttag,               { .i = +1 } },
     /* { MODKEY,                       XK_Insert,              spawn,                  SHCMD("xdotool type $(grep -v '^#' ~/.local/share/larbs/snippets | dmenu -i -l 50 | cut -d' ' -f1)") }, */
 
-    { MODKEY,                       XK_F1,                  spawn,                  SHCMD("feh --bg-fill --random ~/Pics/wallpapers/* &") },
+    { MODKEY,                       XK_F1,                  spawn,                  SHCMD("feh --bg-fill --random ~/Pics/wallpapers/*") },
     { MODKEY,                       XK_F2,                  spawn,                  SHCMD("rofiunicode") },
     { MODKEY,                       XK_F3,                  spawn,                  SHCMD("displayselect") },
     { MODKEY,                       XK_F4,                  spawn,                  SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
