@@ -25,7 +25,7 @@ static const int showbar                 = 1;  /* 0 means no bar */
 static const int topbar                  = 1;  /* 0 means bottom bar */
 static const int sidepad                 = 15; /* horizontal padding of bar */
 static const int vertpad                 = 15; /* vertical padding of bar */
-static const int user_bh                 = 40; /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
+static const int user_bh                 = 35; /* 0 means that dwm will calculate bar height, >= 1 means dwm will user_bh as bar height */
 static const char *fonts[]                     = {
   "monospace:size=10:antialias=true",
   "Twemoji:size=9:antialias=true:autohint=true"
@@ -109,7 +109,7 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int nmaxmaster  = 3;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */

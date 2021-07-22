@@ -1154,23 +1154,29 @@ focusstack(const Arg *arg)
 
     if (!selmon->sel || selmon->sel->isfullscreen)
         return;
-	if (arg->i > 0) {
-		for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next);
-		if (!c)
-			for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next);
-	} else {
-		for (i = selmon->clients; i != selmon->sel; i = i->next)
-			if (ISVISIBLE(i))
-				c = i;
-		if (!c)
-			for (; i; i = i->next)
-				if (ISVISIBLE(i))
-					c = i;
-	}
-	if (c) {
-		focus(c);
-		restack(selmon);
-	}
+    if (arg->i > 0)
+    {
+        for (c = selmon->sel->next; c && !ISVISIBLE(c); c = c->next)
+            ;
+        if (!c)
+            for (c = selmon->clients; c && !ISVISIBLE(c); c = c->next)
+                ;
+    }
+    else
+    {
+        for (i = selmon->clients; i != selmon->sel; i = i->next)
+            if (ISVISIBLE(i))
+                c = i;
+        if (!c)
+            for (; i; i = i->next)
+                if (ISVISIBLE(i))
+                    c = i;
+    }
+    if (c)
+    {
+        focus(c);
+        restack(selmon);
+    }
     XWarpPointer(dpy, None, c->win, 0, 0, 0, 0, c->w / 2, c->h / 2);
 }
 
@@ -1794,31 +1800,38 @@ restack(Monitor *m)
 void
 rotatestack(const Arg *arg)
 {
-	Client *c = NULL;
+    Client *c = NULL;
 
     if (!selmon->sel)
         return;
-	if (arg->i > 0) {
-		for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
-		if (c){
-			detach(c);
-			attach(c);
-			detachstack(c);
-			attachstack(c);
-		}
-	} else {
-		if ((c = nexttiled(selmon->clients))){
-			detach(c);
-			enqueue(c);
-			detachstack(c);
-			enqueuestack(c);
-		}
-	}
-	if (c){
-		arrange(selmon);
-		focus(c);
-		restack(selmon);
-	}
+    if (arg->i > 0)
+    {
+        for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next))
+            ;
+        if (c)
+        {
+            detach(c);
+            attach(c);
+            detachstack(c);
+            attachstack(c);
+        }
+    }
+    else
+    {
+        if ((c = nexttiled(selmon->clients)))
+        {
+            detach(c);
+            enqueue(c);
+            detachstack(c);
+            enqueuestack(c);
+        }
+    }
+    if (c)
+    {
+        arrange(selmon);
+        focus(c);
+        restack(selmon);
+    }
 }
 
 void
@@ -2596,7 +2609,6 @@ updatestatus(void)
 void
 updatesystrayicongeom(Client *i, int w, int h)
 {
-    int bh_fix = bh * 0.8; // Fixes icons geometry if bar height is greater than font size
 	if (i) {
 		i->h = bh;
 		if (w == h)
@@ -2607,12 +2619,12 @@ updatesystrayicongeom(Client *i, int w, int h)
 			i->w = (int) ((float)bh * ((float)w / (float)h));
 		applysizehints(i, &(i->x), &(i->y), &(i->w), &(i->h), False);
 		/* force icons into the systray dimensions if they don't want to */
-		if (i->h > bh_fix) {
+		if (i->h > bh) {
 			if (i->w == i->h)
-				i->w = bh_fix;
+				i->w = bh;
 			else
-				i->w = (int) ((float)bh_fix * ((float)i->w / (float)i->h));
-			i->h = bh_fix;
+				i->w = (int) ((float)bh * ((float)i->w / (float)i->h));
+			i->h = bh;
 		}
 	}
 }
@@ -2692,7 +2704,7 @@ updatesystray(void)
 		XMapRaised(dpy, i->win);
 		w += systrayspacing;
 		i->x = w;
-		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h + bh / 5);
+		XMoveResizeWindow(dpy, i->win, i->x, 0, i->w, i->h);
 		w += i->w;
 		if (i->mon != m)
 			i->mon = m;
