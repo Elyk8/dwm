@@ -1794,11 +1794,10 @@ restack(Monitor *m)
 void
 rotatestack(const Arg *arg)
 {
-	Client *c = NULL, *f;
+	Client *c = NULL;
 
     if (!selmon->sel)
         return;
-	f = selmon->sel;
 	if (arg->i > 0) {
 		for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next));
 		if (c){
@@ -1817,8 +1816,7 @@ rotatestack(const Arg *arg)
 	}
 	if (c){
 		arrange(selmon);
-		//unfocus(f, 1);
-		focus(f);
+		focus(c);
 		restack(selmon);
 	}
 }
