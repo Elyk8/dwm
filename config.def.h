@@ -35,7 +35,7 @@ static const char normbordercolor[] = "#1E1E1E";
 static const char normfgcolor[]     = "#d8dee9";
 static const char selbgcolor[]      = "#1E1E1E";
 static const char selfgcolor[]      = "#d8dee9";
-static const char selbordercolor[]  = "#abb2bf";
+static const char selbordercolor[]  = "#d8dee9";
 
 static const char *colors[][3] = {
    /*               fg           bg           border   */
@@ -91,7 +91,9 @@ static const Rule rules[] = {
     /* class                    instance                  title                   tags mask   isfloating   isterminal     noswallow   monitor */
     { "Gimp",                   NULL,                     NULL,                   1 << 8,     0,           0,             0,          -1 },
     { "Brave",                  NULL,                     NULL,                   1 << 2,     0,           0,             0,          -1 },
-    { "MATLAB R2021a - academic use",   NULL,             NULL,                   1 << 4,          0,           0,             1,          -1 },
+    { "MATLAB R2021a - academic use",   NULL,             NULL,                   1 << 4,     0,           0,             1,          -1 },
+    { "MATLABWindow",           NULL,                     NULL,                   1 << 4,     0,           0,             1,          -1 },
+    { "MATLAB R2021a",          NULL,                     NULL,                   1 << 4,     0,           0,             1,          -1 },
     { NULL,                     NULL,                     "Picture in picture",   0,          1,           0,             1,          -1 },
     { "org-tlauncher-tlauncher-rmo-TLauncher",    NULL,   NULL,                   1 << 2,     1,           0,             0,          -1 },
     { "discord",                NULL,                     NULL,                   1 << 7,     0,           0,             0,          -1 },
