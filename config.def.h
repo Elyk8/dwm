@@ -186,10 +186,10 @@ static Key keys[] = {
     /* { MODKEY|ShiftMask,             XK_Tab,                 spawn,                  SHCMD("") }, */
     { MODKEY,                       XK_q,                   killclient,             {0} },
     { MODKEY|ShiftMask,             XK_q,                   spawn,                  SHCMD("rofikill") },
-    { MODKEY,                       XK_w,                   spawn,                  SHCMD("$BROWSER") },
-    { MODKEY|ShiftMask,             XK_w,                   spawn,                  SHCMD("nm-connection-editor") },
-    { MODKEY,                       XK_e,                   spawn,                  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/config.h) dwmblocks; rmdir ~/.abook") },
-    { MODKEY|ShiftMask,             XK_e,                   spawn,                  SHCMD(TERMINAL " -e abook -C ~/.config/abook/abookrc --datafile ~/.config/abook/addressbook") },
+    { MODKEY,                       XK_w,                   spawn,                  SHCMD("bookmarksurf") },
+    { MODKEY|ShiftMask,             XK_w,                   spawn,                  SHCMD("$BROWSER") },
+    { MODKEY,                       XK_e,                   spawn,                  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/config.h) dwmblocks") },
+    { MODKEY|ShiftMask,             XK_e,                   spawn,                  SHCMD(TERMINAL " -e abook") },
     { MODKEY,                       XK_r,                   spawn,                  SHCMD(TERMINAL " -e lf-run") },
     { MODKEY|ShiftMask,             XK_r,                   spawn,                  SHCMD(TERMINAL " -e gotop") },
     { MODKEY,                       XK_t,                   setlayout,              {.v = &layouts[0]} }, /* tile */
@@ -263,7 +263,7 @@ static Key keys[] = {
 
     { MODKEY,                       XK_F1,                  spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") },
     { MODKEY,                       XK_F2,                  spawn,                  SHCMD("rofiunicode") },
-    { MODKEY,                       XK_F3,                  spawn,                  SHCMD("displayselect") },
+    { MODKEY,                       XK_F3,                  spawn,                  SHCMD("bookmarker") },
     { MODKEY,                       XK_F4,                  spawn,                  SHCMD(TERMINAL " -e pulsemixer; kill -44 $(pidof dwmblocks)") },
     /* { MODKEY,                       XK_F5,                  xrdb,                {.v = NULL } }, */
     /* { MODKEY,                       XK_F6,                  spawn,                  SHCMD("") }, */
