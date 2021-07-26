@@ -208,14 +208,13 @@ static void detachstack(Client *c);
 static Monitor *dirtomon(int dir);
 static void drawbar(Monitor *m);
 static void drawbars(void);
-static void enqueue(Client *c);
-static void enqueuestack(Client *c);
 static void enternotify(XEvent *e);
 static void expose(XEvent *e);
 static void focus(Client *c);
 static void focusin(XEvent *e);
 static void focusmon(const Arg *arg);
 static void focusstack(const Arg *arg);
+static Client *getclientundermouse(void);
 static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static unsigned int getsystraywidth();
@@ -242,7 +241,6 @@ static void resizemouse(const Arg *arg);
 static void resizerequest(XEvent *e);
 static void resizebarwin(Monitor *m);
 static void restack(Monitor *m);
-static void rotatestack(const Arg *arg);
 static void run(void);
 static void runAutostart(void);
 static void scan(void);
@@ -588,41 +586,45 @@ buttonpress(XEvent *e)
     }
     if (ev->window == selmon->barwin) {
         i = x = 0;
-        for (c = m->clients; c; c = c->next)
-            occ |= c->tags == 255 ? 0 : c->tags;
-        do {
-            /* do not reserve space for vacant tags */
-            if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
-                continue;
-            x += TEXTW(tags[i]);
-        } while (ev->x >= x && ++i < LENGTH(tags));
-        if (i < LENGTH(tags)) {
-            click  = ClkTagBar;
-            arg.ui = 1 << i;
-        } else if (ev->x < x + blw)
+		x += blw;
+		if (ev->x < x) {
             click = ClkLtSymbol;
-        else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad - sp - getsystraywidth()) - sysgap - 8) {
-            click      = ClkStatusText;
-            char *text = rawstext;
-            int   i    = -1;
-            char  ch;
-            x = x - sp - sysgap - 8;
-            dwmblockssig = 0;
-            while (text[++i]) {
-                if ((unsigned char)text[i] < ' ') {
-                    ch      = text[i];
-                    text[i] = '\0';
-                    x += TEXTW(text) - lrpad;
-                    text[i] = ch;
-                    text += i + 1;
-                    i = -1;
-                    if (x >= ev->x)
-                        break;
-                    dwmblockssig = ch;
+        } else {
+            for (c = m->clients; c; c = c->next)
+                occ |= c->tags == 255 ? 0 : c->tags;
+            do {
+                /* do not reserve space for vacant tags */
+                if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
+                    continue;
+                x += TEXTW(tags[i]);
+            } while (ev->x >= x && ++i < LENGTH(tags));
+            if (i < LENGTH(tags)) {
+                click  = ClkTagBar;
+                arg.ui = 1 << i;
+            } 
+            else if (ev->x > (x = selmon->ww - (int)TEXTW(stext) + lrpad - sp - getsystraywidth()) - sysgap - 8) {
+                click      = ClkStatusText;
+                char *text = rawstext;
+                int   i    = -1;
+                char  ch;
+                x = x - sp - sysgap - 8;
+                dwmblockssig = 0;
+                while (text[++i]) {
+                    if ((unsigned char)text[i] < ' ') {
+                        ch      = text[i];
+                        text[i] = '\0';
+                        x += TEXTW(text) - lrpad;
+                        text[i] = ch;
+                        text += i + 1;
+                        i = -1;
+                        if (x >= ev->x)
+                            break;
+                        dwmblockssig = ch;
+                    }
                 }
-            }
-        } else
-            click = ClkWinTitle;
+            } else
+                click = ClkWinTitle;
+        }
     } else if ((c = wintoclient(ev->window))) {
         focus(c);
         restack(selmon);
@@ -935,8 +937,11 @@ destroynotify(XEvent *e)
 		resizebarwin(selmon);
 		updatesystray();
 	}
-    else if ((c = swallowingclient(ev->window)))
+    else if ((c = swallowingclient(ev->window))) {
         unmanage(c->swallowing, 1);
+    }
+
+	focus(getclientundermouse());
 }
 
 void
@@ -1003,6 +1008,11 @@ drawbar(Monitor *m)
             urg |= c->tags;
     }
     x = 0;
+
+    w = blw = TEXTW(m->ltsymbol);
+    drw_setscheme(drw, scheme[SchemeTagsNorm]);
+    x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+
     for (i = 0; i < LENGTH(tags); i++) {
         /* do not draw vacant tags */
         if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -1015,10 +1025,6 @@ drawbar(Monitor *m)
         x += w;
     }
     
-    w = blw = TEXTW(m->ltsymbol);
-    drw_setscheme(drw, scheme[SchemeTagsNorm]);
-    x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
-
     if ((w = m->ww - tw - stw - x) > bh) {
         if (m->sel) {
             drw_setscheme(drw, scheme[m == selmon ? SchemeInfoSel : SchemeInfoNorm]);
@@ -1042,28 +1048,6 @@ drawbars(void)
 
     for (m = mons; m; m = m->next)
         drawbar(m);
-}
-
-void
-enqueue(Client *c)
-{
-	Client *l;
-	for (l = c->mon->clients; l && l->next; l = l->next);
-	if (l) {
-		l->next = c;
-		c->next = NULL;
-	}
-}
-
-void
-enqueuestack(Client *c)
-{
-	Client *l;
-	for (l = c->mon->stack; l && l->snext; l = l->snext);
-	if (l) {
-		l->snext = c;
-		c->snext = NULL;
-	}
 }
 
 void
@@ -1216,6 +1200,20 @@ getdwmblockspid()
     return pid != 0 ? 0 : -1;
 }
 #endif
+
+Client *
+getclientundermouse(void)
+{
+	int ret, di;
+	unsigned int dui;
+	Window child, dummy;
+
+	ret = XQueryPointer(dpy, root, &dummy, &child, &di, &di, &di, &di, &dui);
+	if (!ret)
+		return NULL;
+
+	return wintoclient(child);
+}
 
 int
 getrootptr(int *x, int *y)
@@ -1795,43 +1793,6 @@ restack(Monitor *m)
     XSync(dpy, False);
     while (XCheckMaskEvent(dpy, EnterWindowMask, &ev))
         ;
-}
-
-void
-rotatestack(const Arg *arg)
-{
-    Client *c = NULL;
-
-    if (!selmon->sel)
-        return;
-    if (arg->i > 0)
-    {
-        for (c = nexttiled(selmon->clients); c && nexttiled(c->next); c = nexttiled(c->next))
-            ;
-        if (c)
-        {
-            detach(c);
-            attach(c);
-            detachstack(c);
-            attachstack(c);
-        }
-    }
-    else
-    {
-        if ((c = nexttiled(selmon->clients)))
-        {
-            detach(c);
-            enqueue(c);
-            detachstack(c);
-            enqueuestack(c);
-        }
-    }
-    if (c)
-    {
-        arrange(selmon);
-        focus(c);
-        restack(selmon);
-    }
 }
 
 void

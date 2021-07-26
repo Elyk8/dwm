@@ -170,9 +170,7 @@ static Key keys[] = {
     TAGKEYS(                        XK_8,                   7)
     TAGKEYS(                        XK_9,                   8)
     { MODKEY,                       XK_j,                   focusstack,             {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_j,                   rotatestack,            {.i = +1 } },
     { MODKEY,                       XK_k,                   focusstack,             {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_k,                   rotatestack,            {.i = -1 } },
     { MODKEY,                       XK_0,                   view,                   {.ui = ~0 } },
     { MODKEY|ShiftMask,             XK_0,                   tag,                    {.ui = ~0 } },
     { MODKEY,                       XK_minus,               spawn,                  SHCMD("mpc volume -3; kill -44 $(pidof dwmblocks)") },
