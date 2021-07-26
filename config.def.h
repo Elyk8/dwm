@@ -78,10 +78,10 @@ static Sp scratchpads[] = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 /* static const char *tags[] = { "", "", "", "", "", "", "", "ﭮ", "" }; */
 
-static const unsigned int ulinepad	= 0;	/* horizontal padding between the underline and tag */
-static const unsigned int ulinestroke	= 5;	/* thickness / height of the underline */
-static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
-static const int ulineall = 0;	/* 1 to show underline on all tags, 0 for just the active ones */
+static const unsigned int ulinepad  = 0;  /* horizontal padding between the underline and tag */
+static const unsigned int ulinestroke = 5;  /* thickness / height of the underline */
+static const unsigned int ulinevoffset  = 0;  /* how far above the bottom of the bar the line should appear */
+static const int ulineall = 0;  /* 1 to show underline on all tags, 0 for just the active ones */
 
 static const Rule rules[] = {
     /* xprop(1):
@@ -139,9 +139,9 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-    { MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
+    { MODKEY,                       KEY,      comboview,           {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-    { MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
+    { MODKEY|ShiftMask,             KEY,      combotag,            {.ui = 1 << TAG} }, \
     { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
     { MODKEY|Mod1Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
     { MODKEY|Mod1Mask|ShiftMask,    KEY,      tagprevmon,     {.ui = 1 << TAG} },
@@ -171,6 +171,10 @@ static Key keys[] = {
     TAGKEYS(                        XK_9,                   8)
     { MODKEY,                       XK_j,                   focusstack,             {.i = +1 } },
     { MODKEY,                       XK_k,                   focusstack,             {.i = -1 } },
+    { MODKEY|ShiftMask,             XK_j,                   inplacerotate,  {.i = +1} },
+    { MODKEY|ShiftMask,             XK_k,                   inplacerotate,  {.i = -1} },
+    { MODKEY|ShiftMask,             XK_h,                   inplacerotate,  {.i = +2} },
+    { MODKEY|ShiftMask,             XK_l,                   inplacerotate,  {.i = -2} },
     { MODKEY,                       XK_0,                   view,                   {.ui = ~0 } },
     { MODKEY|ShiftMask,             XK_0,                   tag,                    {.ui = ~0 } },
     { MODKEY,                       XK_minus,               spawn,                  SHCMD("mpc volume -3; kill -44 $(pidof dwmblocks)") },
