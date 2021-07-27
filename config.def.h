@@ -173,8 +173,8 @@ static Key keys[] = {
     { MODKEY,                       XK_k,                   focusstack,             {.i = -1 } },
     { MODKEY|ShiftMask,             XK_j,                   inplacerotate,  {.i = +1} },
     { MODKEY|ShiftMask,             XK_k,                   inplacerotate,  {.i = -1} },
-    { MODKEY|ShiftMask,             XK_h,                   inplacerotate,  {.i = +2} },
-    { MODKEY|ShiftMask,             XK_l,                   inplacerotate,  {.i = -2} },
+    { MODKEY|ShiftMask,             XK_h,                   inplacerotate,  {.i = -2} },
+    { MODKEY|ShiftMask,             XK_l,                   inplacerotate,  {.i = +2} },
     { MODKEY,                       XK_0,                   view,                   {.ui = ~0 } },
     { MODKEY|ShiftMask,             XK_0,                   tag,                    {.ui = ~0 } },
     { MODKEY,                       XK_minus,               spawn,                  SHCMD("mpc volume -3; kill -44 $(pidof dwmblocks)") },
@@ -192,7 +192,7 @@ static Key keys[] = {
     { MODKEY|ShiftMask,             XK_w,                   spawn,                  SHCMD("$BROWSER") },
     { MODKEY,                       XK_e,                   spawn,                  SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/config.h) dwmblocks") },
     { MODKEY|ShiftMask,             XK_e,                   spawn,                  SHCMD(TERMINAL " -e abook") },
-    { MODKEY,                       XK_r,                   spawn,                  SHCMD("dmenufm") },
+    { MODKEY,                       XK_r,                   spawn,                  SHCMD("lf-run") },
     { MODKEY|ShiftMask,             XK_r,                   spawn,                  SHCMD(TERMINAL " -e gotop") },
     { MODKEY,                       XK_t,                   setlayout,              {.v = &layouts[0]} }, /* tile */
     { MODKEY|ShiftMask,             XK_t,                   setlayout,              {.v = &layouts[1]} }, /* bstack */
@@ -205,7 +205,7 @@ static Key keys[] = {
     { MODKEY,                       XK_v,                   spawn,                  SHCMD("start-conky") },
     { MODKEY|ShiftMask,             XK_v,                   spawn,                  SHCMD("killall conky") },
     { MODKEY,                       XK_o,                   incnmaster,             {.i = +1 } },
-    /* { MODKEY|ShiftMask,             XK_o,                   incnmaster,             {.i = -1 } }, */
+    { MODKEY|ShiftMask,             XK_o,                   resetnmaster,           {0} },
     { MODKEY,                       XK_p,                   spawn,                  SHCMD("mpc toggle") },
     { MODKEY|ShiftMask,             XK_p,                   spawn,                  SHCMD("mpc pause ; pauseallmpv") },
     { MODKEY,                       XK_bracketleft,         spawn,                  SHCMD("mpc seek -10") },
@@ -306,7 +306,7 @@ static Key keys[] = {
     { 0, XF86XK_ScreenSaver,            spawn,              SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
     { 0, XF86XK_TaskPane,               spawn,              SHCMD(TERMINAL " -e htop") },
     { 0, XF86XK_Mail,                   spawn,              SHCMD(TERMINAL " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
-    { 0, XF86XK_MyComputer,             spawn,              SHCMD("dmenufm") },
+    { 0, XF86XK_MyComputer,             spawn,              SHCMD("lf-run") },
     /* { 0, XF86XK_Battery,               spawn,              SHCMD("") }, */
     { 0, XF86XK_Launch1,                spawn,              SHCMD("xset dpms force off") },
     { 0, XF86XK_TouchpadToggle,         spawn,              SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
