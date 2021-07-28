@@ -29,8 +29,8 @@ static const char *fonts[]               = { "monospace:size=9:antialias=true", 
 static char c000000[]                    = "#000000"; // placeholder value
 
 static char normfgcolor[]                = "#D8DEE9";
-static char normbgcolor[]                = "#1E1E1E";
-static char normbordercolor[]            = "#3B4252";
+static char normbgcolor[]                = "#1b1b1b";
+static char normbordercolor[]            = "#1b1b1b";
 static char normfloatcolor[]             = "#569CD6";
 
 static char selfgcolor[]                 = "#ECEFF4";
@@ -39,7 +39,7 @@ static char selbordercolor[]             = "#ECEFF4";
 static char selfloatcolor[]              = "#569CD6";
 
 static char titlenormfgcolor[]           = "#D8DEE9";
-static char titlenormbgcolor[]           = "#1E1E1E";
+static char titlenormbgcolor[]           = "#1b1b1b";
 static char titlenormbordercolor[]       = "#3B4252";
 static char titlenormfloatcolor[]        = "#569CD6";
 
@@ -49,7 +49,7 @@ static char titleselbordercolor[]        = "#3B4252";
 static char titleselfloatcolor[]         = "#569CD6";
 
 static char tagsnormfgcolor[]            = "#D8DEE9";
-static char tagsnormbgcolor[]            = "#1E1E1E";
+static char tagsnormbgcolor[]            = "#1b1b1b";
 static char tagsnormbordercolor[]        = "#3B4252";
 static char tagsnormfloatcolor[]         = "#569CD6";
 
