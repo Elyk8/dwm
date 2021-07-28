@@ -24,39 +24,39 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "monospace:size=10:antialias=true", "Twemoji:size=9:antialias=true:autohint=true" };
+static const char *fonts[]               = { "monospace:size=9:antialias=true", "Twemoji:size=8:antialias=true:autohint=true" };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#bbbbbb";
-static char normbgcolor[]                = "#222222";
-static char normbordercolor[]            = "#444444";
-static char normfloatcolor[]             = "#db8fd9";
+static char normfgcolor[]                = "#D8DEE9";
+static char normbgcolor[]                = "#1E1E1E";
+static char normbordercolor[]            = "#3B4252";
+static char normfloatcolor[]             = "#569CD6";
 
-static char selfgcolor[]                 = "#eeeeee";
-static char selbgcolor[]                 = "#005577";
-static char selbordercolor[]             = "#005577";
-static char selfloatcolor[]              = "#005577";
+static char selfgcolor[]                 = "#ECEFF4";
+static char selbgcolor[]                 = "#3B4252";
+static char selbordercolor[]             = "#ECEFF4";
+static char selfloatcolor[]              = "#569CD6";
 
-static char titlenormfgcolor[]           = "#bbbbbb";
-static char titlenormbgcolor[]           = "#222222";
-static char titlenormbordercolor[]       = "#444444";
-static char titlenormfloatcolor[]        = "#db8fd9";
+static char titlenormfgcolor[]           = "#D8DEE9";
+static char titlenormbgcolor[]           = "#1E1E1E";
+static char titlenormbordercolor[]       = "#3B4252";
+static char titlenormfloatcolor[]        = "#569CD6";
 
-static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
-static char titleselbordercolor[]        = "#005577";
-static char titleselfloatcolor[]         = "#005577";
+static char titleselfgcolor[]            = "#ECEFF4";
+static char titleselbgcolor[]            = "#3B4252";
+static char titleselbordercolor[]        = "#3B4252";
+static char titleselfloatcolor[]         = "#569CD6";
 
-static char tagsnormfgcolor[]            = "#bbbbbb";
-static char tagsnormbgcolor[]            = "#222222";
-static char tagsnormbordercolor[]        = "#444444";
-static char tagsnormfloatcolor[]         = "#db8fd9";
+static char tagsnormfgcolor[]            = "#D8DEE9";
+static char tagsnormbgcolor[]            = "#1E1E1E";
+static char tagsnormbordercolor[]        = "#3B4252";
+static char tagsnormfloatcolor[]         = "#569CD6";
 
-static char tagsselfgcolor[]             = "#eeeeee";
-static char tagsselbgcolor[]             = "#005577";
-static char tagsselbordercolor[]         = "#005577";
-static char tagsselfloatcolor[]          = "#005577";
+static char tagsselfgcolor[]             = "#ECEFF4";
+static char tagsselbgcolor[]             = "#3B4252";
+static char tagsselbordercolor[]         = "#3B4252";
+static char tagsselfloatcolor[]          = "#569CD6";
 
 static char hidnormfgcolor[]             = "#005577";
 static char hidselfgcolor[]              = "#227799";
@@ -136,6 +136,17 @@ static char *tagicons[][NUMTAGS] = {
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
+/* grid of tags */
+#define SWITCHTAG_UP                1 << 0
+#define SWITCHTAG_DOWN              1 << 1
+#define SWITCHTAG_LEFT              1 << 2
+#define SWITCHTAG_RIGHT             1 << 3
+#define SWITCHTAG_TOGGLETAG         1 << 4
+#define SWITCHTAG_TAG               1 << 5
+#define SWITCHTAG_VIEW              1 << 6
+#define SWITCHTAG_TOGGLEVIEW        1 << 7
+
+static const int tagrows = 2;
 
 /* There are two options when it comes to per-client rules:
  *  - a typical struct table or
@@ -196,7 +207,7 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
-	{  0,       0,     BAR_ALIGN_LEFT,   width_pwrl_tags,         draw_pwrl_tags,         click_pwrl_tags,         "powerline_tags" },
+	{ -1,       0,     BAR_ALIGN_LEFT,   width_taggrid,           draw_taggrid,           click_taggrid,           "taggrid" },
 	{  0,       0,     BAR_ALIGN_RIGHT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{  0,       0,     BAR_ALIGN_RIGHT,  width_status,            draw_status,            click_statuscmd,         "status" },
@@ -268,13 +279,14 @@ static Key keys[] = {
   { MODKEY,                       XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
   { MODKEY|ShiftMask,             XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
-  /* { MODKEY,                       XK_o,          incnmaster,             {.i = +1 } }, */
+  { MODKEY,                       XK_o,          incnmaster,             {.i = +1 } },
+  { MODKEY|ShiftMask,             XK_o,          incnmaster,             {.i = -1 } },
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
   { MODKEY,                       XK_space,      zoom,                   {0} },
   { MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
   { MODKEY,                       XK_z,          incrgaps,               {.i = +3 } },
-	/* { MODKEY|ControlMask,           XK_z,          showhideclient,         {0} }, */
+	{ MODKEY|ShiftMask,             XK_z,          showhideclient,         {0} },
   { MODKEY,                       XK_x,          incrgaps,               {.i = -3 } },
 	{ MODKEY|ShiftMask,             XK_u,          incrgaps,               {.i = -1 } },
 	{ MODKEY,                       XK_a,          togglegaps,             {0} },
@@ -295,7 +307,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_i,          setlayout,              {.v = &layouts[7]} }, /* centeredfloatingmaster */
   { MODKEY,                       XK_f,          togglefullscreen,       {0} },
   { MODKEY|ShiftMask,             XK_f,          setlayout,              {.v = &layouts[8]} },
-	{ MODKEY|ShiftMask,             XK_s,          togglesticky,           {0} },
+	{ MODKEY,                       XK_s,          togglesticky,           {0} },
 	{ MODKEY,                       XK_0,          view,                   {.ui = ~SPTAGMASK } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~SPTAGMASK } },
 	{ MODKEY,                       XK_comma,      focusmon,               {.i = -1 } },
