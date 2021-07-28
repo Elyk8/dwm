@@ -24,7 +24,7 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "monospace:size=10", "Twemoji:size=9" };
+static const char *fonts[]               = { "monospace:size=10:", "Twemoji:size=9" };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -216,7 +216,7 @@ static const BarRule barrules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -270,7 +270,7 @@ static Key keys[] = {
   { MODKEY,                       XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
   { MODKEY|ShiftMask,             XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
-  { MODKEY,                       XK_o,          incnmaster,             {.i = +1 } },
+  /* { MODKEY,                       XK_o,          incnmaster,             {.i = +1 } }, */
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
   { MODKEY,                       XK_space,      zoom,                   {0} },
@@ -323,10 +323,10 @@ static Key keys[] = {
   { MODKEY,                       XK_v,          spawn,                  SHCMD("start-conky") },
   { MODKEY|ShiftMask,             XK_v,          spawn,                  SHCMD("killall conky") },
   /* Music player */
-  { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3; kill -44 $(pidof dwmblocks)") },
-  { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12; kill -44 $(pidof dwmblocks)") },
-  { MODKEY,                       XK_equal,      spawn,                  SHCMD("mpc volume +3; kill -44 $(pidof dwmblocks)") },
-  { MODKEY|ShiftMask,             XK_equal,      spawn,                  SHCMD("mpc volume +12; kill -44 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3; kill -35 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12; kill -35 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_equal,      spawn,                  SHCMD("mpc volume +3; kill -35 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_equal,      spawn,                  SHCMD("mpc volume +12; kill -35 $(pidof dwmblocks)") },
   { MODKEY,                       XK_p,            spawn,                SHCMD("mpc toggle") },
   { MODKEY|ShiftMask,             XK_p,            spawn,                SHCMD("mpc pause ; pauseallmpv") },
   { MODKEY,                       XK_bracketleft,  spawn,                SHCMD("mpc seek -10") },
@@ -406,12 +406,13 @@ static Button buttons[] = {
 	/* click                event mask           button          function        argument */
 	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
-	/* { ClkWinTitle,          0,                   Button1,        togglewin,      {0} }, */
-	/* { ClkWinTitle,          0,                   Button3,        showhideclient, {0} }, */
 	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1 } },
-	{ ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2 } },
-	{ ClkStatusText,        0,                   Button3,        sigstatusbar,   {.i = 3 } },
+  { ClkStatusText,        0,                   Button1,        sigstatusbar,   {.i = 1} },        // left click
+  { ClkStatusText,        ShiftMask,           Button1,        sigstatusbar,   {.i = 6} },        // shift left click
+  { ClkStatusText,        0,                   Button2,        sigstatusbar,   {.i = 2} },        // middle click
+  { ClkStatusText,        0,                   Button3,        sigstatusbar,   {.i = 3} },        // right click
+  { ClkStatusText,        0,                   Button4,        sigstatusbar,   {.i = 4} },        // scroll wheel up
+  { ClkStatusText,        0,                   Button5,        sigstatusbar,   {.i = 5} },        // scroll wheel down
 	{ ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
