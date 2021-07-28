@@ -9,7 +9,7 @@ draw_awesomebar(Bar *bar, BarArg *a)
 {
 	int n = 0, scm, remainder = 0, tabw, pad;
 	unsigned int i;
-	int x = a->x + lrpad / 2, w = a->w - lrpad / 2;
+	int x = a->x + lrpad / 2, w = a->w - lrpad;
 
 	Client *c;
 	for (c = bar->mon->clients; c; c = c->next)
@@ -32,6 +32,8 @@ draw_awesomebar(Bar *bar, BarArg *a)
 				scm = SchemeTitleNorm;
 
 			pad = lrpad / 2;
+			if (TEXTW(c->name) < tabw)
+				pad = (tabw - TEXTW(c->name) + lrpad) / 2;
 
 			drw_setscheme(drw, scheme[scm]);
 

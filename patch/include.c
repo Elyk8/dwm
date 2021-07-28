@@ -15,7 +15,6 @@
 #include "bar_wintitleactions.c"
 
 /* Other patches */
-#include "attachx.c"
 #include "cool_autostart.c"
 #include "inplacerotate.c"
 #include "killunsel.c"
@@ -26,9 +25,11 @@
 #include "shiftviewclients.c"
 #include "sticky.c"
 #include "swallow.c"
+#include "tapresize.c"
 #include "togglefullscreen.c"
 #include "vanitygaps.c"
 #include "zoomswap.c"
+#include "xrdb.c"
 /* Layouts */
 #include "layout_facts.c"
 #include "layout_bstack.c"

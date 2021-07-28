@@ -7,7 +7,7 @@ width_wintitle(Bar *bar, BarArg *a)
 int
 draw_wintitle(Bar *bar, BarArg *a)
 {
-	int x = a->x + lrpad / 2, w = a->w - lrpad / 2;
+	int x = a->x + lrpad / 2, w = a->w - lrpad;
 	Monitor *m = bar->mon;
 	Client *c = m->sel;
 	int pad = lrpad / 2;
@@ -20,6 +20,8 @@ draw_wintitle(Bar *bar, BarArg *a)
 
 	drw_setscheme(drw, scheme[m == selmon ? SchemeTitleSel : SchemeTitleNorm]);
 	XSetErrorHandler(xerrordummy);
+	if (TEXTW(c->name) < w)
+		pad = (w - TEXTW(c->name) + lrpad) / 2;
 
 	drw_text(drw, x, a->y, w, a->h, pad, c->name, 0, False);
 
