@@ -18,7 +18,7 @@ static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int bar_height              = 35;   /* 0 means derive from font, >= 1 explicit height */
 static const int vertpad                 = 15;  /* vertical padding of bar */
 static const int sidepad                 = 15;  /* horizontal padding of bar */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const unsigned int systrayspacing = 5;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
