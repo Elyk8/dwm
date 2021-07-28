@@ -341,6 +341,8 @@ static Key keys[] = {
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
   { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
+  { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
+  { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle; kill -49 $(pidof dwmblocks)") },
 
   { MODKEY,                       XK_Left,       focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,             XK_Left,       tagmon,                 {.i = -1 } },
