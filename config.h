@@ -24,7 +24,7 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "monospace:size=9:antialias=true", "Twemoji:size=8:antialias=true:autohint=true" };
+static const char *fonts[]               = { "monospace:size=11:antialias=true", "Twemoji:size=9:antialias=true:autohint=true" };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -186,7 +186,7 @@ static const Rule rules[] = {
 	RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 4, .noswallow = 1)
 	RULE(.class = "MATLAB R2021a", .tags = 1 << 4, .noswallow = 1)
 	RULE(.class = "MATLABWindow", .tags = 1 << 4, .noswallow = 1)
-	RULE(.class = "Dragon-drag-and-drop", .noswallow = 1)
+	RULE(.class = "Dragon-drag-and-drop", .noswallow = 1, .iscentered = 1)
 	RULE(.title = "Event Tester", .noswallow = 1)
 	RULE(.class = TERMCLASS, .isterminal = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
@@ -352,10 +352,10 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_period,     spawn,                  SHCMD("mpc repeat") },
   { MODKEY,                       XK_c,          spawn,                  SHCMD("rofigreenclip") },
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
-  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop") },
+  { MODKEY,                       XK_d,          spawn,                  SHCMD("dmenu_run_desktop") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
-  { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle; kill -49 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle; kill -39 $(pidof dwmblocks)") },
 
   { MODKEY,                       XK_Left,       focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,             XK_Left,       tagmon,                 {.i = -1 } },
@@ -368,7 +368,7 @@ static Key keys[] = {
   { MODKEY,                       XK_F1,         spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") },
   { MODKEY,                       XK_F2,         spawn,                  SHCMD("rofiunicode") },
   { MODKEY,                       XK_F3,         spawn,                  SHCMD("bookmarker") },
-  { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; kill -44 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; kill -40 $(pidof dwmblocks)") },
   /* { MODKEY,                       XK_F5,        xrdb,                {.v = NULL } }, */
   /* { MODKEY,                       XK_F6,        spawn,                  SHCMD("") }, */
   { MODKEY,                       XK_F7,         spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
@@ -382,9 +382,9 @@ static Key keys[] = {
   { 0,                            XK_Print,      spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
   { ShiftMask,                    XK_Print,      spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
 
-  { 0, XF86XK_AudioMute,          spawn,         SHCMD("pamixer -t; kill -44 $(pidof dwmblocks)") },
-  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; kill -44 $(pidof dwmblocks)") },
-  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; kill -44 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioMute,          spawn,         SHCMD("pamixer -t; kill -40 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; kill -40 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; kill -40 $(pidof dwmblocks)") },
   { 0, XF86XK_AudioPrev,          spawn,         SHCMD("mpc prev") },
   { 0, XF86XK_AudioNext,          spawn,         SHCMD("mpc next") },
   { 0, XF86XK_AudioPause,         spawn,         SHCMD("mpc pause") },
@@ -393,7 +393,7 @@ static Key keys[] = {
   { 0, XF86XK_AudioRewind,        spawn,         SHCMD("mpc seek -10") },
   { 0, XF86XK_AudioForward,       spawn,         SHCMD("mpc seek +10") },
   { 0, XF86XK_AudioMedia,         spawn,         SHCMD(TERM " -e ncmpcpp") },
-  { 0, XF86XK_AudioMicMute,       spawn,         SHCMD("mic-toggle; kill -49 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioMicMute,       spawn,         SHCMD("mic-toggle; kill -39 $(pidof dwmblocks)") },
   { 0, XF86XK_PowerOff,           spawn,         SHCMD("rofipowermenu") },
   { 0, XF86XK_Calculator,         spawn,         SHCMD(TERM " -e bc -l") },
   { 0, XF86XK_Sleep,              spawn,         SHCMD("sudo -A zzz") },
