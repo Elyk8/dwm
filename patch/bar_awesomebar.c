@@ -37,7 +37,9 @@ draw_awesomebar(Bar *bar, BarArg *a)
 
 			drw_setscheme(drw, scheme[scm]);
 
-			drw_text(drw, x, a->y, tabw + (i < remainder ? 1 : 0), a->h, pad, c->name, 0, False);
+			drw_text(drw, x, a->y, tabw + (i < remainder ? 1 : 0), a->h, pad + (c->icon ? c->icon->width + ICONSPACING : 0), c->name, 0, False);
+			if (c->icon)
+				drw_img(drw, x + pad, a->y + (a->h - c->icon->height) / 2, c->icon, tmpicon);
 
 			drawstateindicator(c->mon, c, 1, x, a->y, tabw + (i < remainder ? 1 : 0), a->h, 0, 0, c->isfixed);
 			x += tabw + (i < remainder ? 1 : 0);

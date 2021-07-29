@@ -23,7 +23,9 @@ draw_wintitle(Bar *bar, BarArg *a)
 	if (TEXTW(c->name) < w)
 		pad = (w - TEXTW(c->name) + lrpad) / 2;
 
-	drw_text(drw, x, a->y, w, a->h, pad, c->name, 0, False);
+	drw_text(drw, x, a->y, w, a->h, pad + (c->icon ? c->icon->width + ICONSPACING : 0), c->name, 0, False);
+	if (c->icon)
+		drw_img(drw, x + pad, a->y + (a->h - c->icon->height) / 2, c->icon, tmpicon);
 
 	XSync(dpy, False);
 	XSetErrorHandler(xerror);
