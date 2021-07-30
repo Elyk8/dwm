@@ -8,16 +8,16 @@
 static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int snap           = 32;  /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
-static const unsigned int gappih         = 15;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 15;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 10;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 10;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
+static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int bar_height              = 30;   /* 0 means derive from font, >= 1 explicit height */
-static const int vertpad                 = 10;  /* vertical padding of bar */
-static const int sidepad                 = 10;  /* horizontal padding of bar */
+static const int vertpad                 = 15;  /* vertical padding of bar */
+static const int sidepad                 = 15;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 static const unsigned int systrayspacing = 0;   /* systray spacing */
@@ -26,7 +26,7 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "monospace:size=11:antialias=true", "Twemoji:size=9:antialias=true:autohint=true" };
+static const char *fonts[]               = { "monospace:size=10:antialias=true", "Twemoji:size=9:antialias=true:autohint=true" };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -201,8 +201,8 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
+	{  0,       0,     BAR_ALIGN_LEFT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_tags,              draw_tags,              click_tags,              "tags" },
-	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{  0,       0,     BAR_ALIGN_RIGHT,   width_status,            draw_status,            click_statuscmd,         "status" },
 	{ -1,       1,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
@@ -266,8 +266,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,          inplacerotate,          {.i = +2 } }, // same as rotatestack
 	{ MODKEY|ShiftMask,             XK_k,          inplacerotate,          {.i = -2 } }, // same as reotatestack
-	{ MODKEY|ShiftMask,             XK_j,          inplacerotate,          {.i = +1} },
-	{ MODKEY|ShiftMask,             XK_k,          inplacerotate,          {.i = -1} },
+	{ MODKEY|ShiftMask,             XK_l,          inplacerotate,          {.i = +1} },
+	{ MODKEY|ShiftMask,             XK_h,          inplacerotate,          {.i = -1} },
 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
   { MODKEY|ShiftMask,             XK_Return,     togglescratch,          {.ui = 0} },
   { MODKEY,                       XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
