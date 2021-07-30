@@ -47,6 +47,10 @@
 
 
 
+#include <assert.h>
+#include <libgen.h>
+#include <sys/stat.h>
+#define SPAWN_CWD_DELIM " []{}()<>\"':"
 
 /* macros */
 #define Button6                 6
@@ -198,6 +202,7 @@ typedef struct Client Client;
 struct Client {
 	char name[256];
 	float mina, maxa;
+	float cfact;
 	int x, y, w, h;
 	int oldx, oldy, oldw, oldh;
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
@@ -206,6 +211,7 @@ struct Client {
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	int needresize;
 	int iscentered;
+	int beingmoved;
 	int isterminal, noswallow;
 	pid_t pid;
 	int issticky;
@@ -1469,6 +1475,7 @@ manage(Window w, XWindowAttributes *wa)
 	c->w = c->oldw = wa->width;
 	c->h = c->oldh = wa->height;
 	c->oldbw = wa->border_width;
+	c->cfact = 1.0;
 	c->icon = NULL;
 	updateicon(c);
 	updatetitle(c);
@@ -2265,6 +2272,38 @@ spawn(const Arg *arg)
 		if (dpy)
 			close(ConnectionNumber(dpy));
 
+		if (selmon->sel) {
+			const char* const home = getenv("HOME");
+			assert(home && strchr(home, '/'));
+			const size_t homelen = strlen(home);
+			char *cwd, *pathbuf = NULL;
+			struct stat statbuf;
+
+			cwd = strtok(selmon->sel->name, SPAWN_CWD_DELIM);
+			/* NOTE: strtok() alters selmon->sel->name in-place,
+			 * but that does not matter because we are going to
+			 * exec() below anyway; nothing else will use it */
+			while (cwd) {
+				if (*cwd == '~') { /* replace ~ with $HOME */
+					if (!(pathbuf = malloc(homelen + strlen(cwd)))) /* ~ counts for NULL term */
+						die("fatal: could not malloc() %u bytes\n", homelen + strlen(cwd));
+					strcpy(strcpy(pathbuf, home) + homelen, cwd + 1);
+					cwd = pathbuf;
+				}
+
+				if (strchr(cwd, '/') && !stat(cwd, &statbuf)) {
+					if (!S_ISDIR(statbuf.st_mode))
+						cwd = dirname(cwd);
+
+					if (!chdir(cwd))
+						break;
+				}
+
+				cwd = strtok(NULL, SPAWN_CWD_DELIM);
+			}
+
+			free(pathbuf);
+		}
 		setsid();
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		fprintf(stderr, "dwm: execvp %s", ((char **)arg->v)[0]);
@@ -2763,7 +2802,6 @@ view(const Arg *arg)
 {
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 	{
-		view(&((Arg) { .ui = 0 }));
 		return;
 	}
 	selmon->seltags ^= 1; /* toggle sel tagset */

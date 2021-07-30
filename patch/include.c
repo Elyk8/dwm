@@ -16,10 +16,13 @@
 
 /* Other patches */
 #include "attachx.c"
+#include "cfacts.c"
 #include "cool_autostart.c"
+#include "distributetags.c"
 #include "inplacerotate.c"
 #include "killunsel.c"
 #include "pertag.c"
+#include "placemouse.c"
 #include "restartsig.c"
 #include "scratchpad.c"
 #include "shiftview.c"
