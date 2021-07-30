@@ -20,7 +20,7 @@ static const int vertpad                 = 15;  /* vertical padding of bar */
 static const int sidepad                 = 15;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
-static const unsigned int systrayspacing = 0;   /* systray spacing */
+static const unsigned int systrayspacing = 1;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
@@ -342,7 +342,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_period,     spawn,                  SHCMD("mpc repeat") },
   { MODKEY,                       XK_c,          spawn,                  SHCMD("rofigreenclip") },
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
-  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu\"") },
+  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu -c -X 15 -Y 15 -W 1884 -l 0\"") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
   { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
@@ -366,7 +366,7 @@ static Key keys[] = {
   { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && kill -38 $(pidof dwmblocks)") },
   { MODKEY,                       XK_F9,         spawn,                  SHCMD("dmenumount") },
   { MODKEY,                       XK_F10,        spawn,                  SHCMD("dmenuumount") },
-  { MODKEY,                       XK_F11,        spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
+  { MODKEY,                       XK_F11,        spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --untimed --vf=hflip --no-keepaspect-window --panscan=1 --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
   { MODKEY,                       XK_F12,        spawn,                  SHCMD("remaps && notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
 
   { 0,                            XK_Print,      spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
