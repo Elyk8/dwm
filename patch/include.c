@@ -18,7 +18,7 @@
 #include "attachx.c"
 #include "cfacts.c"
 #include "cool_autostart.c"
-#include "distributetags.c"
+#include "dragcfact.c"
 #include "inplacerotate.c"
 #include "killunsel.c"
 #include "pertag.c"
@@ -34,6 +34,7 @@
 #include "vanitygaps.c"
 #include "zoomswap.c"
 #include "xrdb.c"
+#include "dragmfact.c"
 /* Layouts */
 #include "layout_facts.c"
 #include "layout_bstack.c"

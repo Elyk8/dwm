@@ -281,6 +281,8 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_o,          incnmaster,             {.i = -1 } },
 	{ MODKEY,                       XK_h,          setmfact,               {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,               {.f = +0.05} },
+	{ MODKEY|ControlMask,           XK_k,          setcfact,               {.f = +0.25} },
+	{ MODKEY|ControlMask,           XK_j,          setcfact,               {.f = -0.25} },
   { MODKEY,                       XK_space,      zoom,                   {0} },
   { MODKEY|ShiftMask,             XK_space,      togglefloating,         {0} },
   { MODKEY,                       XK_z,          incrgaps,               {.i = +3 } },
@@ -306,8 +308,6 @@ static Key keys[] = {
   { MODKEY,                       XK_f,          togglefullscreen,       {0} },
   { MODKEY|ShiftMask,             XK_f,          setlayout,              {.v = &layouts[8]} },
 	{ MODKEY,                       XK_s,          togglesticky,           {0} },
-	{ MODKEY,                       XK_grave,      view,                   {.ui = ~SPTAGMASK } },
-	{ MODKEY|ShiftMask,             XK_grave,      tag,                    {.ui = ~SPTAGMASK } },
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
@@ -317,6 +317,8 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                  6)
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
+	{ MODKEY,                       XK_0,          view,                   {.ui = ~SPTAGMASK } },
+	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~SPTAGMASK } },
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
@@ -437,6 +439,8 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,              Button5,        resizemousescroll, {.v = &scrollargs[1]} },
 	{ ClkClientWin,         MODKEY,              Button6,        resizemousescroll, {.v = &scrollargs[2]} },
 	{ ClkClientWin,         MODKEY,              Button7,        resizemousescroll, {.v = &scrollargs[3]} },
+	{ ClkClientWin,         MODKEY|ShiftMask,    Button3,        dragcfact,      {0} },
+	{ ClkClientWin,         MODKEY|ShiftMask,    Button1,        dragmfact,      {0} },
 	{ ClkTagBar,            0,                   Button1,        view,           {0} },
 	{ ClkTagBar,            0,                   Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
