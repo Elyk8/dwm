@@ -26,7 +26,10 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
-static const char *fonts[]               = { "monospace:size=10:antialias=true", "Twemoji:size=9:antialias=true:autohint=true" };
+static const char *fonts[]               = {
+  "monospace:size=10:antialias=true:autohint=true", 
+  "Twemoji:size=9:antialias=true:autohint=true"
+};
 
 static char c000000[]                    = "#000000"; // placeholder value
 
@@ -205,7 +208,7 @@ static const BarRule barrules[] = {
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_tags,              draw_tags,              click_tags,              "tags" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{  0,       0,     BAR_ALIGN_RIGHT,   width_status,            draw_status,            click_statuscmd,         "status" },
-	{ -1,       1,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
+	{ -1,       0,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 };
 
 /* layout(s) */
