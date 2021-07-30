@@ -26,6 +26,7 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
+static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
   "monospace:size=10:antialias=true:autohint=true", 
   "Twemoji:size=9:antialias=true:autohint=true"
@@ -356,7 +357,7 @@ static Key keys[] = {
   { MODKEY,                       XK_Page_Down,  shiftview,              { .i = +1 } },
 
   { MODKEY,                       XK_F1,         spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") },
-  { MODKEY,                       XK_F2,         spawn,                  SHCMD("rofiunicode") },
+  { MODKEY,                       XK_F2,         spawn,                  SHCMD("dmenuunicode") },
   { MODKEY,                       XK_F3,         spawn,                  SHCMD("bookmarker") },
   { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; kill -40 $(pidof dwmblocks)") },
   /* { MODKEY,                       XK_F5,        xrdb,                {.v = NULL } }, */
