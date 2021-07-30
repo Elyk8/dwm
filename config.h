@@ -313,7 +313,6 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                  6)
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
-	TAGKEYS(                        XK_0,                                  9)
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
@@ -340,7 +339,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_period,     spawn,                  SHCMD("mpc repeat") },
   { MODKEY,                       XK_c,          spawn,                  SHCMD("rofigreenclip") },
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
-  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop") },
+  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu\"") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
   { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
