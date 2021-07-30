@@ -10,14 +10,14 @@ static const unsigned int snap           = 32;  /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static const unsigned int gappih         = 15;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 15;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 10;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 35;   /* 0 means derive from font, >= 1 explicit height */
-static const int vertpad                 = 15;  /* vertical padding of bar */
-static const int sidepad                 = 15;  /* horizontal padding of bar */
+static const int bar_height              = 30;   /* 0 means derive from font, >= 1 explicit height */
+static const int vertpad                 = 10;  /* vertical padding of bar */
+static const int sidepad                 = 10;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 static const unsigned int systrayspacing = 0;   /* systray spacing */
@@ -71,20 +71,6 @@ static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
 
-static const unsigned int baralpha = 0xd0;
-static const unsigned int borderalpha = OPAQUE;
-static const unsigned int alphas[][3] = {
-	/*                       fg      bg        border     */
-	[SchemeNorm]         = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsSel]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
-	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
-};
 
 static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
@@ -152,17 +138,6 @@ static char *tagicons[][NUMTAGS] = {
 	[ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
 
-/* grid of tags */
-#define SWITCHTAG_UP                1 << 0
-#define SWITCHTAG_DOWN              1 << 1
-#define SWITCHTAG_LEFT              1 << 2
-#define SWITCHTAG_RIGHT             1 << 3
-#define SWITCHTAG_TOGGLETAG         1 << 4
-#define SWITCHTAG_TAG               1 << 5
-#define SWITCHTAG_VIEW              1 << 6
-#define SWITCHTAG_TOGGLEVIEW        1 << 7
-
-static const int tagrows = 2;
 
 /* There are two options when it comes to per-client rules:
  *  - a typical struct table or
@@ -226,11 +201,11 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
-	{ -1,       0,     BAR_ALIGN_LEFT,   width_taggrid,           draw_taggrid,           click_taggrid,           "taggrid" },
-	{  0,       0,     BAR_ALIGN_RIGHT,  width_systray,           draw_systray,           click_systray,           "systray" },
+	{  0,       0,     BAR_ALIGN_LEFT,   width_pwrl_tags,         draw_pwrl_tags,         click_pwrl_tags,         "powerline_tags" },
+	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-	{  0,       0,     BAR_ALIGN_RIGHT,  width_status,            draw_status,            click_statuscmd,         "status" },
-	{ -1,       0,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
+	{  0,       0,     BAR_ALIGN_RIGHT,   width_status,            draw_status,            click_statuscmd,         "status" },
+	{ -1,       1,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 };
 
 /* layout(s) */
@@ -327,12 +302,8 @@ static Key keys[] = {
   { MODKEY,                       XK_f,          togglefullscreen,       {0} },
   { MODKEY|ShiftMask,             XK_f,          setlayout,              {.v = &layouts[8]} },
 	{ MODKEY,                       XK_s,          togglesticky,           {0} },
-	{ MODKEY,                       XK_0,          view,                   {.ui = ~SPTAGMASK } },
-	{ MODKEY|ShiftMask,             XK_0,          tag,                    {.ui = ~SPTAGMASK } },
-	{ MODKEY,                       XK_comma,      focusmon,               {.i = -1 } },
-	{ MODKEY,                       XK_period,     focusmon,               {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+	{ MODKEY,                       XK_grave,      view,                   {.ui = ~SPTAGMASK } },
+	{ MODKEY|ShiftMask,             XK_grave,      tag,                    {.ui = ~SPTAGMASK } },
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
 	TAGKEYS(                        XK_3,                                  2)
@@ -342,6 +313,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_7,                                  6)
 	TAGKEYS(                        XK_8,                                  7)
 	TAGKEYS(                        XK_9,                                  8)
+	TAGKEYS(                        XK_0,                                  9)
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
@@ -368,10 +340,10 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_period,     spawn,                  SHCMD("mpc repeat") },
   { MODKEY,                       XK_c,          spawn,                  SHCMD("rofigreenclip") },
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
-  { MODKEY,                       XK_d,          spawn,                  SHCMD("dmenu_run_desktop") },
+  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
-  { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle; kill -39 $(pidof dwmblocks)") },
+  { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
 
   { MODKEY,                       XK_Left,       focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,             XK_Left,       tagmon,                 {.i = -1 } },
@@ -389,7 +361,7 @@ static Key keys[] = {
   /* { MODKEY,                       XK_F6,        spawn,                  SHCMD("") }, */
   { MODKEY,                       XK_F7,         spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
   { MODKEY|ShiftMask,             XK_F7,         spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
-  { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && kill -46 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && kill -38 $(pidof dwmblocks)") },
   { MODKEY,                       XK_F9,         spawn,                  SHCMD("dmenumount") },
   { MODKEY,                       XK_F10,        spawn,                  SHCMD("dmenuumount") },
   { MODKEY,                       XK_F11,        spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
@@ -409,7 +381,7 @@ static Key keys[] = {
   { 0, XF86XK_AudioRewind,        spawn,         SHCMD("mpc seek -10") },
   { 0, XF86XK_AudioForward,       spawn,         SHCMD("mpc seek +10") },
   { 0, XF86XK_AudioMedia,         spawn,         SHCMD(TERM " -e ncmpcpp") },
-  { 0, XF86XK_AudioMicMute,       spawn,         SHCMD("mic-toggle; kill -39 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioMicMute,       spawn,         SHCMD("mic-toggle") },
   { 0, XF86XK_PowerOff,           spawn,         SHCMD("rofipowermenu") },
   { 0, XF86XK_Calculator,         spawn,         SHCMD(TERM " -e bc -l") },
   { 0, XF86XK_Sleep,              spawn,         SHCMD("sudo -A zzz") },
@@ -424,8 +396,8 @@ static Key keys[] = {
   { 0, XF86XK_TouchpadToggle,     spawn,         SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
   { 0, XF86XK_TouchpadOff,        spawn,         SHCMD("synclient TouchpadOff=1") },
   { 0, XF86XK_TouchpadOn,         spawn,         SHCMD("synclient TouchpadOff=0") },
-  { 0, XF86XK_MonBrightnessUp,    spawn,         SHCMD("xbacklight -inc 2 ; kill -36 $(pidof dwmblocks)") },
-  { 0, XF86XK_MonBrightnessDown,  spawn,         SHCMD("xbacklight -dec 2 ; kill -36 $(pidof dwmblocks)") },
+  { 0, XF86XK_MonBrightnessUp,    spawn,         SHCMD("xbacklight -inc 2 ; kill -42 $(pidof dwmblocks)") },
+  { 0, XF86XK_MonBrightnessDown,  spawn,         SHCMD("xbacklight -dec 2 ; kill -42 $(pidof dwmblocks)") },
 };
 
 
