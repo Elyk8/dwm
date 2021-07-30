@@ -32,6 +32,7 @@
 #include "tapresize.c"
 #include "togglefullscreen.c"
 #include "vanitygaps.c"
+#include "warp.c"
 #include "zoomswap.c"
 #include "xrdb.c"
 #include "dragmfact.c"

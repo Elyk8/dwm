@@ -25,7 +25,7 @@ static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
-static int floatindicatortype            = INDICATOR_TOP_LEFT_SQUARE;
+static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
   "monospace:size=10:antialias=true:autohint=true", 
@@ -215,6 +215,7 @@ static const BarRule barrules[] = {
 /* layout(s) */
 static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
+static const int nmaxmaster  = 3;    /* maximum number of clients allowed in master area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 
@@ -432,7 +433,7 @@ static Button buttons[] = {
 	 * to control these separately (i.e. to retain the feature to move a tiled window
 	 * into a floating position).
 	 */
-	{ ClkClientWin,         MODKEY,              Button1,        moveorplace,    {.i = 2} },
+	{ ClkClientWin,         MODKEY,              Button1,        moveorplace,    {.i = 0} },
 	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
 	{ ClkClientWin,         MODKEY,              Button4,        resizemousescroll, {.v = &scrollargs[0]} },

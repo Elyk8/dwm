@@ -47,10 +47,6 @@
 
 
 
-#include <assert.h>
-#include <libgen.h>
-#include <sys/stat.h>
-#define SPAWN_CWD_DELIM " []{}()<>\"':"
 
 /* macros */
 #define Button6                 6
@@ -401,6 +397,8 @@ static int lrpad;            /* sum of left and right padding for text */
  * when moving (or resizing) client windows from one monitor to another. This variable is used
  * internally to ignore such configure requests while movemouse or resizemouse are being used. */
 static int ignoreconfigurerequests = 0;
+static int force_warp = 0; // force warp in some situations, e.g. killclient
+static int ignore_warp = 0; // force skip warp in some situations, e.g. dragmfact, dragcfact
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
 static void (*handler[LASTEvent]) (XEvent *) = {
@@ -1262,6 +1260,7 @@ focusmon(const Arg *arg)
 	selmon = m;
 	unfocus(sel, 0, NULL);
 	focus(NULL);
+	warp(selmon->sel);
 }
 
 void
@@ -1410,7 +1409,10 @@ grabkeys(void)
 void
 incnmaster(const Arg *arg)
 {
-	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+    if (selmon->nmaster >= nmaxmaster)
+        selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = 1;
+    else 
+    	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
 	arrange(selmon);
 }
 
@@ -1458,6 +1460,7 @@ killclient(const Arg *arg)
 		XSync(dpy, False);
 		XSetErrorHandler(xerror);
 		XUngrabServer(dpy);
+		force_warp = 1;
 	}
 }
 
@@ -1905,6 +1908,11 @@ restack(Monitor *m)
 	}
 	XSync(dpy, False);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+	if (m == selmon && (m->tagset[m->seltags] & m->sel->tags) && (
+		m->lt[m->sellt]->arrange != &monocle
+		|| m->sel->isfloating)
+	)
+		warp(m->sel);
 }
 
 void
@@ -2278,38 +2286,6 @@ spawn(const Arg *arg)
 		if (dpy)
 			close(ConnectionNumber(dpy));
 
-		if (selmon->sel) {
-			const char* const home = getenv("HOME");
-			assert(home && strchr(home, '/'));
-			const size_t homelen = strlen(home);
-			char *cwd, *pathbuf = NULL;
-			struct stat statbuf;
-
-			cwd = strtok(selmon->sel->name, SPAWN_CWD_DELIM);
-			/* NOTE: strtok() alters selmon->sel->name in-place,
-			 * but that does not matter because we are going to
-			 * exec() below anyway; nothing else will use it */
-			while (cwd) {
-				if (*cwd == '~') { /* replace ~ with $HOME */
-					if (!(pathbuf = malloc(homelen + strlen(cwd)))) /* ~ counts for NULL term */
-						die("fatal: could not malloc() %u bytes\n", homelen + strlen(cwd));
-					strcpy(strcpy(pathbuf, home) + homelen, cwd + 1);
-					cwd = pathbuf;
-				}
-
-				if (strchr(cwd, '/') && !stat(cwd, &statbuf)) {
-					if (!S_ISDIR(statbuf.st_mode))
-						cwd = dirname(cwd);
-
-					if (!chdir(cwd))
-						break;
-				}
-
-				cwd = strtok(NULL, SPAWN_CWD_DELIM);
-			}
-
-			free(pathbuf);
-		}
 		setsid();
 		execvp(((char **)arg->v)[0], (char **)arg->v);
 		fprintf(stderr, "dwm: execvp %s", ((char **)arg->v)[0]);

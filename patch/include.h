@@ -33,6 +33,7 @@
 #include "tapresize.h"
 #include "togglefullscreen.h"
 #include "vanitygaps.h"
+#include "warp.h"
 #include "zoomswap.h"
 #include "xrdb.h"
 /* Layouts */
