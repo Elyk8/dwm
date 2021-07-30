@@ -9,7 +9,7 @@ draw_awesomebar(Bar *bar, BarArg *a)
 {
 	int n = 0, scm, remainder = 0, tabw, pad;
 	unsigned int i;
-	int x = a->x, w = a->w;
+	int x = a->x + lrpad / 2, w = a->w - lrpad;
 
 	Client *c;
 	for (c = bar->mon->clients; c; c = c->next)

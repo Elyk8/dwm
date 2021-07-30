@@ -15,6 +15,7 @@
 #include "bar_wintitleactions.h"
 
 /* Other patches */
+#include "attachx.h"
 #include "cool_autostart.h"
 #include "inplacerotate.h"
 #include "killunsel.h"
