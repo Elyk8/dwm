@@ -20,7 +20,7 @@ static const int vertpad                 = 15;  /* vertical padding of bar */
 static const int sidepad                 = 15;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
-static const unsigned int systrayspacing = 1;   /* systray spacing */
+static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
@@ -296,6 +296,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Tab,        shiftview,              { .i = -1 } },
   { MODKEY,                       XK_backslash,  view,                   {0} },
 	{ MODKEY|ShiftMask,             XK_backslash,  shiftview,              { .i = +1 } },
+  { MODKEY,                       XK_apostrophe, togglescratch,          {.ui = 1} },
+  /* { MODKEY|ShiftMask,               XK_apostrophe,         spawn,               SHCMD("") }, */
   { MODKEY,                       XK_q,          killclient,             {0} },
   { MODKEY|ShiftMask,             XK_q,          killunsel,              {0} },
   { MODKEY,                       XK_t,          setlayout,              {.v = &layouts[0]} }, /* tile */
@@ -350,6 +352,8 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
   { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
+  { MODKEY,                       XK_n,          spawn,                  SHCMD("dmenunotes") },
+  { MODKEY|ShiftMask,             XK_n,          spawn,                  SHCMD(TERM " -e newsboat; pkill -RTMIN+11 dwmblocks") },
 
   { MODKEY,                       XK_Left,       focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,             XK_Left,       tagmon,                 {.i = -1 } },
