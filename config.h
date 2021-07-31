@@ -325,7 +325,7 @@ static Key keys[] = {
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
-  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/config.h) dwmblocks") },
+  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/block.h) dwmblocks") },
   { MODKEY|ShiftMask,             XK_e,          spawn,                  SHCMD(TERM " -e abook") },
   { MODKEY,                       XK_r,          spawn,                  SHCMD(TERM " -e lf-run") },
   { MODKEY|ShiftMask,             XK_r,          spawn,                  SHCMD(TERM " -e gotop") },
