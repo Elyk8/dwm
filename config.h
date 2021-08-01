@@ -325,17 +325,17 @@ static Key keys[] = {
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
-  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/blocks.h) dwmblocks") },
+  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; sb-refresh sb-mailbox") },
   { MODKEY|ShiftMask,             XK_e,          spawn,                  SHCMD(TERM " -e abook") },
   { MODKEY,                       XK_r,          spawn,                  SHCMD(TERM " -e lf-run") },
   { MODKEY|ShiftMask,             XK_r,          spawn,                  SHCMD(TERM " -e gotop") },
   { MODKEY,                       XK_v,          spawn,                  SHCMD("start-conky") },
   { MODKEY|ShiftMask,             XK_v,          spawn,                  SHCMD("killall conky") },
   /* Music player */
-  { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3; kill -35 $(pidof dwmblocks)") },
-  { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12; kill -35 $(pidof dwmblocks)") },
-  { MODKEY,                       XK_equal,      spawn,                  SHCMD("mpc volume +3; kill -35 $(pidof dwmblocks)") },
-  { MODKEY|ShiftMask,             XK_equal,      spawn,                  SHCMD("mpc volume +12; kill -35 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3") },
+  { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12") },
+  { MODKEY,                       XK_equal,      spawn,                  SHCMD("mpc volume +3") },
+  { MODKEY|ShiftMask,             XK_equal,      spawn,                  SHCMD("mpc volume +12") },
   { MODKEY,                       XK_p,            spawn,                SHCMD("mpc toggle") },
   { MODKEY|ShiftMask,             XK_p,            spawn,                SHCMD("mpc pause ; pauseallmpv") },
   { MODKEY,                       XK_bracketleft,  spawn,                SHCMD("mpc seek -10") },
@@ -353,7 +353,7 @@ static Key keys[] = {
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
   { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
   { MODKEY,                       XK_n,          spawn,                  SHCMD("dmenunotes") },
-  { MODKEY|ShiftMask,             XK_n,          spawn,                  SHCMD(TERM " -e newsboat; pkill -RTMIN+11 dwmblocks") },
+  { MODKEY|ShiftMask,             XK_n,          spawn,                  SHCMD(TERM " -e newsboat; sb-refresh sb-news") },
 
   { MODKEY,                       XK_Left,       focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,             XK_Left,       tagmon,                 {.i = -1 } },
@@ -366,12 +366,12 @@ static Key keys[] = {
   { MODKEY,                       XK_F1,         spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") },
   { MODKEY,                       XK_F2,         spawn,                  SHCMD("dmenuunicode") },
   { MODKEY,                       XK_F3,         spawn,                  SHCMD("bookmarker") },
-  { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; kill -40 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; sb-refresh sb-volume") },
   /* { MODKEY,                       XK_F5,        xrdb,                {.v = NULL } }, */
   /* { MODKEY,                       XK_F6,        spawn,                  SHCMD("") }, */
   { MODKEY,                       XK_F7,         spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
   { MODKEY|ShiftMask,             XK_F7,         spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
-  { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && kill -38 $(pidof dwmblocks)") },
+  { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && sb-refresh sb-mailbox") },
   { MODKEY,                       XK_F9,         spawn,                  SHCMD("dmenumount") },
   { MODKEY,                       XK_F10,        spawn,                  SHCMD("dmenuumount") },
   { MODKEY,                       XK_F11,        spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --untimed --vf=hflip --no-keepaspect-window --panscan=1 --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
@@ -380,9 +380,9 @@ static Key keys[] = {
   { 0,                            XK_Print,      spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
   { ShiftMask,                    XK_Print,      spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
 
-  { 0, XF86XK_AudioMute,          spawn,         SHCMD("pamixer -t; kill -40 $(pidof dwmblocks)") },
-  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; kill -40 $(pidof dwmblocks)") },
-  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; kill -40 $(pidof dwmblocks)") },
+  { 0, XF86XK_AudioMute,          spawn,         SHCMD("pamixer -t; sb-refresh sb-volume") },
+  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; sb-refresh sb-volume") },
+  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; sb-refresh sb-volume") },
   { 0, XF86XK_AudioPrev,          spawn,         SHCMD("mpc prev") },
   { 0, XF86XK_AudioNext,          spawn,         SHCMD("mpc next") },
   { 0, XF86XK_AudioPause,         spawn,         SHCMD("mpc pause") },
@@ -399,15 +399,15 @@ static Key keys[] = {
   { 0, XF86XK_DOS,                spawn,         SHCMD(TERM) },
   { 0, XF86XK_ScreenSaver,        spawn,         SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
   { 0, XF86XK_TaskPane,           spawn,         SHCMD(TERM " -e gotop") },
-  { 0, XF86XK_Mail,               spawn,         SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/block.h) dwmblocks") },
+  { 0, XF86XK_Mail,               spawn,         SHCMD(TERM " -e neomutt ; sb-refresh sb-mailbox") },
   { 0, XF86XK_MyComputer,         spawn,         SHCMD(TERM " -e lf-run") },
   /* { 0, XF86XK_Battery,           spawn,         SHCMD("") }, */
   { 0, XF86XK_Launch1,            spawn,         SHCMD("xset dpms force off") },
   { 0, XF86XK_TouchpadToggle,     spawn,         SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
   { 0, XF86XK_TouchpadOff,        spawn,         SHCMD("synclient TouchpadOff=1") },
   { 0, XF86XK_TouchpadOn,         spawn,         SHCMD("synclient TouchpadOff=0") },
-  { 0, XF86XK_MonBrightnessUp,    spawn,         SHCMD("xbacklight -inc 2 ; kill -42 $(pidof dwmblocks)") },
-  { 0, XF86XK_MonBrightnessDown,  spawn,         SHCMD("xbacklight -dec 2 ; kill -42 $(pidof dwmblocks)") },
+  { 0, XF86XK_MonBrightnessUp,    spawn,         SHCMD("xbacklight -inc 2 ; sb-refresh sb-brightness") },
+  { 0, XF86XK_MonBrightnessDown,  spawn,         SHCMD("xbacklight -dec 2 ; sb-refresh sb-brightness") },
 };
 
 
