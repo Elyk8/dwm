@@ -28,7 +28,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-  "monospace:bold:italic:size=10:antialias=true:autohint=true", 
+  "monospace:italic:size=10:antialias=true:autohint=true", 
   "Twemoji:size=9:antialias=true:autohint=true"
 };
 
@@ -177,6 +177,7 @@ static const Rule rules[] = {
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "discord", .tags = 1 << 7)
 	RULE(.class = "Firefox", .tags = 1 << 8)
+	RULE(.class = "qBittorrent", .tags = 1 << 5)
 	RULE(.class = "Zathura", .noswallow = 1)
 	RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 4, .noswallow = 1)
 	RULE(.class = "MATLAB R2021a", .tags = 1 << 4, .noswallow = 1)
@@ -205,11 +206,11 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
+	{ -1,       1,     BAR_ALIGN_CENTER,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 	{  0,       0,     BAR_ALIGN_LEFT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_tags,              draw_tags,              click_tags,              "tags" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{  0,       0,     BAR_ALIGN_RIGHT,   width_status,            draw_status,            click_statuscmd,         "status" },
-	{ -1,       0,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 };
 
 /* layout(s) */
