@@ -12,7 +12,7 @@ static const unsigned int gappih         = 10;  /* horiz inner gap between windo
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int bar_height              = 30;   /* 0 means derive from font, >= 1 explicit height */
@@ -28,7 +28,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-  "monospace:italic:size=10:antialias=true:autohint=true", 
+  "Iosevka Nerd Font:bold:italic:size=10:antialias=true:autohint=true", 
   "Twemoji:size=9:antialias=true:autohint=true"
 };
 
@@ -206,11 +206,11 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment         widthfunc                drawfunc                clickfunc                name */
-	{ -1,       1,     BAR_ALIGN_CENTER,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 	{  0,       0,     BAR_ALIGN_LEFT,  width_systray,           draw_systray,           click_systray,           "systray" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_tags,              draw_tags,              click_tags,              "tags" },
 	{ -1,       0,     BAR_ALIGN_LEFT,   width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{  0,       0,     BAR_ALIGN_RIGHT,   width_status,            draw_status,            click_statuscmd,         "status" },
+	{ -1,       1,     BAR_ALIGN_NONE,   width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 };
 
 /* layout(s) */
@@ -290,7 +290,6 @@ static Key keys[] = {
   { MODKEY,                       XK_z,          incrgaps,               {.i = +3 } },
 	{ MODKEY|ShiftMask,             XK_z,          showhideclient,         {0} },
   { MODKEY,                       XK_x,          incrgaps,               {.i = -3 } },
-	{ MODKEY|ShiftMask,             XK_u,          incrgaps,               {.i = -1 } },
 	{ MODKEY,                       XK_a,          togglegaps,             {0} },
 	{ MODKEY|ShiftMask,             XK_a,          defaultgaps,            {0} },
   { MODKEY,                       XK_Tab,        spawn,                  SHCMD("skippy-xd") },

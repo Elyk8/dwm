@@ -1793,6 +1793,33 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
+	if (((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
+		#if MONOCLE_LAYOUT
+		|| &monocle == c->mon->lt[c->mon->sellt]->arrange
+		#endif // MONOCLE_LAYOUT
+		#if DECK_LAYOUT
+		|| (&deck == c->mon->lt[c->mon->sellt]->arrange &&
+			c->mon->nmaster == 0)
+		#endif // DECK_LAYOUT
+		#if FLEXTILE_DELUXE_LAYOUT
+		|| (&flextile == c->mon->lt[c->mon->sellt]->arrange && (
+			(c->mon->ltaxis[LAYOUT] == NO_SPLIT &&
+			 c->mon->ltaxis[MASTER] == MONOCLE) ||
+			(c->mon->ltaxis[STACK] == MONOCLE &&
+			 c->mon->nmaster == 0)))
+		#endif //FLEXTILE_DELUXE_LAYOUT
+		)
+		#if FAKEFULLSCREEN_CLIENT_PATCH && !FAKEFULLSCREEN_PATCH
+		&& (c->fakefullscreen == 1 || !c->isfullscreen)
+		#else
+		&& !c->isfullscreen
+		#endif // FAKEFULLSCREEN_CLIENT_PATCH
+		&& !c->isfloating
+		&& c->mon->lt[c->mon->sellt]->arrange) {
+		wc.width += c->bw * 2;
+		wc.height += c->bw * 2;
+		wc.border_width = 0;
+	}
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
 	XSync(dpy, False);
