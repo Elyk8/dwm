@@ -16,8 +16,8 @@ static const int smartgaps_fact          = 1;   /* gap factor when there is only
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int bar_height              = 30;   /* 0 means derive from font, >= 1 explicit height */
-static const int vertpad                 = 15;  /* vertical padding of bar */
-static const int sidepad                 = 15;  /* horizontal padding of bar */
+static const int vertpad                 = 0;  /* vertical padding of bar */
+static const int sidepad                 = 0;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
 static const unsigned int systrayspacing = 3;   /* systray spacing */
@@ -28,7 +28,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-  "monospace:size=10:antialias=true:autohint=true", 
+  "monospace:bold:italic:size=10:antialias=true:autohint=true", 
   "Twemoji:size=9:antialias=true:autohint=true"
 };
 
@@ -275,8 +275,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_h,          inplacerotate,          {.i = -1} },
 	{ MODKEY,                       XK_Return,     spawn,                  {.v = termcmd } },
   { MODKEY|ShiftMask,             XK_Return,     togglescratch,          {.ui = 0} },
-  { MODKEY,                       XK_BackSpace,  spawn,                  SHCMD("sysact") },
-  { MODKEY|ShiftMask,             XK_BackSpace,  spawn,                  SHCMD("sysact") },
+  { MODKEY,                       XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
+  { MODKEY|ShiftMask,             XK_BackSpace,  spawn,                  SHCMD("rofipowermenu") },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
   { MODKEY,                       XK_o,          incnmaster,             {.i = +1 } },
   { MODKEY|ShiftMask,             XK_o,          incnmaster,             {.i = -1 } },
@@ -325,7 +325,7 @@ static Key keys[] = {
   /* Applications shortcuts */
   { MODKEY,                       XK_w,          spawn,                  SHCMD("bookmarksurf") },
   { MODKEY|ShiftMask,             XK_w,          spawn,                  SHCMD("$BROWSER") },
-  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/block.h) dwmblocks") },
+  { MODKEY,                       XK_e,          spawn,                  SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/blocks.h) dwmblocks") },
   { MODKEY|ShiftMask,             XK_e,          spawn,                  SHCMD(TERM " -e abook") },
   { MODKEY,                       XK_r,          spawn,                  SHCMD(TERM " -e lf-run") },
   { MODKEY|ShiftMask,             XK_r,          spawn,                  SHCMD(TERM " -e gotop") },
@@ -348,7 +348,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_period,     spawn,                  SHCMD("mpc repeat") },
   { MODKEY,                       XK_c,          spawn,                  SHCMD("rofigreenclip") },
   //{ MODKEY|ShiftMask,             XK_c,          spawn,                  SHCMD("") },
-  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu -c -X 15 -Y 15 -W 1884 -l 0\"") },
+  { MODKEY,                       XK_d,          spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu\"") },
   { MODKEY|ShiftMask,             XK_d,          spawn,                  SHCMD("rofi-pass") },
   { MODKEY,                       XK_m,          togglescratch,          {.ui = 2} },
   { MODKEY|ShiftMask,             XK_m,          spawn,                  SHCMD("mic-toggle") },
@@ -392,14 +392,14 @@ static Key keys[] = {
   { 0, XF86XK_AudioForward,       spawn,         SHCMD("mpc seek +10") },
   { 0, XF86XK_AudioMedia,         spawn,         SHCMD(TERM " -e ncmpcpp") },
   { 0, XF86XK_AudioMicMute,       spawn,         SHCMD("mic-toggle") },
-  { 0, XF86XK_PowerOff,           spawn,         SHCMD("sysact") },
+  { 0, XF86XK_PowerOff,           spawn,         SHCMD("rofipowermenu") },
   { 0, XF86XK_Calculator,         spawn,         SHCMD(TERM " -e bc -l") },
   { 0, XF86XK_Sleep,              spawn,         SHCMD("sudo -A zzz") },
   { 0, XF86XK_WWW,                spawn,         SHCMD("$BROWSER") },
   { 0, XF86XK_DOS,                spawn,         SHCMD(TERM) },
   { 0, XF86XK_ScreenSaver,        spawn,         SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
   { 0, XF86XK_TaskPane,           spawn,         SHCMD(TERM " -e gotop") },
-  { 0, XF86XK_Mail,               spawn,         SHCMD(TERM " -e neomutt ; pkill -RTMIN+12 dwmblocks") },
+  { 0, XF86XK_Mail,               spawn,         SHCMD(TERM " -e neomutt ; pkill -RTMIN+$(awk '/sb-mailbox/ {print $4}' ~/.local/src/dwmblocks/block.h) dwmblocks") },
   { 0, XF86XK_MyComputer,         spawn,         SHCMD(TERM " -e lf-run") },
   /* { 0, XF86XK_Battery,           spawn,         SHCMD("") }, */
   { 0, XF86XK_Launch1,            spawn,         SHCMD("xset dpms force off") },

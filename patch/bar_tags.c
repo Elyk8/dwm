@@ -56,7 +56,7 @@ draw_tags(Bar *bar, BarArg *a)
 int
 click_tags(Bar *bar, Arg *arg, BarArg *a)
 {
-	int i = 0, x = 0;
+	int i = 0, x = 0;   // x = lrpad / 2 is bugged for clicking
 	Client *c;
 	unsigned int occ = 0;
 	for (c = bar->mon->clients; c; c = c->next)
