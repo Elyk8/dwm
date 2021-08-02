@@ -69,6 +69,20 @@ static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
 
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
+static const unsigned int alphas[][3] = {
+	/*                       fg      bg        border     */
+	[SchemeNorm]         = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsSel]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
+	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
+};
 
 static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
@@ -253,6 +267,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_p,          spawn,                  {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return,     spawn,                  {.v = termcmd } },
 	{ MODKEY,                       XK_b,          togglebar,              {0} },
+	{ MODKEY|ControlMask,           XK_space,      focusmaster,            {0} },
 	{ MODKEY,                       XK_j,          focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,             {.i = -1 } },
 	{ MODKEY|Mod4Mask,              XK_j,          inplacerotate,          {.i = +2 } }, // same as rotatestack
