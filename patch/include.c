@@ -19,6 +19,7 @@
 #include "cfacts.c"
 #include "cool_autostart.c"
 #include "dragcfact.c"
+#include "focusmaster.c"
 #include "inplacerotate.c"
 #include "killunsel.c"
 #include "pertag.c"

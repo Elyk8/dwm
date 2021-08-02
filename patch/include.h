@@ -20,6 +20,7 @@
 #include "cool_autostart.h"
 #include "dragcfact.h"
 #include "dragmfact.h"
+#include "focusmaster.h"
 #include "inplacerotate.h"
 #include "killunsel.h"
 #include "pertag.h"

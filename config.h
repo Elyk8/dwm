@@ -329,8 +329,8 @@ static Key keys[] = {
   { MODKEY|ShiftMask,             XK_e,          spawn,                  SHCMD(TERM " -e abook") },
   { MODKEY,                       XK_r,          spawn,                  SHCMD(TERM " -e lf-run") },
   { MODKEY|ShiftMask,             XK_r,          spawn,                  SHCMD(TERM " -e gotop") },
-  { MODKEY,                       XK_v,          spawn,                  SHCMD("start-conky") },
-  { MODKEY|ShiftMask,             XK_v,          spawn,                  SHCMD("killall conky") },
+  { MODKEY,                       XK_v,          focusmaster,            {0} },
+  /* { MODKEY|ShiftMask,             XK_v,          spawn,                  SHCMD("") }, */
   /* Music player */
   { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3") },
   { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12") },
