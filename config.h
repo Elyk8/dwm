@@ -28,7 +28,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-  "Iosevka Nerd Font:heavy:italic:size=10:antialias=true:autohint=true", 
+  "JetBrains Mono Nerd Font:heavy:italic:size=10:antialias=true:autohint=true", 
   "Twemoji:size=9:antialias=true:autohint=true"
 };
 
