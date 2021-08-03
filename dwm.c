@@ -2775,6 +2775,7 @@ view(const Arg *arg)
 {
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 	{
+		view(&((Arg) { .ui = 0 }));
 		return;
 	}
 	selmon->seltags ^= 1; /* toggle sel tagset */

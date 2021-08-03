@@ -19,6 +19,7 @@
 #include "attachx.c"
 #include "cfacts.c"
 #include "cool_autostart.c"
+#include "cyclelayouts.c"
 #include "dragcfact.c"
 #include "focusmaster.c"
 #include "inplacerotate.c"
