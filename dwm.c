@@ -1412,7 +1412,8 @@ incnmaster(const Arg *arg)
     if (selmon->nmaster >= nmaxmaster)
         selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = 1;
     else 
-    	selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+        selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+
 	arrange(selmon);
 }
 
