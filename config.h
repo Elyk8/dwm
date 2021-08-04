@@ -396,8 +396,8 @@ static Key keys[] = {
   { ShiftMask,                    XK_Print,      spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
 
   { 0, XF86XK_AudioMute,          spawn,         SHCMD("pamixer -t; sb-refresh sb-volume") },
-  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; sb-refresh sb-volume") },
-  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; sb-refresh sb-volume") },
+  { 0, XF86XK_AudioRaiseVolume,   spawn,         SHCMD("pamixer --allow-boost -i 3; sb-refresh sb-volume; setsid -f canberra-gtk-play -i audio-volume-change") },
+  { 0, XF86XK_AudioLowerVolume,   spawn,         SHCMD("pamixer --allow-boost -d 3; sb-refresh sb-volume; setsid -f canberra-gtk-play -i audio-volume-change") },
   { 0, XF86XK_AudioPrev,          spawn,         SHCMD("mpc prev") },
   { 0, XF86XK_AudioNext,          spawn,         SHCMD("mpc next") },
   { 0, XF86XK_AudioPause,         spawn,         SHCMD("mpc pause") },
