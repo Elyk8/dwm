@@ -108,6 +108,7 @@ static char *colors[][ColCount] = {
 static const char *const autostart[] = {
 	"st", NULL,
 	"dwmblocks", NULL,
+	"xrandr", "-s", "1920x1080", NULL,
 	NULL /* terminate */
 };
 

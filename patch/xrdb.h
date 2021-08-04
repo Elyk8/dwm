@@ -17,6 +17,5 @@
                                 }
 
 static void loadxrdb(void);
-static void xrdb(const Arg *arg);
 
 

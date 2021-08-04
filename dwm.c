@@ -1409,11 +1409,12 @@ grabkeys(void)
 void
 incnmaster(const Arg *arg)
 {
-    if (selmon->nmaster >= nmaxmaster)
+    if (selmon->nmaster >= nmaxmaster) {
         selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = 1;
-    else 
-        selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
 
+    } else {
+        selmon->nmaster = selmon->pertag->nmasters[selmon->pertag->curtag] = MAX(selmon->nmaster + arg->i, 0);
+    }
 	arrange(selmon);
 }
 
@@ -1450,7 +1451,7 @@ keypress(XEvent *e)
 void
 killclient(const Arg *arg)
 {
-	if (!selmon->sel)
+	if (!selmon->sel || selmon->sel->issticky)
 		return;
 	if (!sendevent(selmon->sel->win, wmatom[WMDelete], NoEventMask, wmatom[WMDelete], CurrentTime, 0, 0, 0))
 	{
