@@ -383,8 +383,8 @@ static Key keys[] = {
   { MODKEY,                       XK_F2,         spawn,                  SHCMD("dmenuunicode") },
   { MODKEY,                       XK_F3,         spawn,                  SHCMD("bookmarker") },
   { MODKEY,                       XK_F4,         spawn,                  SHCMD("pavucontrol; sb-refresh sb-volume") },
-  /* { MODKEY,                       XK_F5,        xrdb,                {.v = NULL } }, */
-  /* { MODKEY,                       XK_F6,        spawn,                  SHCMD("") }, */
+  { MODKEY,                       XK_F5,         spawn,                  SHCMD("start-conky") },
+  { MODKEY,                       XK_F6,         spawn,                  SHCMD("killall conky") },
   { MODKEY,                       XK_F7,         spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") },
   { MODKEY|ShiftMask,             XK_F7,         spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") },
   { MODKEY,                       XK_F8,         spawn,                  SHCMD("mw -Y && sb-refresh sb-mailbox") },
