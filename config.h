@@ -26,6 +26,8 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
+static int fakefsindicatortype           = INDICATOR_PLUS;
+static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
   "JetBrains Mono Nerd Font:heavy:italic:size=10:antialias=true:autohint=true", 
@@ -325,7 +327,7 @@ static Key keys[] = {
   { MODKEY,                       XK_i,          setlayout,              {.v = &layouts[6]} }, /* centeredmaster */
   { MODKEY|ShiftMask,             XK_i,          setlayout,              {.v = &layouts[7]} }, /* centeredfloatingmaster */
   { MODKEY,                       XK_f,          togglefullscreen,       {0} },
-  { MODKEY|ShiftMask,             XK_f,          setlayout,              {.v = &layouts[8]} },
+	{ MODKEY|ShiftMask,             XK_f,          togglefakefullscreen,   {0} },
 	{ MODKEY,                       XK_s,          togglesticky,           {0} },
 	TAGKEYS(                        XK_1,                                  0)
 	TAGKEYS(                        XK_2,                                  1)
@@ -346,7 +348,7 @@ static Key keys[] = {
   { MODKEY,                       XK_r,          spawn,                  SHCMD(TERM " -e lf-run") },
   { MODKEY|ShiftMask,             XK_r,          spawn,                  SHCMD(TERM " -e gotop") },
   { MODKEY,                       XK_v,          focusmaster,            {0} },
-  /* { MODKEY|ShiftMask,             XK_v,          spawn,                  SHCMD("") }, */
+  { MODKEY|ShiftMask,             XK_v,          setlayout,              {.v = &layouts[8]} },
   /* Music player */
   { MODKEY,                       XK_minus,      spawn,                  SHCMD("mpc volume -3") },
   { MODKEY|ShiftMask,             XK_minus,      spawn,                  SHCMD("mpc volume -12") },

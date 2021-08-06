@@ -21,6 +21,7 @@
 #include "cool_autostart.c"
 #include "cyclelayouts.c"
 #include "dragcfact.c"
+#include "fakefullscreenclient.c"
 #include "focusmaster.c"
 #include "inplacerotate.c"
 #include "killunsel.c"

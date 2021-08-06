@@ -22,6 +22,7 @@
 #include "cyclelayouts.h"
 #include "dragcfact.h"
 #include "dragmfact.h"
+#include "fakefullscreenclient.h"
 #include "focusmaster.h"
 #include "inplacerotate.h"
 #include "killunsel.h"
