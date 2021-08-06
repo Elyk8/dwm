@@ -270,6 +270,7 @@ typedef struct {
 	const char *wintype;
 	unsigned int tags;
 	int iscentered;
+	int isfakefullscreen;
 	int isfloating;
 	int isterminal;
 	int noswallow;
@@ -282,7 +283,7 @@ typedef struct {
 #define FLOATING , .isfloating = 1
 #define CENTERED , .iscentered = 1
 #define PERMANENT
-#define FAKEFULLSCREEN
+#define FAKEFULLSCREEN , .isfakefullscreen = 1
 #define NOSWALLOW , .noswallow = 1
 #define TERMINAL , .isterminal = 1
 #define SWITCHTAG
@@ -467,6 +468,7 @@ applyrules(Client *c)
 		&& (!r->wintype || wintype == XInternAtom(dpy, r->wintype, False)))
 		{
 			c->iscentered = r->iscentered;
+			c->fakefullscreen = r->isfakefullscreen;
 			c->isterminal = r->isterminal;
 			c->noswallow = r->noswallow;
 			c->isfloating = r->isfloating;
