@@ -310,7 +310,7 @@ static Key keys[] = {
   { MODKEY,                       XK_x,          incrgaps,               {.i = -3 } },
 	{ MODKEY,                       XK_a,          togglegaps,             {0} },
 	{ MODKEY|ShiftMask,             XK_a,          defaultgaps,            {0} },
-  { MODKEY,                       XK_Tab,        spawn,                  SHCMD("skippy-xd") },
+  { MODKEY,                       XK_Tab,        view,                   {0} },
 	{ MODKEY|ShiftMask,             XK_Tab,        shiftview,              { .i = -1 } },
   { MODKEY,                       XK_backslash,  view,                   {0} },
 	{ MODKEY|ShiftMask,             XK_backslash,  shiftview,              { .i = +1 } },
