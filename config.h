@@ -286,12 +286,16 @@ static const char *termcmd[]  = { "st", NULL };
 #include <X11/XF86keysym.h>
 static Key keys[] = {
 	/* modifier                     key             function                argument */
+	{ MODKEY,                       XK_Left,        focusdir,               {.i = 0 } }, // left
+	{ MODKEY,                       XK_Right,       focusdir,               {.i = 1 } }, // right
+	{ MODKEY,                       XK_Up,          focusdir,               {.i = 2 } }, // up
+	{ MODKEY,                       XK_Down,        focusdir,               {.i = 3 } }, // down
 	{ MODKEY,                       XK_j,           focusstack,             {.i = +1 } },
 	{ MODKEY,                       XK_k,           focusstack,             {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_j,           inplacerotate,          {.i = +2 } }, // same as rotatestack
-	{ MODKEY|ShiftMask,             XK_k,           inplacerotate,          {.i = -2 } }, // same as reotatestack
-	{ MODKEY|ShiftMask,             XK_l,           inplacerotate,          {.i = +1} },
-	{ MODKEY|ShiftMask,             XK_h,           inplacerotate,          {.i = -1} },
+	{ MODKEY|ControlMask,           XK_j,           inplacerotate,          {.i = +2 } }, // same as rotatestack
+	{ MODKEY|ControlMask,           XK_k,           inplacerotate,          {.i = -2 } }, // same as reotatestack
+	{ MODKEY|ControlMask,           XK_l,           inplacerotate,          {.i = +1} },
+	{ MODKEY|ControlMask,           XK_h,           inplacerotate,          {.i = -1} },
 	{ MODKEY,                       XK_Return,      spawn,                  {.v = termcmd } },
   { MODKEY|ShiftMask,             XK_Return,      togglescratch,          {.ui = 0} },
   { MODKEY,                       XK_BackSpace,   spawn,                  SHCMD("rofipowermenu") },
@@ -299,10 +303,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,           togglebar,              {0} },
   { MODKEY,                       XK_o,           incnmaster,             {.i = +1 } },
   { MODKEY|ShiftMask,             XK_o,           incnmaster,             {.i = -1 } },
-	{ MODKEY,                       XK_h,           setmfact,               {.f = -0.05} },
-	{ MODKEY,                       XK_l,           setmfact,               {.f = +0.05} },
-	{ MODKEY|ControlMask,           XK_k,           setcfact,               {.f = +0.25} },
-	{ MODKEY|ControlMask,           XK_j,           setcfact,               {.f = -0.25} },
+	{ MODKEY|ShiftMask,             XK_h,           setmfact,               {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_l,           setmfact,               {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_k,           setcfact,               {.f = +0.25} },
+	{ MODKEY|ShiftMask,             XK_j,           setcfact,               {.f = -0.25} },
   { MODKEY,                       XK_space,       zoom,                   {0} },
   { MODKEY|ShiftMask,             XK_space,       togglefloating,         {0} },
   { MODKEY,                       XK_z,           incrgaps,               {.i = +3 } },

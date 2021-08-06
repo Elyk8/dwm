@@ -22,6 +22,7 @@
 #include "cyclelayouts.c"
 #include "dragcfact.c"
 #include "fakefullscreenclient.c"
+#include "focusdir.c"
 #include "focusmaster.c"
 #include "inplacerotate.c"
 #include "killunsel.c"
