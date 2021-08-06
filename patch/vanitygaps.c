@@ -19,6 +19,52 @@ setgaps(int oh, int ov, int ih, int iv)
 	arrange(selmon);
 }
 
+/* External function that takes one integer and splits it
+ * into four gap values:
+ *    - outer horizontal (oh)
+ *    - outer vertical (ov)
+ *    - inner horizontal (ih)
+ *    - inner vertical (iv)
+ *
+ * Each value is represented as one byte with the uppermost
+ * bit of each byte indicating whether or not to keep the
+ * current value.
+ *
+ * Example:
+ *
+ *   10000000   10000000   00001111   00001111
+ *   |          |          |          |
+ *   + keep oh  + keep ov  + ih 15px  + iv 15px
+ *
+ * This gives an int of:
+ *   10000000100000000000111100001111 = 2155876111
+ *
+ * Thus this command should set inner gaps to 15:
+ *   xsetroot -name "fsignal:setgaps i 2155876111"
+ */
+static void
+setgapsex(const Arg *arg)
+{
+	int oh = selmon->gappoh;
+	int ov = selmon->gappov;
+	int ih = selmon->gappih;
+	int iv = selmon->gappiv;
+
+	if (!(arg->i & (1 << 31)))
+		oh = (arg->i & 0x7f000000) >> 24;
+	if (!(arg->i & (1 << 23)))
+		ov = (arg->i & 0x7f0000) >> 16;
+	if (!(arg->i & (1 << 15)))
+		ih = (arg->i & 0x7f00) >> 8;
+	if (!(arg->i & (1 << 7)))
+		iv = (arg->i & 0x7f);
+
+	/* Auto enable gaps if disabled */
+	if (!selmon->pertag->enablegaps[selmon->pertag->curtag])
+		selmon->pertag->enablegaps[selmon->pertag->curtag] = 1;
+
+	setgaps(oh, ov, ih, iv);
+}
 
 static void
 togglegaps(const Arg *arg)
@@ -44,71 +90,71 @@ incrgaps(const Arg *arg)
 	);
 }
 
-/* static void */
-/* incrigaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh, */
-/* 		selmon->gappov, */
-/* 		selmon->gappih + arg->i, */
-/* 		selmon->gappiv + arg->i */
-/* 	); */
-/* } */
-/*  */
-/* static void */
-/* incrogaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh + arg->i, */
-/* 		selmon->gappov + arg->i, */
-/* 		selmon->gappih, */
-/* 		selmon->gappiv */
-/* 	); */
-/* } */
-/*  */
-/* static void */
-/* incrohgaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh + arg->i, */
-/* 		selmon->gappov, */
-/* 		selmon->gappih, */
-/* 		selmon->gappiv */
-/* 	); */
-/* } */
-/*  */
-/* static void */
-/* incrovgaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh, */
-/* 		selmon->gappov + arg->i, */
-/* 		selmon->gappih, */
-/* 		selmon->gappiv */
-/* 	); */
-/* } */
-/*  */
-/* static void */
-/* incrihgaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh, */
-/* 		selmon->gappov, */
-/* 		selmon->gappih + arg->i, */
-/* 		selmon->gappiv */
-/* 	); */
-/* } */
-/*  */
-/* static void */
-/* incrivgaps(const Arg *arg) */
-/* { */
-/* 	setgaps( */
-/* 		selmon->gappoh, */
-/* 		selmon->gappov, */
-/* 		selmon->gappih, */
-/* 		selmon->gappiv + arg->i */
-/* 	); */
-/* } */
+static void
+incrigaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh,
+		selmon->gappov,
+		selmon->gappih + arg->i,
+		selmon->gappiv + arg->i
+	);
+}
+
+static void
+incrogaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh + arg->i,
+		selmon->gappov + arg->i,
+		selmon->gappih,
+		selmon->gappiv
+	);
+}
+
+static void
+incrohgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh + arg->i,
+		selmon->gappov,
+		selmon->gappih,
+		selmon->gappiv
+	);
+}
+
+static void
+incrovgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh,
+		selmon->gappov + arg->i,
+		selmon->gappih,
+		selmon->gappiv
+	);
+}
+
+static void
+incrihgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh,
+		selmon->gappov,
+		selmon->gappih + arg->i,
+		selmon->gappiv
+	);
+}
+
+static void
+incrivgaps(const Arg *arg)
+{
+	setgaps(
+		selmon->gappoh,
+		selmon->gappov,
+		selmon->gappih,
+		selmon->gappiv + arg->i
+	);
+}
 
 static void
 getgaps(Monitor *m, int *oh, int *ov, int *ih, int *iv, unsigned int *nc)

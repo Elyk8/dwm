@@ -57,3 +57,17 @@ loadxrdb()
 	XCloseDisplay(display);
 }
 
+void
+xrdb(const Arg *arg)
+{
+	loadxrdb();
+	int i;
+	for (i = 0; i < LENGTH(colors); i++)
+		scheme[i] = drw_scm_create(drw, colors[i],
+		alphas[i],
+		ColCount
+		);
+	focus(NULL);
+	arrange(NULL);
+}
+
