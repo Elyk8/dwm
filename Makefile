@@ -54,7 +54,7 @@ install: all
 ifdef YAJLLIBS
 	cp -f dwm-msg ${DESTDIR}${PREFIX}/bin
 endif
-	#cp -f patch/dwmc ${DESTDIR}${PREFIX}/bin
+	cp -f patch/dwmc ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
 ifdef YAJLLIBS
 	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm-msg
@@ -65,6 +65,8 @@ endif
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
+		${DESTDIR}${PREFIX}/bin/dwmc\
+		${DESTDIR}${PREFIX}/bin/dwm-msg\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 .PHONY: all options clean dist install uninstall

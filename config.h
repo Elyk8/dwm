@@ -194,7 +194,7 @@ static const Rule rules[] = {
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 8)
 	RULE(.class = "Virt-manager", .tags = 1 << 8, .isfakefullscreen = 1)
-	RULE(.class = "discord", .tags = 1 << 7)
+	RULE(.class = "discord", .tags = 1 << 7, .isfakefullscreen = 1)
 	RULE(.class = "qBittorrent", .tags = 1 << 5)
 	RULE(.class = "Zathura", .noswallow = 1)
 	RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 4, .noswallow = 1)
