@@ -118,14 +118,12 @@ static const char *const autostart[] = {
 const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=12", "-g", "50x20", "-e", "bc", "-lq", NULL};
 const char *spcmd3[] = {TERM, "-n", "spmusic", "-g", "100x25", "-e", "ncmpcpp", " ", NULL};
-const char *spcmd4[] = {TERM, "-n", "spbinds", "-g", "120x30", "-e", "dwmbindings", " ", NULL};
 
 static Sp scratchpads[] = {
   /* name          cmd  */
   {"spterm",      spcmd1},
   {"spcalc",      spcmd2},
   {"spmusic",     spcmd3},
-  {"spbinds",     spcmd4},
 };
 
 /* Tags
@@ -208,7 +206,7 @@ static const Rule rules[] = {
   RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
   RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
   RULE(.instance = "spmusic", .tags = SPTAG(2), .isfloating = 1)
-  RULE(.instance = "spbinds", .tags = SPTAG(3), .isfloating = 1)
+  RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
 };
 
 
@@ -390,7 +388,7 @@ static Key keys[] = {
   { MODKEY|ShiftMask,           XK_m,             spawn,                  SHCMD("mic-toggle") }, // Microphone mute/unmute toggle
   { MODKEY,                     XK_n,             spawn,                  SHCMD("dmenunotes") }, // Markdown notes manager with dmenu
   { MODKEY|ShiftMask,           XK_n,             spawn,                  SHCMD(TERM " -e newsboat; sb-refresh sb-news") }, // RSS newsfeed
-  { MODKEY,                     XK_F1,            togglescratch,          {.ui = 3} }, // Display all keybindings used in dwm
+  { MODKEY,                     XK_F1,            spawn,                  SHCMD("dmenucheatsheet") }, // Display cheatsheets
   { MODKEY,                     XK_F2,            spawn,                  SHCMD("dmenuunicode") }, // dmenu emoji keyboard
   { MODKEY,                     XK_F3,            spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") }, // Set random wallpaper
   { MODKEY,                     XK_F4,            spawn,                  SHCMD("pavucontrol; sb-refresh sb-volume") }, // Volume mixer
@@ -401,7 +399,7 @@ static Key keys[] = {
   { MODKEY,                     XK_F8,            spawn,                  SHCMD("mw -Y && sb-refresh sb-mailbox") }, // Refresh mutt wizard email
   { MODKEY,                     XK_F9,            spawn,                  SHCMD("dmenumount") }, // Mount devices, including USB drives using dmenu
   { MODKEY,                     XK_F10,           spawn,                  SHCMD("dmenuumount") }, // Unmount devices, including USB drives using dmenu
-  // Display_webcam_using_mpv
+  //Display_webcam_using_mpv
   { MODKEY,                     XK_F11,           spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --untimed --vf=hflip --no-keepaspect-window --panscan=1 --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
   { MODKEY,                     XK_F12,           spawn,                  SHCMD("remaps && notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
 
