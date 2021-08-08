@@ -326,6 +326,11 @@ static Key keys[] = {
   { MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // Focus client to the up
   { MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // Focus client to the down
 
+  { MODKEY,                     XK_Left,          focusmon,               {.i = -1 } }, // Change focus to previous monitor
+  { MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } }, // Move tag to previous monitor
+  { MODKEY,                     XK_Right,         focusmon,               {.i = +1 } }, // Change focus to next monitor
+  { MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } }, // Move tag to next monitor
+
   { MODKEY|ControlMask,         XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
   { MODKEY|ControlMask,         XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
@@ -369,15 +374,8 @@ static Key keys[] = {
 
   { MODKEY,                     XK_i,             setlayout,              {.v = &layouts[6]} }, // Switch to centeredmaster layout
   { MODKEY|ShiftMask,           XK_i,             setlayout,              {.v = &layouts[7]} }, // Switch to centeredfloatingmaster layout
+
   { MODKEY|ShiftMask,           XK_v,             setlayout,              {.v = &layouts[8]} }, // Switch to floating mode
-
-  { MODKEY,                     XK_Left,          focusmon,               {.i = -1 } },
-  { MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } },
-  { MODKEY,                     XK_Right,         focusmon,               {.i = +1 } },
-  { MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } },
-
-  { MODKEY,                     XK_Page_Up,       shiftview,              { .i = -1 } },
-  { MODKEY,                     XK_Page_Down,     shiftview,              { .i = +1 } },
 };
 
 
