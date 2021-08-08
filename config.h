@@ -287,12 +287,13 @@ static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
+  /* modifier                   key               function                argument */
   // Tags management
-  { MODKEY,                     XK_Tab,           view,                   {0} },
-  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } },
+  { MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
+  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
 
-  { MODKEY,                     XK_backslash,     view,                   {0} },
-  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } },
+  { MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
+  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
   TAGKEYS(                      XK_1,                                     0)
   TAGKEYS(                      XK_2,                                     1)
@@ -303,10 +304,9 @@ static Key keys[] = {
   TAGKEYS(                      XK_7,                                     6)
   TAGKEYS(                      XK_8,                                     7)
   TAGKEYS(                      XK_9,                                     8)
-  /* modifier                   key               function                argument */
-  // Display all tags
-  { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } },
-  { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } },
+
+  { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
+  { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
   
   // Clients management
   { MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus up the stack
