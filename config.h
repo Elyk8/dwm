@@ -287,7 +287,13 @@ static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
-  //Tag switching with number keys
+  // Tags management
+  { MODKEY,                     XK_Tab,           view,                   {0} },
+  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } },
+
+  { MODKEY,                     XK_backslash,     view,                   {0} },
+  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } },
+
   TAGKEYS(                      XK_1,                                     0)
   TAGKEYS(                      XK_2,                                     1)
   TAGKEYS(                      XK_3,                                     2)
@@ -298,76 +304,72 @@ static Key keys[] = {
   TAGKEYS(                      XK_8,                                     7)
   TAGKEYS(                      XK_9,                                     8)
   /* modifier                   key               function                argument */
-  //dwm window controls keybinds
+  // Display all tags
   { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } },
   { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } },
+  
+  // Clients management
+  { MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus up the stack
+  { MODKEY,                     XK_k,             focusstack,             {.i = -1 } }, // Focus down the stac
 
-  { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // left
-  { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // right
-  { MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // up
-  { MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // down
+  { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } }, // Increase the number of masters, up to nmaxmaster
+  { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } }, // Decrease the number of master to a minimum of 1
 
-  { MODKEY,                     XK_j,             focusstack,             {.i = +1 } },
-  { MODKEY,                     XK_k,             focusstack,             {.i = -1 } },
+  { MODKEY|ShiftMask,           XK_h,             setmfact,               {.f = -0.05} }, // Increase master horizontal weight
+  { MODKEY|ShiftMask,           XK_l,             setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
 
-  { MODKEY|ControlMask,         XK_j,             inplacerotate,          {.i = +2 } }, // same as rotatestack
-  { MODKEY|ControlMask,         XK_k,             inplacerotate,          {.i = -2 } }, // same as reotatestack
+  { MODKEY|ShiftMask,           XK_k,             setcfact,               {.f = +0.25} }, // Increase client vertical weight
+  { MODKEY|ShiftMask,           XK_j,             setcfact,               {.f = -0.25} }, // Decrease client vertical weight
 
-  { MODKEY|ControlMask,         XK_l,             inplacerotate,          {.i = +1} },
-  { MODKEY|ControlMask,         XK_h,             inplacerotate,          {.i = -1} },
+  { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // Focus client to the left
+  { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
+  { MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // Focus client to the up
+  { MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // Focus client to the down
 
-  { MODKEY,                     XK_b,             togglebar,              {0} },
+  { MODKEY|ControlMask,         XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
+  { MODKEY|ControlMask,         XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
-  { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } },
-  { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } },
+  { MODKEY|ControlMask,         XK_l,             inplacerotate,          {.i = +1} }, // Rotate stack only clockwise
+  { MODKEY|ControlMask,         XK_h,             inplacerotate,          {.i = -1} }, // Rotate stack only anticlockwise
 
-  { MODKEY|ShiftMask,           XK_h,             setmfact,               {.f = -0.05} },
-  { MODKEY|ShiftMask,           XK_l,             setmfact,               {.f = +0.05} },
-  { MODKEY|ShiftMask,           XK_k,             setcfact,               {.f = +0.25} },
-  { MODKEY|ShiftMask,           XK_j,             setcfact,               {.f = -0.25} },
+  { MODKEY,                     XK_v,             focusmaster,            {0} }, // Move focus to the master window
 
-  { MODKEY,                     XK_space,         zoom,                   {0} },
-  { MODKEY|ShiftMask,           XK_space,         togglefloating,         {0} },
+  { MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
-  { MODKEY,                     XK_z,             incrgaps,               {.i = +3 } },
-  { MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} },
+  { MODKEY,                     XK_q,             killclient,             {0} }, // Close the selected client
+  { MODKEY|ShiftMask,           XK_q,             killunsel,              {0} }, // Close all but the selected window
 
-  { MODKEY,                     XK_x,             incrgaps,               {.i = -3 } },
+  { MODKEY,                     XK_space,         zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
+  { MODKEY|ShiftMask,           XK_space,         togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
 
-  { MODKEY,                     XK_a,             togglegaps,             {0} },
-  { MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} },
+  // Desktop management
+  { MODKEY,                     XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
 
-  { MODKEY,                     XK_Tab,           view,                   {0} },
-  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } },
+  { MODKEY,                     XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
-  { MODKEY,                     XK_backslash,     view,                   {0} },
-  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } },
+  { MODKEY,                     XK_f,             togglefullscreen,       {0} }, // Toggle focused window fullscreen
+  { MODKEY|ShiftMask,           XK_f,             togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
-  { MODKEY,                     XK_apostrophe,    togglescratch,          {.ui = 1} },
-  /* { MODKEY|ShiftMask,           XK_apostrophe,    spawn,                  {} }, */
+  // Gaps mamagement
+  { MODKEY,                     XK_z,             incrgaps,               {.i = +3 } }, // Increase gap size by 3
+  { MODKEY,                     XK_x,             incrgaps,               {.i = -3 } }, // Decrease gap size by 3
 
-  { MODKEY,                     XK_q,             killclient,             {0} },
-  { MODKEY|ShiftMask,           XK_q,             killunsel,              {0} },
+  { MODKEY,                     XK_a,             togglegaps,             {0} }, // Toggle gaps
+  { MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} }, // Reset gaps to default
 
-  { MODKEY,                     XK_t,             setlayout,              {.v = &layouts[0]} }, // tile
-  { MODKEY|ShiftMask,           XK_t,             setlayout,              {.v = &layouts[1]} }, // bstack
+  // Layouts
+  { MODKEY,                     XK_t,             setlayout,              {.v = &layouts[0]} }, // Switch to tile layout
+  { MODKEY|ShiftMask,           XK_t,             setlayout,              {.v = &layouts[1]} }, // Switch to bstack layout
 
-  { MODKEY,                     XK_y,             setlayout,              {.v = &layouts[2]} }, // spiral
-  { MODKEY|ShiftMask,           XK_y,             setlayout,              {.v = &layouts[3]} }, // dwindle
+  { MODKEY,                     XK_y,             setlayout,              {.v = &layouts[2]} }, // Switch to spiral layout
+  { MODKEY|ShiftMask,           XK_y,             setlayout,              {.v = &layouts[3]} }, // Switch to dwindle layout
 
-  { MODKEY,                     XK_u,             setlayout,              {.v = &layouts[4]} }, // deck
-  { MODKEY|ShiftMask,           XK_u,             setlayout,              {.v = &layouts[5]} }, // monocle
+  { MODKEY,                     XK_u,             setlayout,              {.v = &layouts[4]} }, // Switch to deck layout
+  { MODKEY|ShiftMask,           XK_u,             setlayout,              {.v = &layouts[5]} }, // Switch to monocle layout
 
-  { MODKEY,                     XK_i,             setlayout,              {.v = &layouts[6]} }, // centeredmaster
-  { MODKEY|ShiftMask,           XK_i,             setlayout,              {.v = &layouts[7]} }, // centeredfloatingmaster
-
-  { MODKEY,                     XK_v,             focusmaster,            {0} },
-  { MODKEY|ShiftMask,           XK_v,             setlayout,              {.v = &layouts[8]} },
-
-  { MODKEY,                     XK_f,             togglefullscreen,       {0} },
-  { MODKEY|ShiftMask,           XK_f,             togglefakefullscreen,   {0} },
-
-  { MODKEY,                     XK_s,             togglesticky,           {0} },
+  { MODKEY,                     XK_i,             setlayout,              {.v = &layouts[6]} }, // Switch to centeredmaster layout
+  { MODKEY|ShiftMask,           XK_i,             setlayout,              {.v = &layouts[7]} }, // Switch to centeredfloatingmaster layout
+  { MODKEY|ShiftMask,           XK_v,             setlayout,              {.v = &layouts[8]} }, // Switch to floating mode
 
   { MODKEY,                     XK_Left,          focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } },
