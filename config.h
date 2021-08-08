@@ -286,7 +286,7 @@ static const char *termcmd[]  = { "st", NULL };
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
-  //Tag_switching_with_number_keys
+  //Tag switching with number keys
   TAGKEYS(                      XK_1,                                     0)
   TAGKEYS(                      XK_2,                                     1)
   TAGKEYS(                      XK_3,                                     2)
@@ -298,7 +298,7 @@ static Key keys[] = {
   TAGKEYS(                      XK_9,                                     8)
   /* modifier                   key               function                argument */
   //
-  //dwm_window_controls_keybinds
+  //dwm window controls keybinds
   { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } },
   { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } },
   { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // left
@@ -357,14 +357,14 @@ static Key keys[] = {
   { MODKEY,                     XK_Page_Up,       shiftview,              { .i = -1 } },
   { MODKEY,                     XK_Page_Down,     shiftview,              { .i = +1 } },
   //
-  //Terminal_and_applications_keybindings
+  //Terminal and applications keybindings
   { MODKEY,                     XK_w,             spawn,                  SHCMD("bookmarksurf") }, //Open dmenu for search and bookmarks
-  { MODKEY|ShiftMask,           XK_w,             spawn,                  SHCMD("$BROWSER") },  // Open webbrowser
+  { MODKEY|ShiftMask,           XK_w,             spawn,                  SHCMD("$BROWSER") }, // Open webbrowser
   { MODKEY,                     XK_e,             spawn,                  SHCMD(TERM " -e neomutt ; sb-refresh sb-mailbox") }, // Neomutt email client
   { MODKEY|ShiftMask,           XK_e,             spawn,                  SHCMD(TERM " -e abook") }, // Addressbook for neomutt
   { MODKEY,                     XK_r,             spawn,                  SHCMD(TERM " -e lf-run") }, // lf file manager with image previews
   { MODKEY|ShiftMask,           XK_r,             spawn,                  SHCMD(TERM " -e gotop") }, // System usage terminal applications
-  //Music_player
+  //Music player
   { MODKEY,                     XK_minus,         spawn,                  SHCMD("mpc volume -3") },
   { MODKEY|ShiftMask,           XK_minus,         spawn,                  SHCMD("mpc volume -12") },
   { MODKEY,                     XK_equal,         spawn,                  SHCMD("mpc volume +3") },
@@ -399,7 +399,7 @@ static Key keys[] = {
   { MODKEY,                     XK_F8,            spawn,                  SHCMD("mw -Y && sb-refresh sb-mailbox") }, // Refresh mutt wizard email
   { MODKEY,                     XK_F9,            spawn,                  SHCMD("dmenumount") }, // Mount devices, including USB drives using dmenu
   { MODKEY,                     XK_F10,           spawn,                  SHCMD("dmenuumount") }, // Unmount devices, including USB drives using dmenu
-  //Display_webcam_using_mpv
+  //Display webcam using mpv
   { MODKEY,                     XK_F11,           spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --untimed --vf=hflip --no-keepaspect-window --panscan=1 --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
   { MODKEY,                     XK_F12,           spawn,                  SHCMD("remaps && notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
 
