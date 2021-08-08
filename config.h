@@ -110,6 +110,7 @@ static char *colors[][ColCount] = {
 static const char *const autostart[] = {
   "st", NULL,
   "dwmblocks", NULL,
+  "shotkey", NULL,
   "xrandr", "-s", "1920x1080", NULL,
   NULL /* terminate */
 };
@@ -276,7 +277,7 @@ static const Layout layouts[] = {
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+/* #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } } */
 
 /* commands */
 static const char *termcmd[]  = { "st", NULL };
@@ -297,143 +298,84 @@ static Key keys[] = {
   TAGKEYS(                      XK_8,                                     7)
   TAGKEYS(                      XK_9,                                     8)
   /* modifier                   key               function                argument */
-  //
   //dwm window controls keybinds
   { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } },
   { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } },
+
   { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // left
   { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // right
   { MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // up
   { MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // down
+
   { MODKEY,                     XK_j,             focusstack,             {.i = +1 } },
   { MODKEY,                     XK_k,             focusstack,             {.i = -1 } },
+
   { MODKEY|ControlMask,         XK_j,             inplacerotate,          {.i = +2 } }, // same as rotatestack
   { MODKEY|ControlMask,         XK_k,             inplacerotate,          {.i = -2 } }, // same as reotatestack
+
   { MODKEY|ControlMask,         XK_l,             inplacerotate,          {.i = +1} },
   { MODKEY|ControlMask,         XK_h,             inplacerotate,          {.i = -1} },
-  { MODKEY,                     XK_Return,        spawn,                  {.v = termcmd } },
-  { MODKEY|ShiftMask,           XK_Return,        togglescratch,          {.ui = 0} },
-  { MODKEY,                     XK_BackSpace,     spawn,                  SHCMD("rofipowermenu") },
-  { MODKEY|ShiftMask,           XK_BackSpace,     spawn,                  SHCMD("rofipowermenu") },
+
   { MODKEY,                     XK_b,             togglebar,              {0} },
+
   { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } },
   { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } },
+
   { MODKEY|ShiftMask,           XK_h,             setmfact,               {.f = -0.05} },
   { MODKEY|ShiftMask,           XK_l,             setmfact,               {.f = +0.05} },
   { MODKEY|ShiftMask,           XK_k,             setcfact,               {.f = +0.25} },
   { MODKEY|ShiftMask,           XK_j,             setcfact,               {.f = -0.25} },
+
   { MODKEY,                     XK_space,         zoom,                   {0} },
   { MODKEY|ShiftMask,           XK_space,         togglefloating,         {0} },
+
   { MODKEY,                     XK_z,             incrgaps,               {.i = +3 } },
   { MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} },
+
   { MODKEY,                     XK_x,             incrgaps,               {.i = -3 } },
+
   { MODKEY,                     XK_a,             togglegaps,             {0} },
   { MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} },
+
   { MODKEY,                     XK_Tab,           view,                   {0} },
   { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } },
+
   { MODKEY,                     XK_backslash,     view,                   {0} },
   { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } },
+
   { MODKEY,                     XK_apostrophe,    togglescratch,          {.ui = 1} },
-  /* { MODKEY|ShiftMask,           XK_apostrophe,    spawn,                  SHCMD("") }, */
+  /* { MODKEY|ShiftMask,           XK_apostrophe,    spawn,                  {} }, */
+
   { MODKEY,                     XK_q,             killclient,             {0} },
   { MODKEY|ShiftMask,           XK_q,             killunsel,              {0} },
+
   { MODKEY,                     XK_t,             setlayout,              {.v = &layouts[0]} }, // tile
   { MODKEY|ShiftMask,           XK_t,             setlayout,              {.v = &layouts[1]} }, // bstack
+
   { MODKEY,                     XK_y,             setlayout,              {.v = &layouts[2]} }, // spiral
   { MODKEY|ShiftMask,           XK_y,             setlayout,              {.v = &layouts[3]} }, // dwindle
+
   { MODKEY,                     XK_u,             setlayout,              {.v = &layouts[4]} }, // deck
   { MODKEY|ShiftMask,           XK_u,             setlayout,              {.v = &layouts[5]} }, // monocle
+
   { MODKEY,                     XK_i,             setlayout,              {.v = &layouts[6]} }, // centeredmaster
   { MODKEY|ShiftMask,           XK_i,             setlayout,              {.v = &layouts[7]} }, // centeredfloatingmaster
+
   { MODKEY,                     XK_v,             focusmaster,            {0} },
   { MODKEY|ShiftMask,           XK_v,             setlayout,              {.v = &layouts[8]} },
+
   { MODKEY,                     XK_f,             togglefullscreen,       {0} },
   { MODKEY|ShiftMask,           XK_f,             togglefakefullscreen,   {0} },
+
   { MODKEY,                     XK_s,             togglesticky,           {0} },
+
   { MODKEY,                     XK_Left,          focusmon,               {.i = -1 } },
   { MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } },
   { MODKEY,                     XK_Right,         focusmon,               {.i = +1 } },
   { MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } },
+
   { MODKEY,                     XK_Page_Up,       shiftview,              { .i = -1 } },
   { MODKEY,                     XK_Page_Down,     shiftview,              { .i = +1 } },
-  //
-  //Terminal and applications keybindings
-  { MODKEY,                     XK_w,             spawn,                  SHCMD("bookmarksurf") }, //Open dmenu for search and bookmarks
-  { MODKEY|ShiftMask,           XK_w,             spawn,                  SHCMD("$BROWSER") }, // Open webbrowser
-  { MODKEY,                     XK_e,             spawn,                  SHCMD(TERM " -e neomutt ; sb-refresh sb-mailbox") }, // Neomutt email client
-  { MODKEY|ShiftMask,           XK_e,             spawn,                  SHCMD(TERM " -e abook") }, // Addressbook for neomutt
-  { MODKEY,                     XK_r,             spawn,                  SHCMD(TERM " -e lf-run") }, // lf file manager with image previews
-  { MODKEY|ShiftMask,           XK_r,             spawn,                  SHCMD(TERM " -e gotop") }, // System usage terminal applications
-  //Music player
-  { MODKEY,                     XK_minus,         spawn,                  SHCMD("mpc volume -3") },
-  { MODKEY|ShiftMask,           XK_minus,         spawn,                  SHCMD("mpc volume -12") },
-  { MODKEY,                     XK_equal,         spawn,                  SHCMD("mpc volume +3") },
-  { MODKEY|ShiftMask,           XK_equal,         spawn,                  SHCMD("mpc volume +12") },
-  { MODKEY,                     XK_p,             spawn,                  SHCMD("mpc toggle") },
-  { MODKEY|ShiftMask,           XK_p,             spawn,                  SHCMD("mpc pause ; pauseallmpv") },
-  { MODKEY,                     XK_bracketleft,   spawn,                  SHCMD("mpc seek -10") },
-  { MODKEY|ShiftMask,           XK_bracketleft,   spawn,                  SHCMD("mpc seek -60") },
-  { MODKEY,                     XK_bracketright,  spawn,                  SHCMD("mpc seek +10") },
-  { MODKEY|ShiftMask,           XK_bracketright,  spawn,                  SHCMD("mpc seek +60") },
-  { MODKEY,                     XK_comma,         spawn,                  SHCMD("mpc prev") },
-  { MODKEY|ShiftMask,           XK_comma,         spawn,                  SHCMD("mpc seek 0%") },
-  { MODKEY,                     XK_period,        spawn,                  SHCMD("mpc next") },
-  { MODKEY|ShiftMask,           XK_period,        spawn,                  SHCMD("mpc repeat") },
-  //
-  { MODKEY,                     XK_c,             spawn,                  SHCMD("rofigreenclip") }, // Clipboard manager
-  /* { MODKEY|ShiftMask,           XK_c,             spawn,                  SHCMD("") }, */
-  { MODKEY,                     XK_d,             spawn,                  SHCMD("j4-dmenu-desktop --dmenu=\"dmenu\"") }, // dmenu application launcher
-  { MODKEY|ShiftMask,           XK_d,             spawn,                  SHCMD("rofi-pass") }, // rofi auto password manager and typer
-  { MODKEY,                     XK_m,             togglescratch,          {.ui = 2} }, // Toggle ncmpcpp music player scratchpad
-  { MODKEY|ShiftMask,           XK_m,             spawn,                  SHCMD("mic-toggle") }, // Microphone mute/unmute toggle
-  { MODKEY,                     XK_n,             spawn,                  SHCMD("dmenunotes") }, // Markdown notes manager with dmenu
-  { MODKEY|ShiftMask,           XK_n,             spawn,                  SHCMD(TERM " -e newsboat; sb-refresh sb-news") }, // RSS newsfeed
-  { MODKEY,                     XK_F1,            spawn,                  SHCMD("dmenucheatsheet") }, // Display cheatsheets
-  { MODKEY,                     XK_F2,            spawn,                  SHCMD("dmenuunicode") }, // dmenu emoji keyboard
-  { MODKEY,                     XK_F3,            spawn,                  SHCMD("feh --bg-fill --no-fehbg --random ~/Pics/wallpapers/*") }, // Set random wallpaper
-  { MODKEY,                     XK_F4,            spawn,                  SHCMD("pavucontrol; sb-refresh sb-volume") }, // Volume mixer
-  { MODKEY,                     XK_F5,            spawn,                  SHCMD("start-conky") }, // Toggle conky, a computer specs and statistics display
-  /* { MODKEY,                     XK_F6,            spawn,                  SHCMD() },  */
-  { MODKEY,                     XK_F7,            spawn,                  SHCMD("flameshot gui -p ~/Pics/screenshots") }, // Partscreen screenshot
-  { MODKEY|ShiftMask,           XK_F7,            spawn,                  SHCMD("flameshot full -p ~/Pics/screenshots") }, // Fullscreen screenshot
-  { MODKEY,                     XK_F8,            spawn,                  SHCMD("mw -Y && sb-refresh sb-mailbox") }, // Refresh mutt wizard email
-  { MODKEY,                     XK_F9,            spawn,                  SHCMD("dmenumount") }, // Mount devices, including USB drives using dmenu
-  { MODKEY,                     XK_F10,           spawn,                  SHCMD("dmenuumount") }, // Unmount devices, including USB drives using dmenu
-  //Display webcam using mpv
-  { MODKEY,                     XK_F11,           spawn,                  SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --profile=low-latency --untimed --vf=hflip --no-keepaspect-window --panscan=1 --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
-  { MODKEY,                     XK_F12,           spawn,                  SHCMD("remaps && notify-send \\\"⌨️ Keyboard remapping...\\\" \\\"Re-running keyboard defaults for any newly plugged-in keyboards.\\\"") },
-
-  //
-  { 0,                          XK_Print,                 spawn,          SHCMD("flameshot gui -p ~/Pics/screenshots") },
-  { ShiftMask,                  XK_Print,                 spawn,          SHCMD("flameshot full -p ~/Pics/screenshots") },
-  { 0,                          XF86XK_AudioForward,      spawn,          SHCMD("mpc seek +10") },
-  { 0,                          XF86XK_AudioLowerVolume,  spawn,          SHCMD("pamixer --allow-boost -d 3; sb-refresh sb-volume; setsid -f canberra-gtk-play -i audio-volume-change") },
-  { 0,                          XF86XK_AudioMedia,        spawn,          SHCMD(TERM " -e ncmpcpp") },
-  { 0,                          XF86XK_AudioMicMute,      spawn,          SHCMD("mic-toggle") },
-  { 0,                          XF86XK_AudioMute,         spawn,          SHCMD("pamixer -t; sb-refresh sb-volume") },
-  { 0,                          XF86XK_AudioNext,         spawn,          SHCMD("mpc next") },
-  { 0,                          XF86XK_AudioPause,        spawn,          SHCMD("mpc pause") },
-  { 0,                          XF86XK_AudioPlay,         spawn,          SHCMD("mpc play") },
-  { 0,                          XF86XK_AudioPrev,         spawn,          SHCMD("mpc prev") },
-  { 0,                          XF86XK_AudioRaiseVolume,  spawn,          SHCMD("pamixer --allow-boost -i 3; sb-refresh sb-volume; setsid -f canberra-gtk-play -i audio-volume-change") },
-  { 0,                          XF86XK_AudioRewind,       spawn,          SHCMD("mpc seek -10") },
-  { 0,                          XF86XK_AudioStop,         spawn,          SHCMD("mpc stop") },
-  { 0,                          XF86XK_Battery,           spawn,          SHCMD("") },
-  { 0,                          XF86XK_Calculator,        spawn,          SHCMD(TERM " -e bc -l") },
-  { 0,                          XF86XK_DOS,               spawn,          SHCMD(TERM) },
-  { 0,                          XF86XK_Launch1,           spawn,          SHCMD("xset dpms force off") },
-  { 0,                          XF86XK_Mail,              spawn,          SHCMD(TERM " -e neomutt ; sb-refresh sb-mailbox") },
-  { 0,                          XF86XK_MonBrightnessDown, spawn,          SHCMD("xbacklight -dec 2 ; sb-refresh sb-brightness") },
-  { 0,                          XF86XK_MonBrightnessUp,   spawn,          SHCMD("xbacklight -inc 2 ; sb-refresh sb-brightness") },
-  { 0,                          XF86XK_MyComputer,        spawn,          SHCMD(TERM " -e lf-run") },
-  { 0,                          XF86XK_PowerOff,          spawn,          SHCMD("rofipowermenu") },
-  { 0,                          XF86XK_ScreenSaver,       spawn,          SHCMD("slock & xset dpms force off; mpc pause; pauseallmpv") },
-  { 0,                          XF86XK_Sleep,             spawn,          SHCMD("sudo -A zzz") },
-  { 0,                          XF86XK_TaskPane,          spawn,          SHCMD(TERM " -e gotop") },
-  { 0,                          XF86XK_TouchpadOff,       spawn,          SHCMD("synclient TouchpadOff=1") },
-  { 0,                          XF86XK_TouchpadOn,        spawn,          SHCMD("synclient TouchpadOff=0") },
-  { 0,                          XF86XK_TouchpadToggle,    spawn,          SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
-  { 0,                          XF86XK_WWW,               spawn,          SHCMD("$BROWSER") },
 };
 
 
