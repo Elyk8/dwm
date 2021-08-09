@@ -12,6 +12,7 @@ int
 swallow(Client *p, Client *c)
 {
 	Client *s;
+	XWindowChanges wc;
 
 	if (c->noswallow > 0 || c->isterminal)
 		return 0;
@@ -39,7 +40,11 @@ swallow(Client *p, Client *c)
 	updatetitle(p);
 	s = scanner ? c : p;
 	setfloatinghint(s);
+
+	wc.border_width = p->bw;
+	XConfigureWindow(dpy, p->win, CWBorderWidth, &wc);
 	XMoveResizeWindow(dpy, p->win, s->x, s->y, s->w, s->h);
+
 	arrange(p->mon);
 	configure(p);
 	updateclientlist();
@@ -50,6 +55,7 @@ swallow(Client *p, Client *c)
 void
 unswallow(Client *c)
 {
+	XWindowChanges wc;
 	c->win = c->swallowing->win;
 
 	free(c->swallowing);
@@ -62,7 +68,11 @@ unswallow(Client *c)
 	updatetitle(c);
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
+
+	wc.border_width = c->bw;
+	XConfigureWindow(dpy, c->win, CWBorderWidth, &wc);
 	XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
+
 	setfloatinghint(c);
 	setclientstate(c, NormalState);
 	focus(NULL);
