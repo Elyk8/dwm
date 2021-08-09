@@ -287,6 +287,8 @@ static const Layout layouts[] = {
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
+  // KEYBOARD BINDINGS
+
   /* modifier                   key               function                argument */
   // Tags management
   { MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
@@ -382,20 +384,27 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
+
+
+  // MOUSE BINDINGS
+
   /* click                event mask            button          function        argument */
-  { ClkLtSymbol,          0,                    Button1,        setlayout,      {0} },
-  { ClkLtSymbol,          0,                    Button3,        setlayout,      {.v = &layouts[2]} },
-  { ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } },
-  { ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } },
-  { ClkWinTitle,          0,                    Button1,        togglewin,      {0} },
-  { ClkWinTitle,          0,                    Button3,        showhideclient, {0} },
-  { ClkWinTitle,          0,                    Button2,        zoom,           {0} },
-  { ClkStatusText,        0,                    Button1,        sigstatusbar,   {.i = 1} },        // left click
-  { ClkStatusText,        ShiftMask,            Button1,        sigstatusbar,   {.i = 6} },        // shift left click
-  { ClkStatusText,        0,                    Button2,        sigstatusbar,   {.i = 2} },        // middle click
-  { ClkStatusText,        0,                    Button3,        sigstatusbar,   {.i = 3} },        // right click
-  { ClkStatusText,        0,                    Button4,        sigstatusbar,   {.i = 4} },        // scroll wheel up
-  { ClkStatusText,        0,                    Button5,        sigstatusbar,   {.i = 5} },        // scroll wheel down
+  // Layout section
+  { ClkLtSymbol,          0,                    Button1,        setlayout,      {0} }, // Left click: Set layout to tiling
+  { ClkLtSymbol,          0,                    Button3,        setlayout,      {.v = &layouts[5]} }, // Right click: Set monocle layout
+  { ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
+  { ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
+  // Title section
+  { ClkWinTitle,          0,                    Button1,        togglewin,      {0} }, // Left click: Select window
+  { ClkWinTitle,          0,                    Button3,        showhideclient, {0} }, // Right click: Show/hide the window
+  { ClkWinTitle,          0,                    Button2,        zoom,           {0} }, // Move to master from stack, or vice versa
+  // dwmblocks status bar, signals depends on individual status bar script
+  { ClkStatusText,        0,                    Button1,        sigstatusbar,   {.i = 1} }, // Left click
+  { ClkStatusText,        ShiftMask,            Button1,        sigstatusbar,   {.i = 6} }, // Shift left click
+  { ClkStatusText,        0,                    Button2,        sigstatusbar,   {.i = 2} }, // Middle click
+  { ClkStatusText,        0,                    Button3,        sigstatusbar,   {.i = 3} }, // Right click
+  { ClkStatusText,        0,                    Button4,        sigstatusbar,   {.i = 4} }, // Scroll wheel up
+  { ClkStatusText,        0,                    Button5,        sigstatusbar,   {.i = 5} }, // Scroll wheel down
   /* { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} }, */
   /* placemouse options, choose which feels more natural:
    *    0 - tiled position is relative to mouse cursor
@@ -407,6 +416,7 @@ static Button buttons[] = {
    * to control these separately (i.e. to retain the feature to move a tiled window
    * into a floating position).
    */
+  // Window management
   { ClkClientWin,         MODKEY,               Button1,        moveorplace,    {.i = 0} },
   { ClkClientWin,         MODKEY,               Button2,        togglefloating, {0} },
   { ClkClientWin,         MODKEY,               Button3,        resizemouse,    {0} },
@@ -414,8 +424,8 @@ static Button buttons[] = {
   { ClkClientWin,         MODKEY,               Button5,        resizemousescroll, {.v = &scrollargs[1]} },
   { ClkClientWin,         MODKEY,               Button6,        resizemousescroll, {.v = &scrollargs[2]} },
   { ClkClientWin,         MODKEY,               Button7,        resizemousescroll, {.v = &scrollargs[3]} },
-  { ClkClientWin,         MODKEY|ShiftMask,     Button3,        dragcfact,      {0} },
-  { ClkClientWin,         MODKEY|ShiftMask,     Button1,        dragmfact,      {0} },
+  { ClkClientWin,         MODKEY|ShiftMask,     Button3,        dragcfact,      {0} }, // Vertical resize of individual client window
+  { ClkClientWin,         MODKEY|ShiftMask,     Button1,        dragmfact,      {0} }, // Resize master and stack areas
   { ClkTagBar,            0,                    Button1,        view,           {0} },
   { ClkTagBar,            0,                    Button3,        toggleview,     {0} },
   { ClkTagBar,            MODKEY,               Button1,        tag,            {0} },
