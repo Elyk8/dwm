@@ -280,7 +280,7 @@ static const Layout layouts[] = {
 /* #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } } */
 
 /* commands */
-static const char *termcmd[]  = { "st", NULL };
+/* static const char *termcmd[]  = { "st", NULL }; */
 
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "dwmblocks"
@@ -295,15 +295,15 @@ static Key keys[] = {
   { MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
   { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
-  TAGKEYS(                      XK_1,                                     0)
-  TAGKEYS(                      XK_2,                                     1)
-  TAGKEYS(                      XK_3,                                     2)
-  TAGKEYS(                      XK_4,                                     3)
-  TAGKEYS(                      XK_5,                                     4)
-  TAGKEYS(                      XK_6,                                     5)
-  TAGKEYS(                      XK_7,                                     6)
-  TAGKEYS(                      XK_8,                                     7)
-  TAGKEYS(                      XK_9,                                     8)
+  TAGKEYS(                      XK_1,                                     0) // Tag 1
+  TAGKEYS(                      XK_2,                                     1) // Tag 2
+  TAGKEYS(                      XK_3,                                     2) // Tag 3
+  TAGKEYS(                      XK_4,                                     3) // Tag 4
+  TAGKEYS(                      XK_5,                                     4) // Tag 5
+  TAGKEYS(                      XK_6,                                     5) // Tag 6
+  TAGKEYS(                      XK_7,                                     6) // Tag 7
+  TAGKEYS(                      XK_8,                                     7) // Tag 8
+  TAGKEYS(                      XK_9,                                     8) // Tag 9
 
   { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
   { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
