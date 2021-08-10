@@ -30,8 +30,8 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-  "JetBrains Mono Nerd Font:heavy:italic:size=10:antialias=true:autohint=true", 
-  "Twemoji:size=9:antialias=true:autohint=true"
+  "JetBrains Mono Nerd Font:heavy:italic:size=12:antialias=true:autohint=true", 
+  "Twemoji:size=10:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -42,8 +42,8 @@ static char normbordercolor[]            = "#1b1b1b";
 static char normfloatcolor[]             = "#569CD6";
 
 static char selfgcolor[]                 = "#ECEFF4";
-static char selbgcolor[]                 = "#3B4252";
-static char selbordercolor[]             = "#ECEFF4";
+static char selbgcolor[]                 = "#924441";
+static char selbordercolor[]             = "#924441";
 static char selfloatcolor[]              = "#569CD6";
 
 static char titlenormfgcolor[]           = "#D8DEE9";
@@ -77,7 +77,7 @@ static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
 
-static const unsigned int baralpha = 0xe0;
+static const unsigned int baralpha = 0xff;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
   /*                       fg      bg        border     */
@@ -155,7 +155,7 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-  [DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+  [DEFAULT_TAGS]        = { "", "", "", "", "", "", "", "", "" },
   [ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
   [ALT_TAGS_DECORATION] = { "<1>", "<2>", "<3>", "<4>", "<5>", "<6>", "<7>", "<8>", "<9>" },
 };
