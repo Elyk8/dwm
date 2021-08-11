@@ -30,8 +30,9 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOX_FULL;
 static const char *fonts[]               = {
-  "JetBrains Mono Nerd Font:heavy:size=10:antialias=true:autohint=true", 
+  "JetBrains Mono Nerd Font:heavy:size=11:antialias=true:autohint=true", 
   "Font Awesome:size=10:antialias=true:autohint=true"
+  "Twemoji:size=10:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
