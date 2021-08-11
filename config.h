@@ -37,35 +37,35 @@ static const char *fonts[]               = {
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#D8DEE9";
-static char normbgcolor[]                = "#1b1b1b";
-static char normbordercolor[]            = "#1b1b1b";
-static char normfloatcolor[]             = "#569CD6";
+static char normfgcolor[]                = "#bbbbbb";
+static char normbgcolor[]                = "#222222";
+static char normbordercolor[]            = "#444444";
+static char normfloatcolor[]             = "#db8fd9";
 
-static char selfgcolor[]                 = "#ECEFF4";
-static char selbgcolor[]                 = "#924441";
-static char selbordercolor[]             = "#924441";
-static char selfloatcolor[]              = "#569CD6";
+static char selfgcolor[]                 = "#eeeeee";
+static char selbgcolor[]                 = "#005577";
+static char selbordercolor[]             = "#005577";
+static char selfloatcolor[]              = "#005577";
 
-static char titlenormfgcolor[]           = "#D8DEE9";
-static char titlenormbgcolor[]           = "#1b1b1b";
-static char titlenormbordercolor[]       = "#3B4252";
-static char titlenormfloatcolor[]        = "#569CD6";
+static char titlenormfgcolor[]           = "#bbbbbb";
+static char titlenormbgcolor[]           = "#222222";
+static char titlenormbordercolor[]       = "#444444";
+static char titlenormfloatcolor[]        = "#db8fd9";
 
-static char titleselfgcolor[]            = "#ECEFF4";
-static char titleselbgcolor[]            = "#3B4252";
-static char titleselbordercolor[]        = "#3B4252";
-static char titleselfloatcolor[]         = "#569CD6";
+static char titleselfgcolor[]            = "#eeeeee";
+static char titleselbgcolor[]            = "#005577";
+static char titleselbordercolor[]        = "#005577";
+static char titleselfloatcolor[]         = "#005577";
 
-static char tagsnormfgcolor[]            = "#D8DEE9";
-static char tagsnormbgcolor[]            = "#1b1b1b";
-static char tagsnormbordercolor[]        = "#3B4252";
-static char tagsnormfloatcolor[]         = "#569CD6";
+static char tagsnormfgcolor[]            = "#bbbbbb";
+static char tagsnormbgcolor[]            = "#222222";
+static char tagsnormbordercolor[]        = "#444444";
+static char tagsnormfloatcolor[]         = "#db8fd9";
 
-static char tagsselfgcolor[]             = "#ECEFF4";
-static char tagsselbgcolor[]             = "#3B4252";
-static char tagsselbordercolor[]         = "#3B4252";
-static char tagsselfloatcolor[]          = "#569CD6";
+static char tagsselfgcolor[]             = "#eeeeee";
+static char tagsselbgcolor[]             = "#005577";
+static char tagsselbordercolor[]         = "#005577";
+static char tagsselfloatcolor[]          = "#005577";
 
 static char hidnormfgcolor[]             = "#005577";
 static char hidselfgcolor[]              = "#227799";
@@ -195,6 +195,7 @@ static const Rule rules[] = {
   RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
   RULE(.instance = "spmusic", .tags = SPTAG(2), .isfloating = 1)
   RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
+  RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
 };
 
 
@@ -419,53 +420,45 @@ static Button buttons[] = {
   { ClkTagBar,            MODKEY,               Button3,        toggletag,      {0} },
 };
 
-/* signal definitions */
-/* signum must be greater than 0 */
-/* trigger signals using `xsetroot -name "fsignal:<signame> [<type> <value>]"` */
-static Signal signals[] = {
-  /* signum                    function */
-  { "focusstack",              focusstack },
-  { "setmfact",                setmfact },
-  { "togglebar",               togglebar },
-  { "incnmaster",              incnmaster },
-  { "togglefloating",          togglefloating },
-  { "focusmon",                focusmon },
-  { "focusurgent",             focusurgent },
-  { "inplacerotate",           inplacerotate },
-  { "setcfact",                setcfact },
-  { "tagmon",                  tagmon },
-  { "zoom",                    zoom },
-  { "incrgaps",                incrgaps },
-  { "incrigaps",               incrigaps },
-  { "incrogaps",               incrogaps },
-  { "incrihgaps",              incrihgaps },
-  { "incrivgaps",              incrivgaps },
-  { "incrohgaps",              incrohgaps },
-  { "incrovgaps",              incrovgaps },
-  { "togglegaps",              togglegaps },
-  { "defaultgaps",             defaultgaps },
-  { "setgaps",                 setgapsex },
-  { "view",                    view },
-  { "viewall",                 viewallex },
-  { "viewex",                  viewex },
-  { "toggleview",              toggleview },
-  { "shiftview",               shiftview },
-  { "shiftviewclients",        shiftviewclients },
-  { "togglesticky",            togglesticky },
-  { "cyclelayout",             cyclelayout },
-  { "toggleviewex",            toggleviewex },
-  { "tag",                     tag },
-  { "tagall",                  tagallex },
-  { "tagex",                   tagex },
-  { "toggletag",               toggletag },
-  { "toggletagex",             toggletagex },
-  { "togglefullscreen",        togglefullscreen },
-  { "togglefakefullscreen",    togglefakefullscreen },
-  { "togglescratch",           togglescratch },
-  { "killclient",              killclient },
-  { "xrdb",                    xrdb },
-  { "quit",                    quit },
-  { "setlayout",               setlayout },
-  { "setlayoutex",             setlayoutex },
+
+static const char *ipcsockpath = "/tmp/dwm.sock";
+static IPCCommand ipccommands[] = {
+	IPCCOMMAND( focusmon, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( focusstack, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incnmaster, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( killclient, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( quit, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setlayoutsafe, 1, {ARG_TYPE_PTR} ),
+	IPCCOMMAND( setmfact, 1, {ARG_TYPE_FLOAT} ),
+	IPCCOMMAND( setstatus, 1, {ARG_TYPE_STR} ),
+	IPCCOMMAND( tag, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( tagmon, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( togglebar, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( togglefloating, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( toggletag, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( toggleview, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( view, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( zoom, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setcfact, 1, {ARG_TYPE_FLOAT} ),
+	IPCCOMMAND( cyclelayout, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglefakefullscreen, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( focusurgent, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( inplacerotate, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglescratch, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( shiftview, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( shiftviewclients, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglesticky, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( togglefullscreen, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( incrgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrigaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrogaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrihgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrivgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrohgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrovgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglegaps, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( defaultgaps, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setgapsex, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( xrdb, 1, {ARG_TYPE_NONE} ),
 };
 

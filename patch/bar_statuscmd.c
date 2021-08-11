@@ -10,7 +10,7 @@ int
 click_statuscmd_text(Arg *arg, int rel_x, char *text)
 {
 	int i = -1;
-	int x = lrpad / 2;
+	int x = 0;
 	char ch;
 	statussig = -1;
 	while (text[++i]) {
