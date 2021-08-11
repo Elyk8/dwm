@@ -6,7 +6,7 @@
 
 /* appearance */
 static const unsigned int borderpx       = 3;   /* border pixel of windows */
-static const unsigned int snap           = 32;  /* snap pixel */
+static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static const unsigned int gappih         = 10;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
@@ -23,15 +23,15 @@ static const int sidepad                 = 0;  /* horizontal padding of bar */
 static const unsigned int systrayspacing = 3;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
+static int tagindicatortype              = INDICATOR_TOP_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
-static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
+static int stickyindicatortype           = INDICATOR_BOX_FULL;
 static const char *fonts[]               = {
-  "JetBrains Mono Nerd Font:heavy:italic:size=10:antialias=true:autohint=true", 
-  "Twemoji:size=8:antialias=true:autohint=true"
+  "JetBrains Mono Nerd Font:heavy:size=10:antialias=true:autohint=true", 
+  "Font Awesome:size=10:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -214,7 +214,7 @@ static const BarRule barrules[] = {
   /* monitor  bar    alignment          widthfunc                drawfunc                clickfunc                name */
   {  0,       1,     BAR_ALIGN_RIGHT,   width_systray,           draw_systray,           click_systray,           "systray" },
   { -1,       0,     BAR_ALIGN_LEFT,    width_tags,              draw_tags,              click_tags,              "tags" },
-  { -1,       0,     BAR_ALIGN_LEFT,    width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
+  { -1,       1,     BAR_ALIGN_LEFT,    width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{ 'A',      0,     BAR_ALIGN_RIGHT,   width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
   { -1,       1,     BAR_ALIGN_NONE,    width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
 };
