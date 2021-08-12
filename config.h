@@ -224,7 +224,6 @@ static const BarRule barrules[] = {
 /* layout(s) */
 static const float mfact     = 0.5; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int nmaxmaster  = 3;    /* maximum number of clients allowed in master area */
 static const int nstack      = 0;    /* number of clients in primary stack area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
@@ -245,7 +244,7 @@ static const Layout layouts[] = {
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
 	{ "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
-	{ "==",      flextile,         { -1, -1, NO_SPLIT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // rows
+	{ "==",       flextile,         { -1, -1, NO_SPLIT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // rows
 	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
 	{ "==#",      flextile,         { -1, -1, SPLIT_HORIZONTAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // bstackgrid
 	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
@@ -317,12 +316,15 @@ static Key keys[] = {
   { MODKEY,                     XK_l,             focusmon,               {.i = +1 } }, // Change focus to next monitor
   { MODKEY|ShiftMask,           XK_l,             tagmon,                 {.i = +1 } }, // Move tag to next monitor
 
-  { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } }, // Increase the number of masters, up to nmaxmaster
-  { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } }, // Decrease the number of master to a minimum of 1
+	{ MODKEY,                     XK_t,             mirrorlayout,           {0} }, // flip the master and stack areas
+
+	{ MODKEY,                     XK_i,             incnmaster,             {.i = +1 } }, // increase the number of clients in the master area
+	{ MODKEY|ShiftMask,           XK_i,             incnstack,              {.i = +1 } }, // increase the number of clients in the primary (first) stack area
+	{ MODKEY,                     XK_o,             incnmaster,             {.i = -1 } }, // decrease the number of clients in the master area
+	{ MODKEY|ShiftMask,           XK_o,             incnstack,              {.i = -1 } }, // increase the number of clients in the primary (first) stack area
 
   { MODKEY,                     XK_bracketleft,   setmfact,               {.f = -0.05} }, // Increase master horizontal weight
   { MODKEY,                     XK_bracketright,  setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
-
   { MODKEY,                     XK_equal,         setcfact,               {.f = +0.25} }, // Increase client vertical weight
   { MODKEY,                     XK_minus,         setcfact,               {.f = -0.25} }, // Decrease client vertical weight
 
@@ -336,11 +338,10 @@ static Key keys[] = {
   { MODKEY,                     XK_Right,         focusmon,               {.i = +1 } }, // Change focus to next monitor
   { MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } }, // Move tag to next monitor
 
-  { MODKEY|ControlMask,         XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
-  { MODKEY|ControlMask,         XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
-
-  { MODKEY|ControlMask,         XK_l,             inplacerotate,          {.i = +1} }, // Rotate stack only clockwise
-  { MODKEY|ControlMask,         XK_h,             inplacerotate,          {.i = -1} }, // Rotate stack only anticlockwise
+  { MODKEY|ShiftMask,           XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
+  { MODKEY|ShiftMask,           XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
+  { MODKEY|ShiftMask,           XK_l,             inplacerotate,          {.i = +1} }, // Rotate stack only clockwise
+  { MODKEY|ShiftMask,           XK_h,             inplacerotate,          {.i = -1} }, // Rotate stack only anticlockwise
 
   { MODKEY,                     XK_v,             focusmaster,            {0} }, // Move focus to the master window
 
