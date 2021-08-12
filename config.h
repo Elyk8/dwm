@@ -243,20 +243,20 @@ static const int scrollargs[][2] = {
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
+	{ "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
 	{ "===",      flextile,         { -1, -1, NO_SPLIT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // rows
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
-	{ "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
-	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
-	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
+	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
+	{ "==#",      flextile,         { -1, -1, SPLIT_HORIZONTAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // bstackgrid
 	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
 	{ "===",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // bstackhoriz
-	{ "==#",      flextile,         { -1, -1, SPLIT_HORIZONTAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // bstackgrid
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
+	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
 	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
 	{ "-M-",      flextile,         { -1, -1, SPLIT_CENTERED_HORIZONTAL, TOP_TO_BOTTOM, LEFT_TO_RIGHT, LEFT_TO_RIGHT, NULL } }, // centeredmaster horiz
-	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
-	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
+	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
+	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
 	{ "[T]",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
  	{ "><>",      NULL,             {0} },    /* no layout function means floating behavior */
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
@@ -312,14 +312,19 @@ static Key keys[] = {
   { MODKEY,                     XK_k,             focusdir,               {.i = 2 } }, // Focus client to the up
   { MODKEY,                     XK_j,             focusdir,               {.i = 3 } }, // Focus client to the down
 
+  { MODKEY,                     XK_h,             focusmon,               {.i = -1 } }, // Change focus to previous monitor
+  { MODKEY|ShiftMask,           XK_h,             tagmon,                 {.i = -1 } }, // Move tag to previous monitor
+  { MODKEY,                     XK_l,             focusmon,               {.i = +1 } }, // Change focus to next monitor
+  { MODKEY|ShiftMask,           XK_l,             tagmon,                 {.i = +1 } }, // Move tag to next monitor
+
   { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } }, // Increase the number of masters, up to nmaxmaster
   { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } }, // Decrease the number of master to a minimum of 1
 
   { MODKEY,                     XK_bracketleft,   setmfact,               {.f = -0.05} }, // Increase master horizontal weight
   { MODKEY,                     XK_bracketright,  setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
 
-  { MODKEY,                     XK_minus,         setcfact,               {.f = +0.25} }, // Increase client vertical weight
-  { MODKEY,                     XK_equal,         setcfact,               {.f = -0.25} }, // Decrease client vertical weight
+  { MODKEY,                     XK_equal,         setcfact,               {.f = +0.25} }, // Increase client vertical weight
+  { MODKEY,                     XK_minus,         setcfact,               {.f = -0.25} }, // Decrease client vertical weight
 
   { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // Focus client to the left
   { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
