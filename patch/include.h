@@ -44,11 +44,5 @@
 #include "zoomswap.h"
 #include "xrdb.h"
 /* Layouts */
-#include "layout_bstack.h"
-#include "layout_centeredmaster.h"
-#include "layout_centeredfloatingmaster.h"
-#include "layout_deck.h"
-#include "layout_fibonacci.h"
-#include "layout_monocle.h"
-#include "layout_tile.h"
+#include "layout_flextile-deluxe.h"
 
