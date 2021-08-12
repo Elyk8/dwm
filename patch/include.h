@@ -2,6 +2,7 @@
 #include "bar_indicators.h"
 #include "bar_tagicons.h"
 
+#include "bar_alpha.h"
 #include "bar_dwmblocks.h"
 #include "bar_ewmhtags.h"
 #include "combo.h"

@@ -78,6 +78,20 @@ static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
 
+static const unsigned int baralpha = 0xd0;
+static const unsigned int borderalpha = OPAQUE;
+static const unsigned int alphas[][3] = {
+	/*                       fg      bg        border     */
+	[SchemeNorm]         = { OPAQUE, baralpha, borderalpha },
+	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
+	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha },
+	[SchemeTagsSel]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
+	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
+	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
+};
 
 static char *colors[][ColCount] = {
   /*                       fg                bg                border                float */
@@ -308,8 +322,8 @@ static Key keys[] = {
   // Clients management
   { MODKEY,                     XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
   { MODKEY,                     XK_l,             focusdir,               {.i = 1 } }, // Focus client to the right
-  { MODKEY,                     XK_k,             focusdir,               {.i = 2 } }, // Focus client to the up
-  { MODKEY,                     XK_j,             focusdir,               {.i = 3 } }, // Focus client to the down
+  { MODKEY,                     XK_k,             focusstack,             {.i = -1 } }, // Focus client to the up
+  { MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus client to the down
 
   { MODKEY,                     XK_h,             focusmon,               {.i = -1 } }, // Change focus to previous monitor
   { MODKEY|ShiftMask,           XK_h,             tagmon,                 {.i = -1 } }, // Move tag to previous monitor
