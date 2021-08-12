@@ -287,12 +287,6 @@ static Key keys[] = {
 
   /* modifier                   key               function                argument */
   // Tags management
-  { MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
-  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
-
-  { MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
-  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
-
   TAGKEYS(                      XK_1,                                     0) // Tag 1
   TAGKEYS(                      XK_2,                                     1) // Tag 2
   TAGKEYS(                      XK_3,                                     2) // Tag 3
@@ -303,21 +297,29 @@ static Key keys[] = {
   TAGKEYS(                      XK_8,                                     7) // Tag 8
   TAGKEYS(                      XK_9,                                     8) // Tag 9
 
+  { MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
+  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
+
+  { MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
+  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
+
   { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
   { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
   
   // Clients management
-  { MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus up the stack
-  { MODKEY,                     XK_k,             focusstack,             {.i = -1 } }, // Focus down the stac
+  { MODKEY,                     XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
+  { MODKEY,                     XK_l,             focusdir,               {.i = 1 } }, // Focus client to the right
+  { MODKEY,                     XK_k,             focusdir,               {.i = 2 } }, // Focus client to the up
+  { MODKEY,                     XK_j,             focusdir,               {.i = 3 } }, // Focus client to the down
 
   { MODKEY,                     XK_o,             incnmaster,             {.i = +1 } }, // Increase the number of masters, up to nmaxmaster
   { MODKEY|ShiftMask,           XK_o,             incnmaster,             {.i = -1 } }, // Decrease the number of master to a minimum of 1
 
-  { MODKEY|ShiftMask,           XK_h,             setmfact,               {.f = -0.05} }, // Increase master horizontal weight
-  { MODKEY|ShiftMask,           XK_l,             setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
+  { MODKEY,                     XK_bracketleft,   setmfact,               {.f = -0.05} }, // Increase master horizontal weight
+  { MODKEY,                     XK_bracketright,  setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
 
-  { MODKEY|ShiftMask,           XK_k,             setcfact,               {.f = +0.25} }, // Increase client vertical weight
-  { MODKEY|ShiftMask,           XK_j,             setcfact,               {.f = -0.25} }, // Decrease client vertical weight
+  { MODKEY,                     XK_minus,         setcfact,               {.f = +0.25} }, // Increase client vertical weight
+  { MODKEY,                     XK_equal,         setcfact,               {.f = -0.25} }, // Decrease client vertical weight
 
   { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // Focus client to the left
   { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
@@ -359,21 +361,6 @@ static Key keys[] = {
 
   { MODKEY,                     XK_a,             togglegaps,             {0} }, // Toggle gaps
   { MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} }, // Reset gaps to default
-
-  // Layouts
-  { MODKEY,                     XK_t,             setlayout,              {.v = &layouts[0]} }, // Switch to tile layout
-  { MODKEY|ShiftMask,           XK_t,             setlayout,              {.v = &layouts[1]} }, // Switch to bstack layout
-
-  { MODKEY,                     XK_y,             setlayout,              {.v = &layouts[2]} }, // Switch to spiral layout
-  { MODKEY|ShiftMask,           XK_y,             setlayout,              {.v = &layouts[3]} }, // Switch to dwindle layout
-
-  { MODKEY,                     XK_u,             setlayout,              {.v = &layouts[4]} }, // Switch to deck layout
-  { MODKEY|ShiftMask,           XK_u,             setlayout,              {.v = &layouts[5]} }, // Switch to monocle layout
-
-  { MODKEY,                     XK_i,             setlayout,              {.v = &layouts[6]} }, // Switch to centeredmaster layout
-  { MODKEY|ShiftMask,           XK_i,             setlayout,              {.v = &layouts[7]} }, // Switch to centeredfloatingmaster layout
-
-  { MODKEY|ShiftMask,           XK_v,             setlayout,              {.v = &layouts[8]} }, // Switch to floating mode
 };
 
 
