@@ -119,13 +119,11 @@ static const char *const autostart[] = {
 
 const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=12", "-g", "50x20", "-e", "bc", "-lq", NULL};
-const char *spcmd3[] = {TERM, "-n", "spmusic", "-g", "100x25", "-e", "ncmpcpp", " ", NULL};
 
 static Sp scratchpads[] = {
   /* name          cmd  */
   {"spterm",      spcmd1},
   {"spcalc",      spcmd2},
-  {"spmusic",     spcmd3},
 };
 
 /* Tags
