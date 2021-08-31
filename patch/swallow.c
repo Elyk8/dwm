@@ -18,7 +18,6 @@ swallow(Client *p, Client *c)
 		return 0;
 	if (c->noswallow < 0 && !swallowfloating && c->isfloating)
 		return 0;
-
 	XMapWindow(dpy, c->win);
 
 	detach(c);
@@ -44,11 +43,13 @@ swallow(Client *p, Client *c)
 	wc.border_width = p->bw;
 	XConfigureWindow(dpy, p->win, CWBorderWidth, &wc);
 	XMoveResizeWindow(dpy, p->win, s->x, s->y, s->w, s->h);
-	XSetWindowBorder(dpy, p->win, scheme[SchemeNorm][ColBorder].pixel);
 
 	arrange(p->mon);
 	configure(p);
 	updateclientlist();
+
+	if (p->isfullscreen)
+		setfullscreen(c, 1);
 
 	return 1;
 }
@@ -64,8 +65,6 @@ unswallow(Client *c)
 
 	XDeleteProperty(dpy, c->win, netatom[NetClientList]);
 
-	/* unfullscreen the client */
-	setfullscreen(c, 0);
 	updatetitle(c);
 	arrange(c->mon);
 	XMapWindow(dpy, c->win);
@@ -73,7 +72,6 @@ unswallow(Client *c)
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, c->win, CWBorderWidth, &wc);
 	XMoveResizeWindow(dpy, c->win, c->x, c->y, c->w, c->h);
-	XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
 
 	setfloatinghint(c);
 	setclientstate(c, NormalState);

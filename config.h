@@ -5,9 +5,10 @@
 #define TERMCLASS "St"
 
 /* appearance */
-static const unsigned int borderpx       = 3;   /* border pixel of windows */
+static const unsigned int borderpx       = 2;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
+static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
 static const unsigned int gappih         = 10;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
@@ -15,57 +16,60 @@ static const unsigned int gappov         = 15;  /* vert outer gap between window
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 24;   /* 0 means derive from font, >= 1 explicit height */
+static const int bar_height              = 26;   /* 0 means derive from font, >= 1 explicit height */
 static const int vertpad                 = 0;  /* vertical padding of bar */
 static const int sidepad                 = 0;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
 #define ICONSPACING 5  /* space between icon and title */
-static const unsigned int systrayspacing = 3;   /* systray spacing */
+static int floatposgrid_x                = 5;  /* float grid columns */
+static int floatposgrid_y                = 5;  /* float grid rows */
+static const int horizpadbar             = 2;   /* horizontal padding for statusbar */
+static const int vertpadbar              = 0;   /* vertical padding for statusbar */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_TOP_BAR;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOX_FULL;
 static const char *fonts[]               = {
-  "JetBrains Mono Nerd Font:heavy:size=11:antialias=true:autohint=true", 
-  "Font Awesome:size=10:antialias=true:autohint=true"
-  "Twemoji:size=10:antialias=true:autohint=true"
+  "JetBrains Mono Nerd Font:heavy:size=10:antialias=true:autohint=true", 
+  "Twemoji:size=8:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#bbbbbb";
-static char normbgcolor[]                = "#222222";
-static char normbordercolor[]            = "#444444";
-static char normfloatcolor[]             = "#db8fd9";
+static char normfgcolor[]                = "#abb2bf";
+static char normbgcolor[]                = "#1E1E1E";
+static char normbordercolor[]            = "#1E1E1E";
+static char normfloatcolor[]             = "#569CD6";
 
-static char selfgcolor[]                 = "#eeeeee";
-static char selbgcolor[]                 = "#005577";
-static char selbordercolor[]             = "#005577";
-static char selfloatcolor[]              = "#005577";
+static char selfgcolor[]                 = "#ECEFF4";
+static char selbgcolor[]                 = "#569CD6";
+static char selbordercolor[]             = "#569CD6";
+static char selfloatcolor[]              = "#3B4252";
 
-static char titlenormfgcolor[]           = "#bbbbbb";
-static char titlenormbgcolor[]           = "#222222";
-static char titlenormbordercolor[]       = "#444444";
-static char titlenormfloatcolor[]        = "#db8fd9";
+static char titlenormfgcolor[]           = "#abb2bf";
+static char titlenormbgcolor[]           = "#1E1E1E";
+static char titlenormbordercolor[]       = "#1E1E1E";
+static char titlenormfloatcolor[]        = "#569CD6";
 
-static char titleselfgcolor[]            = "#eeeeee";
-static char titleselbgcolor[]            = "#005577";
-static char titleselbordercolor[]        = "#005577";
-static char titleselfloatcolor[]         = "#005577";
+static char titleselfgcolor[]            = "#ECEFF4";
+static char titleselbgcolor[]            = "#3B4252";
+static char titleselbordercolor[]        = "#569CD6";
+static char titleselfloatcolor[]         = "#3B4252";
 
-static char tagsnormfgcolor[]            = "#bbbbbb";
-static char tagsnormbgcolor[]            = "#222222";
-static char tagsnormbordercolor[]        = "#444444";
-static char tagsnormfloatcolor[]         = "#db8fd9";
+static char tagsnormfgcolor[]            = "#abb2bf";
+static char tagsnormbgcolor[]            = "#1E1E1E";
+static char tagsnormbordercolor[]        = "#1E1E1E";
+static char tagsnormfloatcolor[]         = "#569CD6";
 
-static char tagsselfgcolor[]             = "#eeeeee";
-static char tagsselbgcolor[]             = "#005577";
-static char tagsselbordercolor[]         = "#005577";
-static char tagsselfloatcolor[]          = "#005577";
+static char tagsselfgcolor[]             = "#ECEFF4";
+static char tagsselbgcolor[]             = "#3B4252";
+static char tagsselbordercolor[]         = "#3B4252";
+static char tagsselfloatcolor[]          = "#3B4252";
 
 static char hidnormfgcolor[]             = "#005577";
 static char hidselfgcolor[]              = "#227799";
@@ -77,6 +81,39 @@ static char urgbgcolor[]                 = "#222222";
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
+static char normTTBbgcolor[]             = "#330000";
+static char normLTRbgcolor[]             = "#330033";
+static char normMONObgcolor[]            = "#000033";
+static char normGRIDbgcolor[]            = "#003300";
+static char normGRD1bgcolor[]            = "#003300";
+static char normGRD2bgcolor[]            = "#003300";
+static char normGRDMbgcolor[]            = "#506600";
+static char normHGRDbgcolor[]            = "#b96600";
+static char normDWDLbgcolor[]            = "#003333";
+static char normSPRLbgcolor[]            = "#333300";
+static char normfloatbgcolor[]           = "#115577";
+static char actTTBbgcolor[]              = "#440000";
+static char actLTRbgcolor[]              = "#440044";
+static char actMONObgcolor[]             = "#000044";
+static char actGRIDbgcolor[]             = "#004400";
+static char actGRD1bgcolor[]             = "#004400";
+static char actGRD2bgcolor[]             = "#004400";
+static char actGRDMbgcolor[]             = "#507711";
+static char actHGRDbgcolor[]             = "#b97711";
+static char actDWDLbgcolor[]             = "#004444";
+static char actSPRLbgcolor[]             = "#444400";
+static char actfloatbgcolor[]            = "#116688";
+static char selTTBbgcolor[]              = "#550000";
+static char selLTRbgcolor[]              = "#550055";
+static char selMONObgcolor[]             = "#212171";
+static char selGRIDbgcolor[]             = "#005500";
+static char selGRD1bgcolor[]             = "#005500";
+static char selGRD2bgcolor[]             = "#005500";
+static char selGRDMbgcolor[]             = "#508822";
+static char selHGRDbgcolor[]             = "#b98822";
+static char selDWDLbgcolor[]             = "#005555";
+static char selSPRLbgcolor[]             = "#555500";
+static char selfloatbgcolor[]            = "#117799";
 
 static const unsigned int baralpha = 0xd0;
 static const unsigned int borderalpha = OPAQUE;
@@ -91,25 +128,90 @@ static const unsigned int alphas[][3] = {
 	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
 	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
 	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActTTB]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActLTR]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActMONO]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActGRID]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActGRD1]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActGRD2]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActGRDM]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActHGRD]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActDWDL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActSPRL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexActFloat] = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaTTB]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaLTR]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaMONO]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaGRID]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaGRD1]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaGRD2]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaGRDM]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaHGRD]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaDWDL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaSPRL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexInaFloat] = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelTTB]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelLTR]   = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelMONO]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelGRID]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelGRD1]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelGRD2]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelGRDM]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelHGRD]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelDWDL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelSPRL]  = { OPAQUE, baralpha, borderalpha },
+	[SchemeFlexSelFloat] = { OPAQUE, baralpha, borderalpha },
 };
 
 static char *colors[][ColCount] = {
-  /*                       fg                bg                border                float */
-  [SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
-  [SchemeSel]          = { selfgcolor,       selbgcolor,       selbordercolor,       selfloatcolor },
-  [SchemeTitleNorm]    = { titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor },
-  [SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
-  [SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
-  [SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
-  [SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
-  [SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
-  [SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
+	/*                       fg                bg                border                float */
+	[SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
+	[SchemeSel]          = { selfgcolor,       selbgcolor,       selbordercolor,       selfloatcolor },
+	[SchemeTitleNorm]    = { titlenormfgcolor, titlenormbgcolor, titlenormbordercolor, titlenormfloatcolor },
+	[SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
+	[SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
+	[SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
+	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
+	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
+	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
+	[SchemeFlexActTTB]   = { titleselfgcolor,  actTTBbgcolor,    actTTBbgcolor,        c000000 },
+	[SchemeFlexActLTR]   = { titleselfgcolor,  actLTRbgcolor,    actLTRbgcolor,        c000000 },
+	[SchemeFlexActMONO]  = { titleselfgcolor,  actMONObgcolor,   actMONObgcolor,       c000000 },
+	[SchemeFlexActGRID]  = { titleselfgcolor,  actGRIDbgcolor,   actGRIDbgcolor,       c000000 },
+	[SchemeFlexActGRD1]  = { titleselfgcolor,  actGRD1bgcolor,   actGRD1bgcolor,       c000000 },
+	[SchemeFlexActGRD2]  = { titleselfgcolor,  actGRD2bgcolor,   actGRD2bgcolor,       c000000 },
+	[SchemeFlexActGRDM]  = { titleselfgcolor,  actGRDMbgcolor,   actGRDMbgcolor,       c000000 },
+	[SchemeFlexActHGRD]  = { titleselfgcolor,  actHGRDbgcolor,   actHGRDbgcolor,       c000000 },
+	[SchemeFlexActDWDL]  = { titleselfgcolor,  actDWDLbgcolor,   actDWDLbgcolor,       c000000 },
+	[SchemeFlexActSPRL]  = { titleselfgcolor,  actSPRLbgcolor,   actSPRLbgcolor,       c000000 },
+	[SchemeFlexActFloat] = { titleselfgcolor,  actfloatbgcolor,  actfloatbgcolor,      c000000 },
+	[SchemeFlexInaTTB]   = { titlenormfgcolor, normTTBbgcolor,   normTTBbgcolor,       c000000 },
+	[SchemeFlexInaLTR]   = { titlenormfgcolor, normLTRbgcolor,   normLTRbgcolor,       c000000 },
+	[SchemeFlexInaMONO]  = { titlenormfgcolor, normMONObgcolor,  normMONObgcolor,      c000000 },
+	[SchemeFlexInaGRID]  = { titlenormfgcolor, normGRIDbgcolor,  normGRIDbgcolor,      c000000 },
+	[SchemeFlexInaGRD1]  = { titlenormfgcolor, normGRD1bgcolor,  normGRD1bgcolor,      c000000 },
+	[SchemeFlexInaGRD2]  = { titlenormfgcolor, normGRD2bgcolor,  normGRD2bgcolor,      c000000 },
+	[SchemeFlexInaGRDM]  = { titlenormfgcolor, normGRDMbgcolor,  normGRDMbgcolor,      c000000 },
+	[SchemeFlexInaHGRD]  = { titlenormfgcolor, normHGRDbgcolor,  normHGRDbgcolor,      c000000 },
+	[SchemeFlexInaDWDL]  = { titlenormfgcolor, normDWDLbgcolor,  normDWDLbgcolor,      c000000 },
+	[SchemeFlexInaSPRL]  = { titlenormfgcolor, normSPRLbgcolor,  normSPRLbgcolor,      c000000 },
+	[SchemeFlexInaFloat] = { titlenormfgcolor, normfloatbgcolor, normfloatbgcolor,     c000000 },
+	[SchemeFlexSelTTB]   = { titleselfgcolor,  selTTBbgcolor,    titleselbordercolor,  c000000 },
+	[SchemeFlexSelLTR]   = { titleselfgcolor,  selLTRbgcolor,    titleselbordercolor,  c000000 },
+	[SchemeFlexSelMONO]  = { titleselfgcolor,  selMONObgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelGRID]  = { titleselfgcolor,  selGRIDbgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelGRD1]  = { titleselfgcolor,  selGRD1bgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelGRD2]  = { titleselfgcolor,  selGRD2bgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelGRDM]  = { titleselfgcolor,  selGRDMbgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelHGRD]  = { titleselfgcolor,  selHGRDbgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelDWDL]  = { titleselfgcolor,  selDWDLbgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelSPRL]  = { titleselfgcolor,  selSPRLbgcolor,   titleselbordercolor,  c000000 },
+	[SchemeFlexSelFloat] = { titleselfgcolor,  selfloatbgcolor,  titleselbordercolor,  c000000 },
 };
 
 
 
 static const char *const autostart[] = {
-  "st", NULL,
   "dwmblocks", NULL,
   "shotkey", NULL,
   "xrandr", "-s", "1920x1080", NULL,
@@ -121,9 +223,9 @@ const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=12", "-g", "50x20", "-e", "bc", "-lq", NULL};
 
 static Sp scratchpads[] = {
-  /* name          cmd  */
-  {"spterm",      spcmd1},
-  {"spcalc",      spcmd2},
+	/* name          cmd  */
+	{"spterm",      spcmd1},
+	{"spcalc",      spcmd2},
 };
 
 /* Tags
@@ -154,9 +256,9 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-  [DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-  [ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
-  [ALT_TAGS_DECORATION] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
+	[ALT_TAGS_DECORATION] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
 };
 
 
@@ -179,35 +281,35 @@ static char *tagicons[][NUMTAGS] = {
  * the patches you enable.
  */
 static const Rule rules[] = {
-  /* xprop(1):
-   *  WM_CLASS(STRING) = instance, class
-   *  WM_NAME(STRING) = title
-   *  WM_WINDOW_ROLE(STRING) = role
-   *  _NET_WM_WINDOW_TYPE(ATOM) = wintype
-   */
-  RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
-  RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
-  RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
-  RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-  RULE(.class = "Brave", .tags = 1 << 2, .isfakefullscreen = 1)
-  RULE(.class = "zoom", .tags = 1 << 3, .isfakefullscreen = 1)
-  RULE(.class = "Gimp", .tags = 1 << 4)
-  RULE(.class = "Firefox", .tags = 1 << 8)
-  RULE(.class = "Virt-manager", .tags = 1 << 8, .isfakefullscreen = 1)
-  RULE(.class = "discord", .tags = 1 << 7, .isfakefullscreen = 1)
-  RULE(.class = "qBittorrent", .tags = 1 << 5)
-  RULE(.class = "Zathura", .noswallow = 1)
-  RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 4, .noswallow = 1)
-  RULE(.class = "MATLAB R2021a", .tags = 1 << 4, .noswallow = 1)
-  RULE(.class = "MATLABWindow", .tags = 1 << 4, .noswallow = 1)
-  RULE(.class = "Dragon-drag-and-drop", .noswallow = 1, .iscentered = 1)
-  RULE(.title = "Event Tester", .noswallow = 1)
-  RULE(.class = TERMCLASS, .isterminal = 1)
-  RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-  RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
-  RULE(.instance = "spmusic", .tags = SPTAG(2), .isfloating = 1)
-  RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
-  RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
+	/* xprop(1):
+	*  WM_CLASS(STRING) = instance, class
+	*  WM_NAME(STRING) = title
+	*  WM_WINDOW_ROLE(STRING) = role
+	*  _NET_WM_WINDOW_TYPE(ATOM) = wintype
+	*/
+	RULE(.wintype = WTYPE "DIALOG", .isfloating = 1)
+	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
+	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
+	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
+	RULE(.class = "Brave", .tags = 1 << 2, .isfakefullscreen = 1)
+	RULE(.class = "zoom", .tags = 1 << 3, .isfakefullscreen = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4)
+	RULE(.class = "Firefox", .tags = 1 << 8)
+	RULE(.class = "Virt-manager", .tags = 1 << 8, .isfakefullscreen = 1)
+	RULE(.class = "discord", .tags = 1 << 7, .isfakefullscreen = 1)
+	RULE(.class = "qBittorrent", .tags = 1 << 5)
+	RULE(.class = "Zathura", .noswallow = 1)
+	RULE(.class = "Yad", .isfloating = 1, .iscentered = 1)
+	RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 4, .noswallow = 1)
+	RULE(.class = "MATLAB R2021a", .tags = 1 << 4, .noswallow = 1)
+	RULE(.class = "MATLABWindow", .tags = 1 << 4, .noswallow = 1)
+	RULE(.class = "Dragon-drag-and-drop", .noswallow = 1, .iscentered = 1)
+	RULE(.title = "Event Tester", .noswallow = 1)
+	RULE(.class = TERMCLASS, .isterminal = 1)
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
+	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
+	RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
+	RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
 };
 
 
@@ -226,11 +328,13 @@ static const Rule rules[] = {
  */
 static const BarRule barrules[] = {
   /* monitor  bar    alignment          widthfunc                drawfunc                clickfunc                name */
-  {  0,       1,     BAR_ALIGN_RIGHT,   width_systray,           draw_systray,           click_systray,           "systray" },
-  { -1,       0,     BAR_ALIGN_LEFT,    width_tags,              draw_tags,              click_tags,              "tags" },
-  { -1,       0,     BAR_ALIGN_LEFT,    width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-	{ 'A',      0,     BAR_ALIGN_RIGHT,   width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
-  { -1,       1,     BAR_ALIGN_NONE,    width_awesomebar,        draw_awesomebar,        click_awesomebar,        "awesomebar" },
+	{ 'A',      0,   BAR_ALIGN_RIGHT,   width_systray,           draw_systray,           click_systray,           "systray" },
+  	{ -1,       0,   BAR_ALIGN_LEFT,    width_tags,              draw_tags,              click_tags,              "tags" },
+  	{ -1,       0,   BAR_ALIGN_LEFT,    width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
+  	{ 'A',      0,   BAR_ALIGN_RIGHT,   width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
+	{ -1,       0,   BAR_ALIGN_NONE,   width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
+	{ -1,       1,   BAR_ALIGN_RIGHT_RIGHT, width_wintitle_hidden, draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
+	{ -1,       1,   BAR_ALIGN_LEFT,   width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
 };
 
 /* layout(s) */
@@ -240,47 +344,37 @@ static const int nstack      = 0;    /* number of clients in primary stack area 
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 
-/* mouse scroll resize */
-static const int scrollsensetivity = 30; /* 1 means resize window by 1 pixel for each scroll event */
-/* resizemousescroll direction argument list */
-static const int scrollargs[][2] = {
-  /* width change         height change */
-  { +scrollsensetivity, 0 },
-  { -scrollsensetivity, 0 },
-  { 0,            +scrollsensetivity },
-  { 0,          -scrollsensetivity },
-};
 
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
-	{ "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
-	{ "==",       flextile,         { -1, -1, NO_SPLIT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // rows
-	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
-	{ "==#",      flextile,         { -1, -1, SPLIT_HORIZONTAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // bstackgrid
+	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
 	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
-	{ "===",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // bstackhoriz
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
-	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
+	{ "[M]",      monocle,          {0} },
+	{ "[D]",      deck,             {0} },
 	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
-	{ "-M-",      flextile,         { -1, -1, SPLIT_CENTERED_HORIZONTAL, TOP_TO_BOTTOM, LEFT_TO_RIGHT, LEFT_TO_RIGHT, NULL } }, // centeredmaster horiz
-	{ "[T]",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
 	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
+	{ "[]#",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // stackgrid
+	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
  	{ "><>",      NULL,             {0} },    /* no layout function means floating behavior */
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
+	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };
 
 /* key definitions */
 #define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
-  { MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
-  { MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-  { MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
-  { MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ MODKEY,                       KEY,      comboview,      {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
+	{ MODKEY|Mod1Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} }, \
 
+#define LAYOUTSKEYS(KEY,LAYOUT) \
+	{ MODKEY,                       KEY,      setlayout,      {.v = &layouts[LAYOUT - 1]} }, \
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -294,143 +388,167 @@ static const Layout layouts[] = {
 
 #include <X11/XF86keysym.h>
 static Key keys[] = {
-  // KEYBOARD BINDINGS
+	// KEYBOARD BINDINGS
 
-  /* modifier                   key               function                argument */
-  // Tags management
-  TAGKEYS(                      XK_1,                                     0) // Tag 1
-  TAGKEYS(                      XK_2,                                     1) // Tag 2
-  TAGKEYS(                      XK_3,                                     2) // Tag 3
-  TAGKEYS(                      XK_4,                                     3) // Tag 4
-  TAGKEYS(                      XK_5,                                     4) // Tag 5
-  TAGKEYS(                      XK_6,                                     5) // Tag 6
-  TAGKEYS(                      XK_7,                                     6) // Tag 7
-  TAGKEYS(                      XK_8,                                     7) // Tag 8
-  TAGKEYS(                      XK_9,                                     8) // Tag 9
+	/* modifier                   key               function                argument */
+	// Tags management
+	TAGKEYS(                      XK_1,                                     0) // Tag 1
+	TAGKEYS(                      XK_2,                                     1) // Tag 2
+	TAGKEYS(                      XK_3,                                     2) // Tag 3
+	TAGKEYS(                      XK_4,                                     3) // Tag 4
+	TAGKEYS(                      XK_5,                                     4) // Tag 5
+	TAGKEYS(                      XK_6,                                     5) // Tag 6
+	TAGKEYS(                      XK_7,                                     6) // Tag 7
+	TAGKEYS(                      XK_8,                                     7) // Tag 8
+	TAGKEYS(                      XK_9,                                     8) // Tag 9
+	{ MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
+	{ MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
 
-  { MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
-  { MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
+	// Layouts keys
+	LAYOUTSKEYS(                 XK_F1,                                     1)
+	LAYOUTSKEYS(                 XK_F2,                                     2)
+	LAYOUTSKEYS(                 XK_F3,                                     3)
+	LAYOUTSKEYS(                 XK_F4,                                     4)
+	LAYOUTSKEYS(                 XK_F5,                                     5)
+	LAYOUTSKEYS(                 XK_F6,                                     6)
+	LAYOUTSKEYS(                 XK_F7,                                     7)
+	LAYOUTSKEYS(                 XK_F8,                                     8)
+	LAYOUTSKEYS(                 XK_F9,                                     9)
+	LAYOUTSKEYS(                 XK_F10,                                    10)
+	LAYOUTSKEYS(                 XK_F11,                                    11)
+	LAYOUTSKEYS(                 XK_F12,                                    12)
 
-  { MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
-  { MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
+	{ MODKEY,                     XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
+	{ MODKEY|ShiftMask,           XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
 
-  { MODKEY,                     XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
-  { MODKEY|ShiftMask,           XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
-  
-  // Clients management
-  { MODKEY,                     XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
-  { MODKEY,                     XK_l,             focusdir,               {.i = 1 } }, // Focus client to the right
-  { MODKEY,                     XK_k,             focusstack,             {.i = -1 } }, // Focus client to the up
-  { MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus client to the down
+	{ MODKEY,                     XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
+	{ MODKEY|ShiftMask,           XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
-  { MODKEY,                     XK_h,             focusmon,               {.i = -1 } }, // Change focus to previous monitor
-  { MODKEY|ShiftMask,           XK_h,             tagmon,                 {.i = -1 } }, // Move tag to previous monitor
-  { MODKEY,                     XK_l,             focusmon,               {.i = +1 } }, // Change focus to next monitor
-  { MODKEY|ShiftMask,           XK_l,             tagmon,                 {.i = +1 } }, // Move tag to next monitor
+	{ MODKEY,                     XK_w,             shiftview,              { .i = -1 } }, // Backward cycle through tags 
+	{ MODKEY,                     XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
-	{ MODKEY,                     XK_t,             mirrorlayout,           {0} }, // flip the master and stack areas
+	// Clients management
+	{ MODKEY,                     XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
+	{ MODKEY,                     XK_l,             focusdir,               {.i = 1 } }, // Focus client to the right
+	{ MODKEY,                     XK_k,             focusstack,             {.i = -1 } }, // Focus client to the up
+	{ MODKEY,                     XK_j,             focusstack,             {.i = +1 } }, // Focus client to the down
+
+	{ MODKEY,                     XK_h,             setmfact,               {.f = -0.05} }, // Increase master horizontal weight
+	{ MODKEY,                     XK_l,             setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
+	{ MODKEY|ShiftMask,           XK_h,             setcfact,               {.f = +0.25} }, // Increase client vertical weight
+	{ MODKEY|ShiftMask,           XK_l,             setcfact,               {.f = -0.25} }, // Decrease client vertical weight
+
+	{ MODKEY,                     XK_comma,         focusmon,               {.i = -1 } }, // focus on the previous monitor, if any
+	{ MODKEY,                     XK_period,        focusmon,               {.i = +1 } }, // focus on the next monitor, if any
+	{ MODKEY|ShiftMask,           XK_comma,         tagmon,                 {.i = -1 } }, // Move tag to previous monitor
+	{ MODKEY|ShiftMask,           XK_period,        tagmon,                 {.i = +1 } }, // Move tag to next monitor
+
+	{ MODKEY|ControlMask,         XK_m,             mirrorlayout,           {0} }, // flip the master and stack areas
+
+	{ MODKEY,                     XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{ MODKEY,                     XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{ MODKEY|Mod1Mask,            XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
+	{ MODKEY|Mod1Mask,            XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
+	{ MODKEY|ShiftMask,           XK_bracketleft,   rotatelayoutaxis,       {.i = -3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
+	{ MODKEY|ShiftMask,           XK_bracketright,  rotatelayoutaxis,       {.i = +3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
+	{ MODKEY|ControlMask,         XK_bracketleft,   rotatelayoutaxis,       {.i = -4 } }, // cycle through the available tiling arrangements for the secondary stack area
+	{ MODKEY|ControlMask,         XK_bracketright,  rotatelayoutaxis,       {.i = +4 } }, // cycle through the available tiling arrangements for the secondary stack area
 
 	{ MODKEY,                     XK_i,             incnmaster,             {.i = +1 } }, // increase the number of clients in the master area
-	{ MODKEY|ShiftMask,           XK_i,             incnstack,              {.i = +1 } }, // increase the number of clients in the primary (first) stack area
-	{ MODKEY,                     XK_o,             incnmaster,             {.i = -1 } }, // decrease the number of clients in the master area
-	{ MODKEY|ShiftMask,           XK_o,             incnstack,              {.i = -1 } }, // increase the number of clients in the primary (first) stack area
+	{ MODKEY,                     XK_u,             incnmaster,             {.i = -1 } }, // decrease the number of clients in the master area
+	{ MODKEY|ControlMask,         XK_i,             incnstack,              {.i = +1 } }, // increase the number of clients in the primary (first) stack area
+	{ MODKEY|ControlMask,         XK_u,             incnstack,              {.i = -1 } }, // increase the number of clients in the primary (first) stack area
 
-  { MODKEY,                     XK_bracketleft,   setmfact,               {.f = -0.05} }, // Increase master horizontal weight
-  { MODKEY,                     XK_bracketright,  setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
-  { MODKEY,                     XK_equal,         setcfact,               {.f = +0.25} }, // Increase client vertical weight
-  { MODKEY,                     XK_minus,         setcfact,               {.f = -0.25} }, // Decrease client vertical weight
+	{ MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // Focus client to the left
+	{ MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
+	{ MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // Focus client to the up
+	{ MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // Focus client to the down
 
-  { MODKEY,                     XK_Left,          focusdir,               {.i = 0 } }, // Focus client to the left
-  { MODKEY,                     XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
-  { MODKEY,                     XK_Up,            focusdir,               {.i = 2 } }, // Focus client to the up
-  { MODKEY,                     XK_Down,          focusdir,               {.i = 3 } }, // Focus client to the down
+	{ MODKEY,                     XK_Left,          focusmon,               {.i = -1 } }, // Change focus to previous monitor
+	{ MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } }, // Move tag to previous monitor
+	{ MODKEY,                     XK_Right,         focusmon,               {.i = +1 } }, // Change focus to next monitor
+	{ MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } }, // Move tag to next monitor
 
-  { MODKEY,                     XK_Left,          focusmon,               {.i = -1 } }, // Change focus to previous monitor
-  { MODKEY|ShiftMask,           XK_Left,          tagmon,                 {.i = -1 } }, // Move tag to previous monitor
-  { MODKEY,                     XK_Right,         focusmon,               {.i = +1 } }, // Change focus to next monitor
-  { MODKEY|ShiftMask,           XK_Right,         tagmon,                 {.i = +1 } }, // Move tag to next monitor
+	{ MODKEY|ShiftMask,           XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
+	{ MODKEY|ShiftMask,           XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
-  { MODKEY|ShiftMask,           XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
-  { MODKEY|ShiftMask,           XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
-  { MODKEY|ShiftMask,           XK_l,             inplacerotate,          {.i = +1} }, // Rotate stack only clockwise
-  { MODKEY|ShiftMask,           XK_h,             inplacerotate,          {.i = -1} }, // Rotate stack only anticlockwise
+	{ MODKEY,                     XK_v,             switchcol,              {0} },
 
-  { MODKEY,                     XK_v,             focusmaster,            {0} }, // Move focus to the master window
+	{ MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
-  { MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
+	{ MODKEY,                     XK_q,             killclient,             {0} }, // Close the selected client
+	{ MODKEY|ShiftMask,           XK_q,             killunsel,              {0} }, // Close all but the selected window
 
-  { MODKEY,                     XK_q,             killclient,             {0} }, // Close the selected client
-  { MODKEY|ShiftMask,           XK_q,             killunsel,              {0} }, // Close all but the selected window
+	{ MODKEY|ShiftMask,           XK_BackSpace,     self_restart,           {0} }, // restart dusk
+	{ MODKEY|ControlMask,         XK_BackSpace,     quit,                   {0} }, // exit dusk
 
-  { MODKEY,                     XK_space,         zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
-  { MODKEY|ShiftMask,           XK_space,         togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
+	{ MODKEY,                     XK_Return,        zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
+	{ MODKEY|ShiftMask,           XK_Return,        togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
 
-  // Desktop management
-  { MODKEY,                     XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
+	// Desktop management
+	{ MODKEY,                     XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
 
-  { MODKEY,                     XK_s,             togglesticky,           {0} }, // Make window appear on all tags
+	{ MODKEY,                     XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
-  { MODKEY,                     XK_f,             togglefullscreen,       {0} }, // Toggle focused window fullscreen
-  { MODKEY|ShiftMask,           XK_f,             togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
+	{ MODKEY,                     XK_space,         togglefullscreen,       {0} }, // Toggle focused window fullscreen
+	{ MODKEY|ShiftMask,           XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
-  // Gaps mamagement
-  { MODKEY,                     XK_z,             incrgaps,               {.i = +3 } }, // Increase gap size by 3
-  { MODKEY,                     XK_x,             incrgaps,               {.i = -3 } }, // Decrease gap size by 3
+	// Gaps mamagement
+	{ MODKEY,                     XK_z,             incrgaps,               {.i = +3 } }, // Increase gap size by 3
+	{ MODKEY,                     XK_x,             incrgaps,               {.i = -3 } }, // Decrease gap size by 3
 
-  { MODKEY,                     XK_a,             togglegaps,             {0} }, // Toggle gaps
-  { MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} }, // Reset gaps to default
+	{ MODKEY,                     XK_a,             togglegaps,             {0} }, // Toggle gaps
+	{ MODKEY|ShiftMask,           XK_a,             defaultgaps,            {0} }, // Reset gaps to default
 };
 
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
+	// MOUSE BINDINGS
 
-
-  // MOUSE BINDINGS
-
-  /* click                event mask            button          function        argument */
-  // Layout section
-  { ClkLtSymbol,          0,                    Button1,        setlayout,      {0} }, // Left click: Set layout to tiling
-  { ClkLtSymbol,          0,                    Button3,        setlayout,      {.v = &layouts[5]} }, // Right click: Set monocle layout
-  { ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
-  { ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
-  // Title section
-  { ClkWinTitle,          0,                    Button1,        togglewin,      {0} }, // Left click: Select window
-  { ClkWinTitle,          0,                    Button3,        showhideclient, {0} }, // Right click: Show/hide the window
-  { ClkWinTitle,          0,                    Button2,        zoom,           {0} }, // Move to master from stack, or vice versa
-  // dwmblocks status bar, signals depends on individual status bar script
-  { ClkStatusText,        0,                    Button1,        sigstatusbar,   {.i = 1} }, // Left click
-  { ClkStatusText,        ShiftMask,            Button1,        sigstatusbar,   {.i = 6} }, // Shift left click
-  { ClkStatusText,        0,                    Button2,        sigstatusbar,   {.i = 2} }, // Middle click
-  { ClkStatusText,        0,                    Button3,        sigstatusbar,   {.i = 3} }, // Right click
-  { ClkStatusText,        0,                    Button4,        sigstatusbar,   {.i = 4} }, // Scroll wheel up
-  { ClkStatusText,        0,                    Button5,        sigstatusbar,   {.i = 5} }, // Scroll wheel down
-  /* { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} }, */
-  /* placemouse options, choose which feels more natural:
-   *    0 - tiled position is relative to mouse cursor
-   *    1 - tiled postiion is relative to window center
-   *    2 - mouse pointer warps to window center
-   *
-   * The moveorplace uses movemouse or placemouse depending on the floating state
-   * of the selected client. Set up individual keybindings for the two if you want
-   * to control these separately (i.e. to retain the feature to move a tiled window
-   * into a floating position).
-   */
-  // Window management
-  { ClkClientWin,         MODKEY,               Button1,        moveorplace,    {.i = 0} },
-  { ClkClientWin,         MODKEY,               Button2,        togglefloating, {0} },
-  { ClkClientWin,         MODKEY,               Button3,        resizemouse,    {0} },
-  { ClkClientWin,         MODKEY,               Button4,        resizemousescroll, {.v = &scrollargs[0]} },
-  { ClkClientWin,         MODKEY,               Button5,        resizemousescroll, {.v = &scrollargs[1]} },
-  { ClkClientWin,         MODKEY,               Button6,        resizemousescroll, {.v = &scrollargs[2]} },
-  { ClkClientWin,         MODKEY,               Button7,        resizemousescroll, {.v = &scrollargs[3]} },
-  { ClkClientWin,         MODKEY|ShiftMask,     Button3,        dragcfact,      {0} }, // Vertical resize of individual client window
-  { ClkClientWin,         MODKEY|ShiftMask,     Button1,        dragmfact,      {0} }, // Resize master and stack areas
-  { ClkTagBar,            0,                    Button1,        view,           {0} },
-  { ClkTagBar,            0,                    Button3,        toggleview,     {0} },
-  { ClkTagBar,            MODKEY,               Button1,        tag,            {0} },
-  { ClkTagBar,            MODKEY,               Button3,        toggletag,      {0} },
+	/* click                event mask            button          function        argument */
+	// Layout section
+	{ ClkLtSymbol,          0,                    Button1,        setlayout,      {0} }, // Left click: Set layout to tiling
+	{ ClkLtSymbol,          0,                    Button3,        setlayout,      {.v = &layouts[5]} }, // Right click: Set monocle layout
+	{ ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
+	{ ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
+	// Title section
+	{ ClkWinTitle,          0,                    Button1,        togglewin,      {0} }, // Left click: Select window
+	{ ClkWinTitle,          0,                    Button3,        showhideclient, {0} }, // Right click: Show/hide the window
+	{ ClkWinTitle,          0,                    Button2,        zoom,           {0} }, // Move to master from stack, or vice versa
+	// dwmblocks status bar, signals depends on individual status bar script
+	{ ClkStatusText,        0,                    Button1,        sigstatusbar,   {.i = 1} }, // Left click
+	{ ClkStatusText,        ShiftMask,            Button1,        sigstatusbar,   {.i = 6} }, // Shift left click
+	{ ClkStatusText,        0,                    Button2,        sigstatusbar,   {.i = 2} }, // Middle click
+	{ ClkStatusText,        0,                    Button3,        sigstatusbar,   {.i = 3} }, // Right click
+	{ ClkStatusText,        0,                    Button4,        sigstatusbar,   {.i = 4} }, // Scroll wheel up
+	{ ClkStatusText,        0,                    Button5,        sigstatusbar,   {.i = 5} }, // Scroll wheel down
+	/* { ClkClientWin,         MODKEY,              Button1,        movemouse,      {0} }, */
+	/* placemouse options, choose which feels more natural:
+	*    0 - tiled position is relative to mouse cursor
+	*    1 - tiled postiion is relative to window center
+	*    2 - mouse pointer warps to window center
+	*
+	* The moveorplace uses movemouse or placemouse depending on the floating state
+	* of the selected client. Set up individual keybindings for the two if you want
+	* to control these separately (i.e. to retain the feature to move a tiled window
+	* into a floating position).
+	*/
+	// Window management
+	{ ClkClientWin,         MODKEY,               Button1,        moveorplace,    {.i = 0} },
+	{ ClkClientWin,         MODKEY,               Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,               Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,               Button4,        inplacerotate,  {.i = +1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) clockwise
+	{ ClkClientWin,         MODKEY,               Button5,        inplacerotate,  {.i = -1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) counter-clockwise
+	{ ClkClientWin,         MODKEY|ShiftMask,     Button4,        inplacerotate,  {.i = +2 } }, // rotate all clients (clockwise)
+	{ ClkClientWin,         MODKEY|ShiftMask,     Button5,        inplacerotate,  {.i = -2 } }, // rotate all clients (counter-clockwise)
+	{ ClkClientWin,         MODKEY|ShiftMask,     Button3,        dragcfact,      {0} }, // Vertical resize of individual client window
+	{ ClkClientWin,         MODKEY|ShiftMask,     Button1,        dragmfact,      {0} }, // Resize master and stack areas
+	{ ClkTagBar,            0,                    Button1,        view,           {0} },
+	{ ClkTagBar,            0,                    Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,               Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,               Button3,        toggletag,      {0} },
 };
 
 /* signal definitions */
@@ -444,9 +562,14 @@ static Signal signals[] = {
 	{ "incnmaster",              incnmaster },
 	{ "togglefloating",          togglefloating },
 	{ "focusmon",                focusmon },
-	{ "focusurgent",             focusurgent },
+	{ "switchcol",               switchcol },
 	{ "inplacerotate",           inplacerotate },
+	{ "incnstack",               incnstack },
+	{ "rotatelayoutaxis",        rotatelayoutaxis },
+	{ "setlayoutaxisex",         setlayoutaxisex },
+	{ "mirrorlayout",            mirrorlayout },
 	{ "setcfact",                setcfact },
+	{ "transferall",             transferall },
 	{ "tagmon",                  tagmon },
 	{ "zoom",                    zoom },
 	{ "incrgaps",                incrgaps },
@@ -465,6 +588,7 @@ static Signal signals[] = {
 	{ "toggleview",              toggleview },
 	{ "shiftview",               shiftview },
 	{ "shiftviewclients",        shiftviewclients },
+	{ "self_restart",            self_restart },
 	{ "togglesticky",            togglesticky },
 	{ "cyclelayout",             cyclelayout },
 	{ "toggleviewex",            toggleviewex },
@@ -477,10 +601,9 @@ static Signal signals[] = {
 	{ "togglefakefullscreen",    togglefakefullscreen },
 	{ "togglescratch",           togglescratch },
 	{ "killclient",              killclient },
+	{ "winview",                 winview },
 	{ "xrdb",                    xrdb },
 	{ "quit",                    quit },
 	{ "setlayout",               setlayout },
 	{ "setlayoutex",             setlayoutex },
 };
-
-
