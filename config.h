@@ -472,7 +472,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,           XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
 	{ MODKEY|ShiftMask,           XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
-	{ MODKEY,                     XK_v,             switchcol,              {0} },
+	{ MODKEY,                     XK_f,             switchcol,              {0} },
 
 	{ MODKEY|ShiftMask,           XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
