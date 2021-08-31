@@ -52,7 +52,6 @@ dragmfact(const Arg *arg)
 	/* do not allow mfact to be modified under certain conditions */
 	if (!m->lt[m->sellt]->arrange                            // floating layout
 		|| (!fixed && m->nmaster && n <= m->nmaster) // no master
-		|| m->lt[m->sellt]->arrange == &monocle
 		|| (m->lt[m->sellt]->arrange == &flextile && m->ltaxis[LAYOUT] == NO_SPLIT)
 	)
 		return;

@@ -333,11 +333,16 @@ static const Layout layouts[] = {
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[T]",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
-	{ "[M]",      monocle,          {0} },
-	{ "[D]",      deck,             {0} },
 	{ NULL,       NULL,             {0} },
 };
 
+
+#define Shift ShiftMask
+#define Ctrl ControlMask
+#define Alt Mod1Mask
+#define AltGr Mod3Mask
+#define Super Mod4Mask
+#define ShiftGr Mod5Mask
 
 /* key definitions */
 #define MODKEY Mod1Mask

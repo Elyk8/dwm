@@ -739,6 +739,7 @@ flextile(Monitor *m)
 	if (n == 0)
 		return;
 
+
 	/* Needed to fix layout symbol displaying the number of clients in the workspace */
 	if (m->ltaxis[MASTER] == MONOCLE && (abs(m->ltaxis[LAYOUT]) == NO_SPLIT || !m->nmaster || n <= m->nmaster))
 		monoclesymbols(m, n);
@@ -800,7 +801,7 @@ static void
 decksymbols(Monitor *m, unsigned int n)
 {
 	if (n > m->nmaster)
-		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[]%d", n);
+		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[]%d", ( n - selmon->pertag->nmasters[selmon->pertag->curtag] ));
 	else
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[D]");
 }

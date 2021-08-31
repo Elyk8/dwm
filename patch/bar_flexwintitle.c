@@ -3,7 +3,7 @@
 #define FLEXWINTITLE_BORDERS 1       // 0 = off, 1 = on
 #endif
 #ifndef FLEXWINTITLE_SHOWFLOATING
-#define FLEXWINTITLE_SHOWFLOATING 1  // whether to show titles for floating windows, hidden clients are always shown
+#define FLEXWINTITLE_SHOWFLOATING 0  // whether to show titles for floating windows, hidden clients are always shown
 #endif
 #ifndef FLEXWINTITLE_MASTERWEIGHT
 #define FLEXWINTITLE_MASTERWEIGHT 50  // master weight compared to stack, hidden and floating window titles
@@ -72,16 +72,8 @@ getschemefor(Monitor *m, int group, int activegroup)
 	case GRP_MASTER:
 	case GRP_STACK1:
 	case GRP_STACK2:
-		if (m->lt[m->sellt]->arrange == &deck) {
-			if (group == GRP_MASTER)
-				return (activegroup ? SchemeFlexActTTB : SchemeFlexInaTTB);
-			else
-				return (activegroup ? SchemeFlexActMONO : SchemeFlexInaMONO);
-		}
 		if (m->lt[m->sellt]->arrange == &flextile)
 			return (activegroup ? SchemeFlexActTTB + m->ltaxis[group] : SchemeFlexInaTTB + m->ltaxis[group]);
-		if (m->lt[m->sellt]->arrange == &monocle)
-			return (activegroup ? SchemeFlexActMONO : SchemeFlexInaMONO);
 		return SchemeTitleNorm;
 	case GRP_HIDDEN:
 		return SchemeHidNorm;
@@ -255,7 +247,6 @@ flextitlecalculate(
 	/* Certain layouts have no master / stack areas */
 	if (!m->lt[m->sellt]->arrange                            // floating layout
 		|| (!n || (!fixed && m->nmaster && n <= m->nmaster)) // no master
-		|| m->lt[m->sellt]->arrange == &monocle
 		|| (m->lt[m->sellt]->arrange == &flextile && m->ltaxis[LAYOUT] == NO_SPLIT)
 	)
 		fulllayout = 1;

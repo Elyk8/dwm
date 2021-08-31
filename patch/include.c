@@ -51,8 +51,5 @@
 #include "xrdb.c"
 #include "dragmfact.c"
 /* Layouts */
-#include "layout_facts.c"
-#include "layout_deck.c"
 #include "layout_flextile-deluxe.c"
-#include "layout_monocle.c"
 

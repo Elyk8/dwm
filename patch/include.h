@@ -51,7 +51,5 @@
 #include "zoomswap.h"
 #include "xrdb.h"
 /* Layouts */
-#include "layout_deck.h"
 #include "layout_flextile-deluxe.h"
-#include "layout_monocle.h"
 
