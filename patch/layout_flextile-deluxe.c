@@ -739,6 +739,11 @@ flextile(Monitor *m)
 	if (n == 0)
 		return;
 
+	/* Needed to fix layout symbol displaying the number of clients in the workspace */
+	if (m->ltaxis[MASTER] == MONOCLE && (abs(m->ltaxis[LAYOUT]) == NO_SPLIT || !m->nmaster || n <= m->nmaster))
+		monoclesymbols(m, n);
+	if (m->ltaxis[STACK] == MONOCLE && (abs(m->ltaxis[LAYOUT]) == SPLIT_VERTICAL || abs(m->ltaxis[LAYOUT]) == SPLIT_HORIZONTAL_FIXED))
+		decksymbols(m, n);
 
 	(&flexlayouts[abs(m->ltaxis[LAYOUT])])->arrange(m, m->wx + ov, m->wy + oh, m->wh - 2*oh, m->ww - 2*ov, ih, iv, n);
 	return;
