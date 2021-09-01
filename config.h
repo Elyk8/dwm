@@ -24,7 +24,7 @@ static const int sidepad                 = 0;  /* horizontal padding of bar */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
 static const int horizpadbar             = 2;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 0;   /* vertical padding for statusbar */
+static const int vertpadbar              = 2;   /* vertical padding for statusbar */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
@@ -41,7 +41,7 @@ static const char *fonts[]               = {
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#abb2bf";
+static char normfgcolor[]                = "#ECEFF4";
 static char normbgcolor[]                = "#1E1E1E";
 static char normbordercolor[]            = "#1E1E1E";
 static char normfloatcolor[]             = "#569CD6";
@@ -311,6 +311,7 @@ static const Rule rules[] = {
 	RULE(.title = "Event Tester", .noswallow = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
+	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1)
 	RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1, .iscentered = 1)
@@ -335,7 +336,7 @@ static const BarRule barrules[] = {
 	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-  	{ 'A',      0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
+  	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
 	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
 	{ -1,       1,     BAR_ALIGN_LEFT_LEFT,    width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
@@ -419,7 +420,17 @@ static Key keys[] = {
 	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
 
-	// Layouts keys
+	{ MODKEY,                    XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
+	{ MODKEY,                    XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
+	{ MODKEY|Shift,              XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
+	{ MODKEY|Shift,              XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
+
+	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags 
+	{ MODKEY,                    XK_e,             shiftviewclients,       { .i = +1 } }, // Forward cycle through tags 
+	{ MODKEY|Shift,              XK_w,             shiftview,              { .i = -1 } }, // Backward cycle through tags 
+	{ MODKEY|Shift,              XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags 
+
+	// Layouts management
 	LAYOUTSKEYS(                 XK_F1,                                     1)
 	LAYOUTSKEYS(                 XK_F2,                                     2)
 	LAYOUTSKEYS(                 XK_F3,                                     3)
@@ -433,15 +444,15 @@ static Key keys[] = {
 	LAYOUTSKEYS(                 XK_F11,                                    11)
 	LAYOUTSKEYS(                 XK_F12,                                    12)
 
-	{ MODKEY,                    XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
-	{ MODKEY,                    XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
-	{ MODKEY|Shift,              XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY|Shift,              XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
-
-	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY,                    XK_e,             shiftviewclients,       { .i = +1 } }, // Forward cycle through tags 
-	{ MODKEY|Shift,              XK_w,             shiftview,              { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY|Shift,              XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags 
+	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{ MODKEY|Alt,                XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
+	{ MODKEY|Alt,                XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
+	{ MODKEY|Shift,              XK_bracketleft,   rotatelayoutaxis,       {.i = -3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
+	{ MODKEY|Shift,              XK_bracketright,  rotatelayoutaxis,       {.i = +3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
+	{ MODKEY|Ctrl,               XK_bracketleft,   rotatelayoutaxis,       {.i = -4 } }, // cycle through the available tiling arrangements for the secondary stack area
+	{ MODKEY|Ctrl,               XK_bracketright,  rotatelayoutaxis,       {.i = +4 } }, // cycle through the available tiling arrangements for the secondary stack area
+	{ MODKEY|Ctrl,               XK_m,             mirrorlayout,           {0} }, // flip the master and stack areas
 
 	// Clients management
 	{ MODKEY,                    XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
@@ -459,17 +470,7 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_comma,         tagmon,                 {.i = -1 } }, // Move tag to previous monitor
 	{ MODKEY|Shift,              XK_period,        tagmon,                 {.i = +1 } }, // Move tag to next monitor
 
-	{ MODKEY|Ctrl,               XK_m,             mirrorlayout,           {0} }, // flip the master and stack areas
 	{ Ctrl|Alt,                  XK_Tab,           togglenomodbuttons,     {0} }, // disables / enables keybindings that are not accompanied by any modifier buttons for a client
-
-	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
-	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
-	{ MODKEY|Alt,                XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
-	{ MODKEY|Alt,                XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
-	{ MODKEY|Shift,              XK_bracketleft,   rotatelayoutaxis,       {.i = -3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
-	{ MODKEY|Shift,              XK_bracketright,  rotatelayoutaxis,       {.i = +3 } }, // cycle through the available tiling arrangements for the primary (first) stack area
-	{ MODKEY|Ctrl,               XK_bracketleft,   rotatelayoutaxis,       {.i = -4 } }, // cycle through the available tiling arrangements for the secondary stack area
-	{ MODKEY|Ctrl,               XK_bracketright,  rotatelayoutaxis,       {.i = +4 } }, // cycle through the available tiling arrangements for the secondary stack area
 
 	{ MODKEY,                    XK_i,             incnmaster,             {.i = +1 } }, // increase the number of clients in the master area
 	{ MODKEY,                    XK_u,             incnmaster,             {.i = -1 } }, // decrease the number of clients in the master area
@@ -490,7 +491,6 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
 	{ MODKEY,                    XK_f,             switchcol,              {0} },
-
 	{ MODKEY|Shift,              XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
 	{ MODKEY,                    XK_q,             killclient,             {0} }, // Close the selected client
@@ -504,7 +504,6 @@ static Key keys[] = {
 
 	// Desktop management
 	{ MODKEY,                    XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
-
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 	{ MODKEY,                    XK_space,         togglefullscreen,       {0} }, // Toggle focused window fullscreen
