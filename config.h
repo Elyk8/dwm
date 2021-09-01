@@ -20,10 +20,10 @@ static const int bar_height              = 26;   /* 0 means derive from font, >=
 static const int vertpad                 = 0;  /* vertical padding of bar */
 static const int sidepad                 = 0;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
-#define ICONSPACING 5  /* space between icon and title */
+#define ICONSPACING 3  /* space between icon and title */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
-static const int horizpadbar             = 2;   /* horizontal padding for statusbar */
+static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
 static const int vertpadbar              = 2;   /* vertical padding for statusbar */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
@@ -35,7 +35,7 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font:heavy:size=10:antialias=true:autohint=true", 
+	"JetBrains Mono Nerd Font:heavy:size=8:antialias=true:autohint=true", 
 	"Twemoji:size=8:antialias=true:autohint=true"
 };
 
@@ -58,7 +58,7 @@ static char titlenormfloatcolor[]        = "#569CD6";
 
 static char titleselfgcolor[]            = "#ECEFF4";
 static char titleselbgcolor[]            = "#3B4252";
-static char titleselbordercolor[]        = "#569CD6";
+static char titleselbordercolor[]        = "#D8DEE9";
 static char titleselfloatcolor[]         = "#3B4252";
 
 static char tagsnormfgcolor[]            = "#abb2bf";
@@ -81,39 +81,41 @@ static char urgbgcolor[]                 = "#1E1E1E";
 static char urgbordercolor[]             = "#D7BA7D";
 static char urgfloatcolor[]              = "#569CD6";
 
-static char normTTBbgcolor[]             = "#330000";
-static char normLTRbgcolor[]             = "#330033";
-static char normMONObgcolor[]            = "#000033";
-static char normGRIDbgcolor[]            = "#003300";
-static char normGRD1bgcolor[]            = "#003300";
-static char normGRD2bgcolor[]            = "#003300";
-static char normGRDMbgcolor[]            = "#506600";
-static char normHGRDbgcolor[]            = "#b96600";
-static char normDWDLbgcolor[]            = "#003333";
-static char normSPRLbgcolor[]            = "#333300";
-static char normfloatbgcolor[]           = "#115577";
-static char actTTBbgcolor[]              = "#440000";
-static char actLTRbgcolor[]              = "#440044";
-static char actMONObgcolor[]             = "#000044";
-static char actGRIDbgcolor[]             = "#004400";
-static char actGRD1bgcolor[]             = "#004400";
-static char actGRD2bgcolor[]             = "#004400";
-static char actGRDMbgcolor[]             = "#507711";
-static char actHGRDbgcolor[]             = "#b97711";
-static char actDWDLbgcolor[]             = "#004444";
-static char actSPRLbgcolor[]             = "#444400";
-static char actfloatbgcolor[]            = "#116688";
-static char selTTBbgcolor[]              = "#550000";
-static char selLTRbgcolor[]              = "#550055";
-static char selMONObgcolor[]             = "#212171";
-static char selGRIDbgcolor[]             = "#005500";
-static char selGRD1bgcolor[]             = "#005500";
-static char selGRD2bgcolor[]             = "#005500";
-static char selGRDMbgcolor[]             = "#508822";
-static char selHGRDbgcolor[]             = "#b98822";
-static char selDWDLbgcolor[]             = "#005555";
-static char selSPRLbgcolor[]             = "#555500";
-static char selfloatbgcolor[]            = "#117799";
+static char normTTBbgcolor[]             = "#141414";
+static char normLTRbgcolor[]             = "#121419";
+static char normMONObgcolor[]            = "#0d2234";
+static char normGRIDbgcolor[]            = "#270909";
+static char normGRD1bgcolor[]            = "#270909";
+static char normGRD2bgcolor[]            = "#270909";
+static char normGRDMbgcolor[]            = "#370c17";
+static char normHGRDbgcolor[]            = "#0f5b3d";
+static char normDWDLbgcolor[]            = "#261225";
+static char normSPRLbgcolor[]            = "#32270f";
+static char normfloatbgcolor[]           = "#505969";
+
+static char actTTBbgcolor[]              = "#1E1E1E";
+static char actLTRbgcolor[]              = "#1a1d24";
+static char actMONObgcolor[]             = "#0d2234";
+static char actGRIDbgcolor[]             = "#370c0c";
+static char actGRD1bgcolor[]             = "#370c0c";
+static char actGRD2bgcolor[]             = "#370c0c";
+static char actGRDMbgcolor[]             = "#47101e";
+static char actHGRDbgcolor[]             = "#126c48";
+static char actDWDLbgcolor[]             = "#331931";
+static char actSPRLbgcolor[]             = "#413314";
+static char actfloatbgcolor[]            = "#505969";
+
+static char selTTBbgcolor[]              = "#2b303b";
+static char selLTRbgcolor[]              = "#323232";
+static char selMONObgcolor[]             = "#143654";
+static char selGRIDbgcolor[]             = "#571414";
+static char selGRD1bgcolor[]             = "#571414";
+static char selGRD2bgcolor[]             = "#571414";
+static char selGRDMbgcolor[]             = "#67172b";
+static char selHGRDbgcolor[]             = "#188e5e";
+static char selDWDLbgcolor[]             = "#4e254b";
+static char selSPRLbgcolor[]             = "#503e19";
+static char selfloatbgcolor[]            = "#596274";
 
 static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
@@ -337,8 +339,8 @@ static const Rule rules[] = {
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
 	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
-  	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
+  	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
   	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
 //	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },

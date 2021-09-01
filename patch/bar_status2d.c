@@ -31,7 +31,10 @@ width_status2d(Bar *bar, BarArg *a)
 int
 draw_status2d(Bar *bar, BarArg *a)
 {
-	return drawstatusbar(a, rawstext);
+	int ret;
+	ret = drawstatusbar(a, rawstext);
+	drawindicator(bar->mon, NULL, 1, a->x, a->y, a->w, a->h, 0, 1, 0, tiledindicatortype);
+	return ret;
 }
 
 

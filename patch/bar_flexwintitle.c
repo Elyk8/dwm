@@ -1,6 +1,6 @@
 /* Flexwintitle properties, you can override these in your config.h if you want. */
 #ifndef FLEXWINTITLE_BORDERS
-#define FLEXWINTITLE_BORDERS 1       // 0 = off, 1 = on
+#define FLEXWINTITLE_BORDERS 0       // 0 = off, 1 = on
 #endif
 #ifndef FLEXWINTITLE_SHOWFLOATING
 #define FLEXWINTITLE_SHOWFLOATING 0  // whether to show titles for floating windows, hidden clients are always shown
@@ -15,7 +15,7 @@
 #define FLEXWINTITLE_HIDDENWEIGHT 0  // hidden window title weight
 #endif
 #ifndef FLEXWINTITLE_FLOATWEIGHT
-#define FLEXWINTITLE_FLOATWEIGHT 0   // floating window title weight, set to 0 to not show floating windows
+#define FLEXWINTITLE_FLOATWEIGHT 15   // floating window title weight, set to 0 to not show floating windows
 #endif
 
 #define SCHEMEFOR(c) getschemefor(m, c, groupactive == c)

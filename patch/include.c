@@ -13,7 +13,6 @@
 #include "bar_winicon.c"
 #include "bar_tags.c"
 #include "bar_flexwintitle.c"
-#include "bar_wintitle_floating.c"
 #include "bar_wintitle_hidden.c"
 #include "bar_systray.c"
 #include "bar_wintitleactions.c"
