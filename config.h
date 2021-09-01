@@ -115,7 +115,7 @@ static char selDWDLbgcolor[]             = "#005555";
 static char selSPRLbgcolor[]             = "#555500";
 static char selfloatbgcolor[]            = "#117799";
 
-static const unsigned int baralpha = 0xd0;
+static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -222,12 +222,14 @@ static const char *const autostart[] = {
 const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=12", "-g", "50x20", "-e", "bc", "-lq", NULL};
 const char *spcmd3[] = {TERM, "-n", "spfm", "-g", "144x41", "-e", "lf", NULL };
+const char *spcmd4[] = {TERM, "-n", "spmusic", "-g", "144x41", "-e", "ncmpcpp", NULL };
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
 	{"spfm",        spcmd3},
+	{"spmusic",     spcmd4},
 };
 
 /* Tags
@@ -312,6 +314,7 @@ static const Rule rules[] = {
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spmusic", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1, .iscentered = 1)
@@ -525,6 +528,7 @@ static Key keys[] = {
 	// Scratch
 	SCRATCHKEYS(                 XK_apostrophe,    1 )
 	SCRATCHKEYS(                 XK_r,             2 )
+	SCRATCHKEYS(                 XK_m,             3 )
 };
 
 
