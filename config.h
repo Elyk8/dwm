@@ -33,7 +33,7 @@ static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
-static int stickyindicatortype           = INDICATOR_BOX_FULL;
+static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
 	"JetBrains Mono Nerd Font:heavy:size=10:antialias=true:autohint=true", 
 	"Twemoji:size=8:antialias=true:autohint=true"
@@ -76,10 +76,10 @@ static char hidselfgcolor[]              = "#227799";
 static char hidnormbgcolor[]             = "#222222";
 static char hidselbgcolor[]              = "#222222";
 
-static char urgfgcolor[]                 = "#bbbbbb";
-static char urgbgcolor[]                 = "#222222";
-static char urgbordercolor[]             = "#ff0000";
-static char urgfloatcolor[]              = "#db8fd9";
+static char urgfgcolor[]                 = "#ECEFF4";
+static char urgbgcolor[]                 = "#1E1E1E";
+static char urgbordercolor[]             = "#D7BA7D";
+static char urgfloatcolor[]              = "#569CD6";
 
 static char normTTBbgcolor[]             = "#330000";
 static char normLTRbgcolor[]             = "#330033";
@@ -309,9 +309,9 @@ static const Rule rules[] = {
 	RULE(.class = "Dragon-drag-and-drop", .noswallow = 1, .iscentered = 1)
 	RULE(.class = TERMCLASS, .isterminal = 1)
 	RULE(.title = "Event Tester", .noswallow = 1)
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1)
-	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1)
-	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1)
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "cheatsheet", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1, .iscentered = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1, .iscentered = 1)
@@ -338,8 +338,8 @@ static const BarRule barrules[] = {
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
   	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
-	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
-	{ -1,       1,     BAR_ALIGN_LEFT_LEFT,    width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
+//	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
+	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
 };
 
 /* layout(s) */
@@ -383,7 +383,9 @@ static const Layout layouts[] = {
 	{ MODKEY|Ctrl,               KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|Shift,              KEY,      combotag,       {.ui = 1 << TAG} }, \
 	{ MODKEY|Ctrl|Shift,         KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Alt|Shift,          KEY,      swaptags,       {.ui = 1 << TAG} }, \
+	{ MODKEY|Alt|ShiftMask,      KEY,      swaptags,       {.ui = 1 << TAG} }, \
+	{ MODKEY|Alt,                KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|Alt|Ctrl,           KEY,      tagprevmon,     {.ui = 1 << TAG} }, \
 
 #define LAYOUTSKEYS(KEY,LAYOUT) \
 	{ MODKEY,                    KEY,      setlayout,      {.v = &layouts[LAYOUT - 1]} }, \
@@ -500,10 +502,14 @@ static Key keys[] = {
 	{ MODKEY|Ctrl,               XK_BackSpace,     quit,                   {0} }, // exit dusk
 
 	{ MODKEY,                    XK_Return,        zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
-	{ MODKEY|Shift,              XK_Return,        togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
+
+	{ MODKEY,                    XK_g,             togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
+	{ MODKEY|Shift,              XK_g,             floatpos,               {.v = "50% 50% 80% 80%" } }, // center client and take up 80% of the screen
 
 	// Desktop management
 	{ MODKEY,                    XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
+	{ MODKEY|Shift,              XK_n,             togglealttag,           {0} },
+
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 	{ MODKEY,                    XK_space,         togglefullscreen,       {0} }, // Toggle focused window fullscreen
@@ -517,8 +523,8 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_a,             defaultgaps,            {0} }, // Reset gaps to default
 
 	// Scratch
-	SCRATCHKEYS(                 XK_apostrophe,    1)
-	SCRATCHKEYS(                 XK_r,             2)
+	SCRATCHKEYS(                 XK_apostrophe,    1 )
+	SCRATCHKEYS(                 XK_r,             2 )
 };
 
 
@@ -622,6 +628,8 @@ static Signal signals[] = {
 	{ "killclient",              killclient },
 	{ "winview",                 winview },
 	{ "xrdb",                    xrdb },
+	{ "tagnextmonex",            tagnextmonex },
+	{ "tagprevmonex",            tagprevmonex },
 	{ "quit",                    quit },
 	{ "setlayout",               setlayout },
 	{ "setlayoutex",             setlayoutex },

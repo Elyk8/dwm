@@ -351,7 +351,9 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      combotag,       {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} }, \
-	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} },
+	{ MODKEY|Mod4Mask|ShiftMask,    KEY,      swaptags,       {.ui = 1 << TAG} }, \
+	{ MODKEY|Mod4Mask,              KEY,      tagnextmon,     {.ui = 1 << TAG} }, \
+	{ MODKEY|Mod4Mask|ControlMask,  KEY,      tagprevmon,     {.ui = 1 << TAG} },
 
 
 
@@ -457,6 +459,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,               {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,                 {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,                 {.i = +1 } },
+	{ MODKEY,                       XK_n,          togglealttag,           {0} },
 	/* Note that due to key limitations the below example kybindings are defined with a Mod3Mask,
 	 * which is not always readily available. Refer to the patch wiki for more details. */
 	/* Client position is limited to monitor window area */
@@ -590,12 +593,15 @@ static Signal signals[] = {
 	{ "tagex",                   tagex },
 	{ "toggletag",               toggletag },
 	{ "toggletagex",             toggletagex },
+	{ "togglealttag",            togglealttag },
 	{ "togglefullscreen",        togglefullscreen },
 	{ "togglefakefullscreen",    togglefakefullscreen },
 	{ "togglescratch",           togglescratch },
 	{ "killclient",              killclient },
 	{ "winview",                 winview },
 	{ "xrdb",                    xrdb },
+	{ "tagnextmonex",            tagnextmonex },
+	{ "tagprevmonex",            tagprevmonex },
 	{ "quit",                    quit },
 	{ "setlayout",               setlayout },
 	{ "setlayoutex",             setlayoutex },

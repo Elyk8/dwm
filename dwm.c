@@ -142,6 +142,7 @@ enum {
 	NetSystemTrayVisual, NetWMWindowTypeDock, NetSystemTrayOrientationHorz,
 	NetDesktopNames, NetDesktopViewport, NetNumberOfDesktops, NetCurrentDesktop,
 	NetClientList,
+	NetClientListStacking,
 	NetLast
 }; /* EWMH atoms */
 
@@ -308,6 +309,7 @@ struct Monitor {
 	Monitor *next;
 	Bar *bar;
 	const Layout *lt[2];
+	unsigned int alttag;
 	Pertag *pertag;
 };
 
@@ -1626,6 +1628,8 @@ manage(Window w, XWindowAttributes *wa)
 	attachstack(c);
 	XChangeProperty(dpy, root, netatom[NetClientList], XA_WINDOW, 32, PropModeAppend,
 		(unsigned char *) &(c->win), 1);
+	XChangeProperty(dpy, root, netatom[NetClientListStacking], XA_WINDOW, 32, PropModePrepend,
+		(unsigned char *) &(c->win), 1);
 	XMoveResizeWindow(dpy, c->win, c->x + 2 * sw, c->y, c->w, c->h); /* some windows require this */
 
 	if (!HIDDEN(c))
@@ -2192,11 +2196,9 @@ setfullscreen(Client *c, int fullscreen)
 void
 setlayout(const Arg *arg)
 {
-	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt]) {
 		selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
 		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
-	}
-	if (arg && arg->v)
+	if (arg && arg->v && arg->v != selmon->lt[selmon->sellt ^ 1])
 		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
 	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
 
@@ -2290,6 +2292,7 @@ setup(void)
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetClientList] = XInternAtom(dpy, "_NET_CLIENT_LIST", False);
+	netatom[NetClientListStacking] = XInternAtom(dpy, "_NET_CLIENT_LIST_STACKING", False);
 	/* init cursors */
 	cursor[CurNormal] = drw_cur_create(drw, XC_left_ptr);
 	cursor[CurResize] = drw_cur_create(drw, XC_sizing);
@@ -2326,6 +2329,7 @@ setup(void)
 	setdesktopnames();
 	setviewport();
 	XDeleteProperty(dpy, root, netatom[NetClientList]);
+	XDeleteProperty(dpy, root, netatom[NetClientListStacking]);
 	/* select events */
 	wa.cursor = cursor[CurNormal]->cursor;
 	wa.event_mask = SubstructureRedirectMask|SubstructureNotifyMask
@@ -2452,9 +2456,19 @@ tag(const Arg *arg)
 void
 tagmon(const Arg *arg)
 {
-	if (!selmon->sel || !mons->next)
+	Client *c = selmon->sel;
+	if (!c || !mons->next)
 		return;
-	sendmon(selmon->sel, dirtomon(arg->i));
+	if (c->isfullscreen) {
+		c->isfullscreen = 0;
+		sendmon(c, dirtomon(arg->i));
+		c->isfullscreen = 1;
+		if (c->fakefullscreen != 1) {
+			resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
+			XRaiseWindow(dpy, c->win);
+		}
+	} else
+		sendmon(c, dirtomon(arg->i));
 }
 
 void
@@ -2727,6 +2741,12 @@ updateclientlist()
 				XA_WINDOW, 32, PropModeAppend,
 				(unsigned char *) &(c->win), 1);
 
+	XDeleteProperty(dpy, root, netatom[NetClientListStacking]);
+	for (m = mons; m; m = m->next)
+		for (c = m->stack; c; c = c->snext)
+			XChangeProperty(dpy, root, netatom[NetClientListStacking],
+				XA_WINDOW, 32, PropModeAppend,
+				(unsigned char *) &(c->win), 1);
 }
 
 int

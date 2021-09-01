@@ -3,6 +3,7 @@
 #include "bar_tagicons.c"
 
 #include "bar_alpha.c"
+#include "bar_alternativetags.c"
 #include "bar_dwmblocks.c"
 #include "bar_ewmhtags.c"
 #include "combo.c"
@@ -42,6 +43,7 @@
 #include "swallow.c"
 #include "swaptags.c"
 #include "switchcol.c"
+#include "tagothermonitor.c"
 #include "togglefullscreen.c"
 #include "transferall.c"
 #include "vanitygaps.c"
