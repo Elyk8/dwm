@@ -35,8 +35,8 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font:heavy:size=8:antialias=true:autohint=true", 
-	"Twemoji:size=8:antialias=true:autohint=true"
+	"JetBrains Mono Nerd Font:heavy:size=9:antialias=true:autohint=true", 
+	"Twemoji:size=7:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -76,8 +76,8 @@ static char hidselfgcolor[]              = "#227799";
 static char hidnormbgcolor[]             = "#222222";
 static char hidselbgcolor[]              = "#222222";
 
-static char urgfgcolor[]                 = "#ECEFF4";
-static char urgbgcolor[]                 = "#1E1E1E";
+static char urgfgcolor[]                 = "#D7BA7D";
+static char urgbgcolor[]                 = "#3B4252";
 static char urgbordercolor[]             = "#D7BA7D";
 static char urgfloatcolor[]              = "#569CD6";
 
@@ -222,9 +222,9 @@ static const char *const autostart[] = {
 
 
 const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
-const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=12", "-g", "50x20", "-e", "bc", "-lq", NULL};
-const char *spcmd3[] = {TERM, "-n", "spfm", "-g", "144x41", "-e", "lf", NULL };
-const char *spcmd4[] = {TERM, "-n", "spmusic", "-g", "144x41", "-e", "ncmpcpp", NULL };
+const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL};
+const char *spcmd3[] = {TERM, "-n", "spfm", "-g", "120x30", "-e", "lf", NULL };
+const char *spcmd4[] = {TERM, "-n", "spmusic", "-g", "120x30", "-e", "ncmpcpp", NULL };
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -297,8 +297,8 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.role = "pop-up", .isfloating = 1, .iscentered = 1, .isterminal = 1)
-	RULE(.class = "Brave", .tags = 1 << 3, .isfakefullscreen = 1)
+	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1)
+	RULE(.role = "pop-up", .isfloating = 1, .iscentered = 1)
 	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 8)
@@ -369,7 +369,7 @@ static const Layout layouts[] = {
 	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
- 	{ "><>",      NULL,             {0} },    /* no layout function means floating behavior */
+ 	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };
@@ -397,8 +397,8 @@ static const Layout layouts[] = {
 
 #define SCRATCHKEYS(KEY,NUM) \
 	{ MODKEY,                    KEY,      togglescratch,  {.ui = NUM } }, \
-	{ MODKEY|Ctrl,               KEY,      setscratch,     {.ui = NUM } }, \
-	{ MODKEY|Ctrl|Shift,         KEY,      removescratch,  {.ui = NUM } }, \
+	{ MODKEY|Alt,                KEY,      setscratch,     {.ui = NUM } }, \
+	{ MODKEY|Alt|Shift,          KEY,      removescratch,  {.ui = NUM } }, \
 
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
@@ -438,18 +438,18 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
 	// Layouts management
-	LAYOUTSKEYS(                 XK_F1,                                     1)
-	LAYOUTSKEYS(                 XK_F2,                                     2)
-	LAYOUTSKEYS(                 XK_F3,                                     3)
-	LAYOUTSKEYS(                 XK_F4,                                     4)
-	LAYOUTSKEYS(                 XK_F5,                                     5)
-	LAYOUTSKEYS(                 XK_F6,                                     6)
-	LAYOUTSKEYS(                 XK_F7,                                     7)
-	LAYOUTSKEYS(                 XK_F8,                                     8)
-	LAYOUTSKEYS(                 XK_F9,                                     9)
-	LAYOUTSKEYS(                 XK_F10,                                    10)
-	LAYOUTSKEYS(                 XK_F11,                                    11)
-	LAYOUTSKEYS(                 XK_F12,                                    12)
+	LAYOUTSKEYS(                 XK_F1,                                    1)
+	LAYOUTSKEYS(                 XK_F2,                                    2)
+	LAYOUTSKEYS(                 XK_F3,                                    3)
+	LAYOUTSKEYS(                 XK_F4,                                    4)
+	LAYOUTSKEYS(                 XK_F5,                                    5)
+	LAYOUTSKEYS(                 XK_F6,                                    6)
+	LAYOUTSKEYS(                 XK_F7,                                    7)
+	LAYOUTSKEYS(                 XK_F8,                                    8)
+	LAYOUTSKEYS(                 XK_F9,                                    9)
+	LAYOUTSKEYS(                 XK_F10,                                   10)
+	LAYOUTSKEYS(                 XK_F11,                                   11)
+	LAYOUTSKEYS(                 XK_F12,                                   12)
 
 	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
