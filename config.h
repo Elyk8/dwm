@@ -462,8 +462,6 @@ static Key keys[] = {
 	{ MODKEY|Ctrl,               XK_m,             mirrorlayout,           {0} }, // flip the master and stack areas
 
 	// Clients management
-	{ MODKEY,                    XK_h,             focusdir,               {.i = 0 } }, // Focus client to the left
-	{ MODKEY,                    XK_l,             focusdir,               {.i = 1 } }, // Focus client to the right
 	{ MODKEY,                    XK_k,             focusstack,             {.i = -1 } }, // Focus client to the up
 	{ MODKEY,                    XK_j,             focusstack,             {.i = +1 } }, // Focus client to the down
 
