@@ -246,7 +246,6 @@ struct Client {
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	int fakefullscreen;
 	int needresize;
-	int iscentered;
 	int ispermanent;
 	int beingmoved;
 	int isterminal, noswallow;
@@ -321,7 +320,6 @@ typedef struct {
 	const char *wintype;
 	unsigned int tags;
 	int switchtag;
-	int iscentered;
 	int isfloating;
 	int isfakefullscreen;
 	int ispermanent;
@@ -335,7 +333,7 @@ typedef struct {
 
 /* Cross patch compatibility rule macro helper macros */
 #define FLOATING , .isfloating = 1
-#define CENTERED , .iscentered = 1
+#define CENTERED
 #define PERMANENT , .ispermanent = 1
 #define FAKEFULLSCREEN , .isfakefullscreen = 1
 #define NOSWALLOW , .noswallow = 1
@@ -525,7 +523,6 @@ applyrules(Client *c)
 		&& (!r->instance || strstr(instance, r->instance))
 		&& (!r->wintype || wintype == XInternAtom(dpy, r->wintype, False)))
 		{
-			c->iscentered = r->iscentered;
 			c->ispermanent = r->ispermanent;
 			c->fakefullscreen = r->isfakefullscreen;
 			c->isterminal = r->isterminal;
@@ -540,7 +537,6 @@ applyrules(Client *c)
 			if (m)
 				c->mon = m;
 			if (c->isfloating && r->floatpos) {
-				c->iscentered = 0;
 				setfloatpos(c, r->floatpos);
 			}
 
@@ -1581,8 +1577,6 @@ manage(Window w, XWindowAttributes *wa)
 		c->y = t->y + HEIGHT(t) / 2 - HEIGHT(c) / 2;
 	} else {
 		c->mon = selmon;
-		if (c->x == c->mon->wx && c->y == c->mon->wy)
-			c->iscentered = 1;
 		c->bw = borderpx;
 		applyrules(c);
 		term = termforwin(c);
@@ -1606,10 +1600,8 @@ manage(Window w, XWindowAttributes *wa)
 	if (getatomprop(c, netatom[NetWMState]) == netatom[NetWMFullscreen])
 		setfullscreen(c, 1);
 	updatewmhints(c);
-	if (c->iscentered) {
-		c->x = c->mon->wx + (c->mon->ww - WIDTH(c)) / 2;
-		c->y = c->mon->wy + (c->mon->wh - HEIGHT(c)) / 2;
-	}
+	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
+	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
 	c->sfx = -9999;
 	c->sfy = -9999;
 	c->sfw = c->w;
