@@ -1600,10 +1600,13 @@ manage(Window w, XWindowAttributes *wa)
 	if (getatomprop(c, netatom[NetWMState]) == netatom[NetWMFullscreen])
 		setfullscreen(c, 1);
 	updatewmhints(c);
-	c->x = c->mon->mx + (c->mon->mw - WIDTH(c)) / 2;
-	c->y = c->mon->my + (c->mon->mh - HEIGHT(c)) / 2;
+
 	c->sfx = -9999;
 	c->sfy = -9999;
+	if (c->iscentered) {
+		c->sfx = c->x = c->mon->wx + (c->mon->ww - WIDTH(c)) / 2;
+		c->sfy = c->y = c->mon->wy + (c->mon->wh - HEIGHT(c)) / 2;
+	}
 	c->sfw = c->w;
 	c->sfh = c->h;
 
