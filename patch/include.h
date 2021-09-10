@@ -48,7 +48,6 @@
 #include "vanitygaps.h"
 #include "warp.h"
 #include "winview.h"
-#include "zoomswap.h"
 #include "xrdb.h"
 /* Layouts */
 #include "layout_flextile-deluxe.h"

@@ -6,7 +6,6 @@ struct Pertag {
 	const Layout *ltidxs[NUMTAGS + 1][3]; /* matrix of tags and layouts indexes  */
 	float mfacts[NUMTAGS + 1]; /* mfacts per tag */
 	unsigned int sellts[NUMTAGS + 1]; /* selected layouts */
-	Client *prevzooms[NUMTAGS + 1]; /* store zoom information */
 	int enablegaps[NUMTAGS + 1];
 	unsigned int gaps[NUMTAGS + 1];
 };

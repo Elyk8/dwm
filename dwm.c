@@ -1051,7 +1051,6 @@ createmon(void)
 		m->pertag->mfacts[i] = m->mfact;
 
 
-		m->pertag->prevzooms[i] = NULL;
 
 		/* init layouts */
 		m->pertag->ltidxs[i][0] = m->lt[0];
@@ -1601,12 +1600,8 @@ manage(Window w, XWindowAttributes *wa)
 		setfullscreen(c, 1);
 	updatewmhints(c);
 
-	c->sfx = -9999;
-	c->sfy = -9999;
-	if (c->iscentered) {
-		c->sfx = c->x = c->mon->wx + (c->mon->ww - WIDTH(c)) / 2;
-		c->sfy = c->y = c->mon->wy + (c->mon->wh - HEIGHT(c)) / 2;
-	}
+	c->sfx = c->x = c->mon->wx + (c->mon->ww - WIDTH(c)) / 2;
+	c->sfy = c->y = c->mon->wy + (c->mon->wh - HEIGHT(c)) / 2;
 	c->sfw = c->w;
 	c->sfh = c->h;
 
@@ -3023,7 +3018,6 @@ zoom(const Arg *arg)
 		c = (Client*)arg->v;
 	if (!c)
 		return;
-	Client *at = NULL, *cold, *cprevious = NULL, *p;
 
 	if (c && c->isfloating)
 		togglefloating(&((Arg) { .v = c }));
@@ -3031,39 +3025,13 @@ zoom(const Arg *arg)
 
 	if (!c->mon->lt[c->mon->sellt]->arrange
 	|| (c && c->isfloating)
-	|| !c
 	)
 		return;
 
-	if (c == nexttiled(c->mon->clients)) {
-		p = c->mon->pertag->prevzooms[c->mon->pertag->curtag];
-		at = findbefore(p);
-		if (at)
-			cprevious = nexttiled(at->next);
-		if (!cprevious || cprevious != p) {
-			c->mon->pertag->prevzooms[c->mon->pertag->curtag] = NULL;
-			if (!c || !(c = nexttiled(c->next)))
-				return;
-		} else
-			c = cprevious;
-	}
-
-	cold = nexttiled(c->mon->clients);
-	if (c != cold && !at)
-		at = findbefore(c);
-	detach(c);
-	attach(c);
-	/* swap windows instead of pushing the previous one down */
-	if (c != cold && at) {
-		c->mon->pertag->prevzooms[c->mon->pertag->curtag] = cold;
-		if (cold && at != cold) {
-			detach(cold);
-			cold->next = at->next;
-			at->next = cold;
-		}
-	}
-	focus(c);
-	arrange(c->mon);
+	if (c == nexttiled(c->mon->clients))
+		if (!c || !(c = nexttiled(c->next)))
+			return;
+	pop(c);
 }
 
 int

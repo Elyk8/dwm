@@ -47,7 +47,6 @@
 #include "vanitygaps.c"
 #include "warp.c"
 #include "winview.c"
-#include "zoomswap.c"
 #include "xrdb.c"
 #include "dragmfact.c"
 /* Layouts */
