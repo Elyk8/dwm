@@ -307,6 +307,7 @@ static const Rule rules[] = {
 	RULE(.class = "discord", .tags = 1 << 8, .isfakefullscreen = 1)
 	RULE(.class = "qBittorrent", .tags = 1 << 6)
 	RULE(.class = "Zathura", .noswallow = 1)
+	RULE(.class = "sioyek", .noswallow = 1)
 	RULE(.class = "Yad", .isfloating = 1)
 	RULE(.class = "MATLAB R2021a - academic use", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "MATLAB R2021a", .tags = 1 << 5, .noswallow = 1)
