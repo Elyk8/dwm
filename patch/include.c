@@ -16,6 +16,7 @@
 #include "bar_wintitle_hidden.c"
 #include "bar_systray.c"
 #include "bar_wintitleactions.c"
+#include "bar_layoutmenu.c"
 
 /* Other patches */
 #include "attachx.c"

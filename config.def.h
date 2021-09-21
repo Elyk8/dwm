@@ -204,6 +204,7 @@ static char *colors[][ColCount] = {
 };
 
 
+static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const char *const autostart[] = {
 	"st", NULL,
@@ -518,7 +519,7 @@ static Key keys[] = {
 static Button buttons[] = {
 	/* click                event mask           button          function        argument */
 	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
-	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkLtSymbol,          0,                   Button3,        layoutmenu,     {0} },
 	{ ClkWinTitle,          0,                   Button1,        togglewin,      {0} },
 	{ ClkWinTitle,          0,                   Button3,        showhideclient, {0} },
 	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },

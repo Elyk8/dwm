@@ -35,7 +35,7 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font:medium:size=9:antialias=true:autohint=true", 
+	"JetBrains Mono Nerd Font:medium:size=8:antialias=true:autohint=true", 
 	"Twemoji:size=7:antialias=true:autohint=true"
 };
 
@@ -212,6 +212,7 @@ static char *colors[][ColCount] = {
 };
 
 
+static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const char *const autostart[] = {
 	"dwmblocks", NULL,
@@ -299,7 +300,9 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1)
 	RULE(.class = "Brave-browser-nightly", .tags = 1 << 3, .isfakefullscreen = 1)
+	RULE(.class = "Soffice", .isfakefullscreen = 1)
 	RULE(.role = "pop-up", .isfloating = 1)
+	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
 	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 8)
@@ -542,7 +545,7 @@ static Button buttons[] = {
 	/* click                event mask            button          function        argument */
 	// Layout section
 	{ ClkLtSymbol,          0,                    Button1,        setlayout,      {0} }, // Left click: Set layout to tiling
-	{ ClkLtSymbol,          0,                    Button3,        setlayout,      {.v = &layouts[5]} }, // Right click: Set monocle layout
+	{ ClkLtSymbol,          0,                    Button3,        layoutmenu,     {0} },
 	{ ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
 	{ ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
 	// Title section
