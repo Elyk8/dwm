@@ -222,7 +222,7 @@ static const char *const autostart[] = {
 };
 
 
-const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "100x25", NULL};
+const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "120x30", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL};
 const char *spcmd3[] = {TERM, "-n", "spfm", "-g", "120x30", "-e", "lf", NULL };
 const char *spcmd4[] = {TERM, "-n", "spmusic", "-g", "120x30", "-e", "ncmpcpp", NULL };
@@ -400,6 +400,9 @@ static const Layout layouts[] = {
 #define LAYOUTSKEYS(KEY,LAYOUT) \
 	{ MODKEY,                    KEY,      setlayout,      {.v = &layouts[LAYOUT - 1]} }, \
 
+#define SCRATCHKEYSHIFT(KEY,NUM) \
+	{ MODKEY|Shift,              KEY,      togglescratch,  {.ui = NUM } }, \
+
 #define SCRATCHKEYS(KEY,NUM) \
 	{ MODKEY,                    KEY,      togglescratch,  {.ui = NUM } }, \
 	{ MODKEY|Alt,                KEY,      setscratch,     {.ui = NUM } }, \
@@ -430,7 +433,7 @@ static Key keys[] = {
 	TAGKEYS(                     XK_8,                                     7) // Tag 8
 	TAGKEYS(                     XK_9,                                     8) // Tag 9
 	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
-	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in tag appear on all tags
+	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
 
 	{ MODKEY,                    XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
 	{ MODKEY,                    XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
@@ -531,9 +534,11 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_a,             defaultgaps,            {0} }, // Reset gaps to default
 
 	// Scratch
+	SCRATCHKEYSHIFT(             XK_t,             0 )
 	SCRATCHKEYS(                 XK_apostrophe,    1 )
 	SCRATCHKEYS(                 XK_r,             2 )
 	SCRATCHKEYS(                 XK_m,             3 )
+
 };
 
 
@@ -544,8 +549,8 @@ static Button buttons[] = {
 
 	/* click                event mask            button          function        argument */
 	// Layout section
-	{ ClkLtSymbol,          0,                    Button1,        setlayout,      {0} }, // Left click: Set layout to tiling
-	{ ClkLtSymbol,          0,                    Button3,        layoutmenu,     {0} },
+	{ ClkLtSymbol,          0,                    Button1,        layoutmenu,     {0} }, // Left click: Open layout menu (depends on xmenu)
+	{ ClkLtSymbol,          0,                    Button3,        setlayout,      {0} }, // Right click: Set layout to tiling
 	{ ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
 	{ ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
 	// Title section
