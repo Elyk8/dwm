@@ -217,7 +217,6 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *const autostart[] = {
 	"dwmblocks", NULL,
 	"shotkey", NULL,
-	"xrandr", "-s", "1920x1080", NULL,
 	NULL /* terminate */
 };
 
@@ -325,6 +324,7 @@ static const Rule rules[] = {
 	RULE(.instance = "cheatsheet", .isfloating = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1)
+	RULE(.title = "Picture-in-picture", .isfloating = 1)
 };
 
 
