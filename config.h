@@ -353,7 +353,7 @@ static const BarRule barrules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int nstack      = 0;    /* number of clients in primary stack area */
 static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
@@ -523,7 +523,8 @@ static Key keys[] = {
 
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
-	{ MODKEY,                    XK_space,         togglefullscreen,       {0} }, // Toggle focused window fullscreen
+
+	LAYOUTSKEYS(                 XK_space,                                     2)
 	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
 	// Gaps mamagement

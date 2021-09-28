@@ -739,6 +739,11 @@ flextile(Monitor *m)
 	if (n == 0)
 		return;
 
+	/* No outer gap if full screen monocle */
+	if (abs(m->ltaxis[MASTER]) == MONOCLE && (abs(m->ltaxis[LAYOUT]) == NO_SPLIT || n <= m->nmaster)) {
+		oh = 0;
+		ov = 0;
+	}
 
 	/* Needed to fix layout symbol displaying the number of clients in the workspace */
 	if (m->ltaxis[MASTER] == MONOCLE && (abs(m->ltaxis[LAYOUT]) == NO_SPLIT || !m->nmaster || n <= m->nmaster))
