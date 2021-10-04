@@ -29,7 +29,6 @@
 #include "fakefullscreenclient.h"
 #include "floatpos.h"
 #include "focusdir.h"
-#include "fullscreen.h"
 #include "inplacerotate.h"
 #include "killunsel.h"
 #include "nomodbuttons.h"
@@ -48,7 +47,6 @@
 #include "togglefullscreen.h"
 #include "transferall.h"
 #include "vanitygaps.h"
-#include "warp.h"
 #include "winview.h"
 #include "xrdb.h"
 /* Layouts */
