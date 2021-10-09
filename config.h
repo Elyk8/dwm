@@ -35,7 +35,7 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"Iosevka Nerd Font:bold:italic:size=10:antialias=true:autohint=true", 
+	"Iosevka Nerd Font:bold:italic:size=9:antialias=true:autohint=true", 
 	"Twemoji:size=8:antialias=true:autohint=true"
 };
 
@@ -104,17 +104,17 @@ static char actHGRDbgcolor[]             = "#24283b";
 static char actDWDLbgcolor[]             = "#24283b";
 static char actSPRLbgcolor[]             = "#24283b";
 static char actfloatbgcolor[]            = "#24283b";
-static char selTTBbgcolor[]              = "#61AFEF";
-static char selLTRbgcolor[]              = "#61AFEF";
-static char selMONObgcolor[]             = "#61AFEF";
-static char selGRIDbgcolor[]             = "#61AFEF";
-static char selGRD1bgcolor[]             = "#61AFEF";
-static char selGRD2bgcolor[]             = "#61AFEF";
-static char selGRDMbgcolor[]             = "#61AFEF";
-static char selHGRDbgcolor[]             = "#61AFEF";
-static char selDWDLbgcolor[]             = "#61AFEF";
-static char selSPRLbgcolor[]             = "#61AFEF";
-static char selfloatbgcolor[]            = "#61AFEF";
+static char selTTBbgcolor[]              = "#9ECE6A";
+static char selLTRbgcolor[]              = "#9ECE6A";
+static char selMONObgcolor[]             = "#9ECE6A";
+static char selGRIDbgcolor[]             = "#9ECE6A";
+static char selGRD1bgcolor[]             = "#9ECE6A";
+static char selGRD2bgcolor[]             = "#9ECE6A";
+static char selGRDMbgcolor[]             = "#9ECE6A";
+static char selHGRDbgcolor[]             = "#9ECE6A";
+static char selDWDLbgcolor[]             = "#9ECE6A";
+static char selSPRLbgcolor[]             = "#9ECE6A";
+static char selfloatbgcolor[]            = "#9ECE6A";
 
 static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
@@ -342,7 +342,7 @@ static const BarRule barrules[] = {
 	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
 	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-	{ -1,       0,     BAR_ALIGN_LEFT,         width_pwrl_tags,         draw_pwrl_tags,         click_pwrl_tags,         "powerline_tags" },
+	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
   	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
 //	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
