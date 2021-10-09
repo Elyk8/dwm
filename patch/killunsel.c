@@ -8,7 +8,7 @@ killunsel(const Arg *arg)
 
 	for (i = selmon->clients; i; i = i->next) {
 		if (ISVISIBLE(i) && i != selmon->sel) {
-			if (!sendevent(i->win, wmatom[WMDelete], NoEventMask, wmatom[WMDelete], CurrentTime, 0, 0, 0))
+			if (!sendevent(i, wmatom[WMDelete]))
 			{
 				XGrabServer(dpy);
 				XSetErrorHandler(xerrordummy);

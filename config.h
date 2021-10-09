@@ -14,21 +14,14 @@ static const unsigned int gappiv         = 10;  /* vert inner gap between window
 static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+static const int usealtbar               = 1;   /* 1 means use non-dwm status bar */
+static const char *altbarclass           = "Polybar"; /* Alternate bar class name */
+static const char *altbarcmd             = "$HOME/.config/polybar/launch"; /* Alternate bar launch command */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 26;   /* 0 means derive from font, >= 1 explicit height */
-static const int vertpad                 = 0;  /* vertical padding of bar */
-static const int sidepad                 = 0;  /* horizontal padding of bar */
-#define ICONSIZE 20    /* icon size */
-#define ICONSPACING 3  /* space between icon and title */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
-static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 2;   /* vertical padding for statusbar */
-static const unsigned int systrayspacing = 2;   /* systray spacing */
-static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
@@ -82,88 +75,6 @@ static char urgbgcolor[]                 = "#222222";
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
-static char normTTBbgcolor[]             = "#24283b";
-static char normLTRbgcolor[]             = "#24283b";
-static char normMONObgcolor[]            = "#24283b";
-static char normGRIDbgcolor[]            = "#24283b";
-static char normGRD1bgcolor[]            = "#24283b";
-static char normGRD2bgcolor[]            = "#24283b";
-static char normGRDMbgcolor[]            = "#24283b";
-static char normHGRDbgcolor[]            = "#24283b";
-static char normDWDLbgcolor[]            = "#24283b";
-static char normSPRLbgcolor[]            = "#24283b";
-static char normfloatbgcolor[]           = "#24283b";
-static char actTTBbgcolor[]              = "#24283b";
-static char actLTRbgcolor[]              = "#24283b";
-static char actMONObgcolor[]             = "#24283b";
-static char actGRIDbgcolor[]             = "#24283b";
-static char actGRD1bgcolor[]             = "#24283b";
-static char actGRD2bgcolor[]             = "#24283b";
-static char actGRDMbgcolor[]             = "#24283b";
-static char actHGRDbgcolor[]             = "#24283b";
-static char actDWDLbgcolor[]             = "#24283b";
-static char actSPRLbgcolor[]             = "#24283b";
-static char actfloatbgcolor[]            = "#24283b";
-static char selTTBbgcolor[]              = "#61AFEF";
-static char selLTRbgcolor[]              = "#61AFEF";
-static char selMONObgcolor[]             = "#61AFEF";
-static char selGRIDbgcolor[]             = "#61AFEF";
-static char selGRD1bgcolor[]             = "#61AFEF";
-static char selGRD2bgcolor[]             = "#61AFEF";
-static char selGRDMbgcolor[]             = "#61AFEF";
-static char selHGRDbgcolor[]             = "#61AFEF";
-static char selDWDLbgcolor[]             = "#61AFEF";
-static char selSPRLbgcolor[]             = "#61AFEF";
-static char selfloatbgcolor[]            = "#61AFEF";
-
-static const unsigned int baralpha = 0xf0;
-static const unsigned int borderalpha = OPAQUE;
-static const unsigned int alphas[][3] = {
-	/*                       fg      bg        border     */
-	[SchemeNorm]         = { OPAQUE, baralpha, borderalpha },
-	[SchemeSel]          = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleNorm]    = { OPAQUE, baralpha, borderalpha },
-	[SchemeTitleSel]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsNorm]     = { OPAQUE, baralpha, borderalpha },
-	[SchemeTagsSel]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidNorm]      = { OPAQUE, baralpha, borderalpha },
-	[SchemeHidSel]       = { OPAQUE, baralpha, borderalpha },
-	[SchemeUrg]          = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexActFloat] = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexInaFloat] = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelTTB]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelLTR]   = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelMONO]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRID]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRD1]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRD2]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelGRDM]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelHGRD]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelDWDL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelSPRL]  = { OPAQUE, baralpha, borderalpha },
-	[SchemeFlexSelFloat] = { OPAQUE, baralpha, borderalpha },
-};
-
 static char *colors[][ColCount] = {
 	/*                       fg                bg                border                float */
 	[SchemeNorm]         = { normfgcolor,      normbgcolor,      normbordercolor,      normfloatcolor },
@@ -175,47 +86,11 @@ static char *colors[][ColCount] = {
 	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
 	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
-	[SchemeFlexActTTB]   = { titlenormfgcolor, actTTBbgcolor,    actTTBbgcolor,        c000000 },
-	[SchemeFlexActLTR]   = { titlenormfgcolor, actLTRbgcolor,    actLTRbgcolor,        c000000 },
-	[SchemeFlexActMONO]  = { titlenormfgcolor, actMONObgcolor,   actMONObgcolor,       c000000 },
-	[SchemeFlexActGRID]  = { titlenormfgcolor, actGRIDbgcolor,   actGRIDbgcolor,       c000000 },
-	[SchemeFlexActGRD1]  = { titlenormfgcolor, actGRD1bgcolor,   actGRD1bgcolor,       c000000 },
-	[SchemeFlexActGRD2]  = { titlenormfgcolor, actGRD2bgcolor,   actGRD2bgcolor,       c000000 },
-	[SchemeFlexActGRDM]  = { titlenormfgcolor, actGRDMbgcolor,   actGRDMbgcolor,       c000000 },
-	[SchemeFlexActHGRD]  = { titlenormfgcolor, actHGRDbgcolor,   actHGRDbgcolor,       c000000 },
-	[SchemeFlexActDWDL]  = { titlenormfgcolor, actDWDLbgcolor,   actDWDLbgcolor,       c000000 },
-	[SchemeFlexActSPRL]  = { titlenormfgcolor, actSPRLbgcolor,   actSPRLbgcolor,       c000000 },
-	[SchemeFlexActFloat] = { titlenormfgcolor, actfloatbgcolor,  actfloatbgcolor,      c000000 },
-	[SchemeFlexInaTTB]   = { titlenormfgcolor, normTTBbgcolor,   normTTBbgcolor,       c000000 },
-	[SchemeFlexInaLTR]   = { titlenormfgcolor, normLTRbgcolor,   normLTRbgcolor,       c000000 },
-	[SchemeFlexInaMONO]  = { titlenormfgcolor, normMONObgcolor,  normMONObgcolor,      c000000 },
-	[SchemeFlexInaGRID]  = { titlenormfgcolor, normGRIDbgcolor,  normGRIDbgcolor,      c000000 },
-	[SchemeFlexInaGRD1]  = { titlenormfgcolor, normGRD1bgcolor,  normGRD1bgcolor,      c000000 },
-	[SchemeFlexInaGRD2]  = { titlenormfgcolor, normGRD2bgcolor,  normGRD2bgcolor,      c000000 },
-	[SchemeFlexInaGRDM]  = { titlenormfgcolor, normGRDMbgcolor,  normGRDMbgcolor,      c000000 },
-	[SchemeFlexInaHGRD]  = { titlenormfgcolor, normHGRDbgcolor,  normHGRDbgcolor,      c000000 },
-	[SchemeFlexInaDWDL]  = { titlenormfgcolor, normDWDLbgcolor,  normDWDLbgcolor,      c000000 },
-	[SchemeFlexInaSPRL]  = { titlenormfgcolor, normSPRLbgcolor,  normSPRLbgcolor,      c000000 },
-	[SchemeFlexInaFloat] = { titlenormfgcolor, normfloatbgcolor, normfloatbgcolor,     c000000 },
-	[SchemeFlexSelTTB]   = { titleselfgcolor,  selTTBbgcolor,    titleselbordercolor,  c000000 },
-	[SchemeFlexSelLTR]   = { titleselfgcolor,  selLTRbgcolor,    titleselbordercolor,  c000000 },
-	[SchemeFlexSelMONO]  = { titleselfgcolor,  selMONObgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelGRID]  = { titleselfgcolor,  selGRIDbgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelGRD1]  = { titleselfgcolor,  selGRD1bgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelGRD2]  = { titleselfgcolor,  selGRD2bgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelGRDM]  = { titleselfgcolor,  selGRDMbgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelHGRD]  = { titleselfgcolor,  selHGRDbgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelDWDL]  = { titleselfgcolor,  selDWDLbgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelSPRL]  = { titleselfgcolor,  selSPRLbgcolor,   titleselbordercolor,  c000000 },
-	[SchemeFlexSelFloat] = { titleselfgcolor,  selfloatbgcolor,  titleselbordercolor,  c000000 },
 };
 
 
-static const char *layoutmenu_cmd = "layoutmenu.sh";
-
 static const char *const autostart[] = {
 	"shotkey", NULL,
-	"sh", "-c", "killall -q dwmblocks; dwmblocks &", NULL,
 	NULL /* terminate */
 };
 
@@ -338,16 +213,7 @@ static const Rule rules[] = {
  *    widthfunc, drawfunc, clickfunc - providing bar module width, draw and click functions
  *    name - does nothing, intended for visual clue and for logging / debugging
  */
-static const BarRule barrules[] = {
-	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
-	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
-  	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-	{ -1,       0,     BAR_ALIGN_LEFT,         width_pwrl_tags,         draw_pwrl_tags,         click_pwrl_tags,         "powerline_tags" },
-  	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
-	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
-//	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
-	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
-};
+static const BarRule barrules[] = {{ -2}};
 
 /* layout(s) */
 static const float mfact     = 0.5;  /* factor of master area size [0.05..0.95] */
@@ -410,7 +276,7 @@ static const Layout layouts[] = {
 /* #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } } */
 
 /* commands */
-/* static const char *termcmd[]  = { "st", NULL }; */
+static const char *termcmd[]  = { "st", NULL };
 
 /* This defines the name of the executable that handles the bar (used for signalling purposes) */
 #define STATUSBAR "dwmblocks"
@@ -501,7 +367,6 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
 
 	{ MODKEY,                    XK_f,             switchcol,              {0} },
-	{ MODKEY|Shift,              XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
 	{ MODKEY,                    XK_q,             killclient,             {0} }, // Close the selected client
 	{ MODKEY|Shift,              XK_q,             killunsel,              {0} }, // Close all but the selected window
@@ -516,7 +381,6 @@ static Key keys[] = {
 
 	// Desktop management
 	{ MODKEY,                    XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
-	{ MODKEY|Shift,              XK_n,             togglealttag,           {0} },
 
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
@@ -543,25 +407,11 @@ static Key keys[] = {
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
-	// MOUSE BINDINGS
-
-	/* click                event mask            button          function        argument */
-	// Layout section
-	{ ClkLtSymbol,          0,                    Button1,        layoutmenu,     {0} }, // Left click: Open layout menu (depends on xmenu)
-	{ ClkLtSymbol,          0,                    Button3,        setlayout,      {0} }, // Right click: Set layout to tiling
-	{ ClkLtSymbol,          0,                    Button4,        cyclelayout,    {.i = +1 } }, // Mouse wheel up: Forward cycle layout
-	{ ClkLtSymbol,          0,                    Button5,        cyclelayout,    {.i = -1 } }, // Mouse wheel down: Backward cycle layout
-	// Title section
-	{ ClkWinTitle,          0,                    Button1,        togglewin,      {0} }, // Left click: Select window
-	{ ClkWinTitle,          0,                    Button3,        showhideclient, {0} }, // Right click: Show/hide the window
-	{ ClkWinTitle,          0,                    Button2,        zoom,           {0} }, // Move to master from stack, or vice versa
-	// dwmblocks status bar, signals depends on individual status bar script
-	{ ClkStatusText,        0,                    Button1,        sigstatusbar,   {.i = 1} }, // Left click
-	{ ClkStatusText,        Shift,                Button1,        sigstatusbar,   {.i = 6} }, // Shift left click
-	{ ClkStatusText,        0,                    Button2,        sigstatusbar,   {.i = 2} }, // Middle click
-	{ ClkStatusText,        0,                    Button3,        sigstatusbar,   {.i = 3} }, // Right click
-	{ ClkStatusText,        0,                    Button4,        sigstatusbar,   {.i = 4} }, // Scroll wheel up
-	{ ClkStatusText,        0,                    Button5,        sigstatusbar,   {.i = 5} }, // Scroll wheel down
+	/* click                event mask           button          function        argument */
+	{ ClkLtSymbol,          0,                   Button1,        setlayout,      {0} },
+	{ ClkLtSymbol,          0,                   Button3,        setlayout,      {.v = &layouts[2]} },
+	{ ClkWinTitle,          0,                   Button2,        zoom,           {0} },
+	{ ClkStatusText,        0,                   Button2,        spawn,          {.v = termcmd } },
 	/* placemouse options, choose which feels more natural:
 	 *    0 - tiled position is relative to mouse cursor
 	 *    1 - tiled postiion is relative to window center
@@ -572,77 +422,66 @@ static Button buttons[] = {
 	 * to control these separately (i.e. to retain the feature to move a tiled window
 	 * into a floating position).
 	 */
-	// Window management
-	{ ClkClientWin,         MODKEY,               Button1,        moveorplace,    {.i = 0} },
-	{ ClkClientWin,         MODKEY,               Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,               Button3,        resizemouse,    {0} },
-	{ ClkClientWin,         MODKEY,               Button4,        inplacerotate,  {.i = +1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) clockwise
-	{ ClkClientWin,         MODKEY,               Button5,        inplacerotate,  {.i = -1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) counter-clockwise
-	{ ClkClientWin,         MODKEY|Shift,         Button4,        inplacerotate,  {.i = +2 } }, // rotate all clients (clockwise)
-	{ ClkClientWin,         MODKEY|Shift,         Button5,        inplacerotate,  {.i = -2 } }, // rotate all clients (counter-clockwise)
-	{ ClkClientWin,         MODKEY|Shift,         Button3,        dragcfact,      {0} }, // Vertical resize of individual client window
-	{ ClkClientWin,         MODKEY|Shift,         Button1,        dragmfact,      {0} }, // Resize master and stack areas
-	{ ClkTagBar,            0,                    Button1,        view,           {0} },
-	{ ClkTagBar,            0,                    Button3,        toggleview,     {0} },
-	{ ClkTagBar,            MODKEY,               Button1,        tag,            {0} },
-	{ ClkTagBar,            MODKEY,               Button3,        toggletag,      {0} },
+	{ ClkClientWin,         MODKEY,              Button1,        moveorplace,    {.i = 1} },
+	{ ClkClientWin,         MODKEY,              Button2,        togglefloating, {0} },
+	{ ClkClientWin,         MODKEY,              Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY|ShiftMask,    Button3,        dragcfact,      {0} },
+	{ ClkClientWin,         MODKEY|ShiftMask,    Button1,        dragmfact,      {0} },
+	{ ClkTagBar,            0,                   Button1,        view,           {0} },
+	{ ClkTagBar,            0,                   Button3,        toggleview,     {0} },
+	{ ClkTagBar,            MODKEY,              Button1,        tag,            {0} },
+	{ ClkTagBar,            MODKEY,              Button3,        toggletag,      {0} },
 };
 
-/* signal definitions */
-/* signum must be greater than 0 */
-/* trigger signals using `xsetroot -name "fsignal:<signame> [<type> <value>]"` */
-static Signal signals[] = {
-	/* signum                    function */
-	{ "focusstack",              focusstack },
-	{ "setmfact",                setmfact },
-	{ "togglebar",               togglebar },
-	{ "incnmaster",              incnmaster },
-	{ "togglefloating",          togglefloating },
-	{ "focusmon",                focusmon },
-	{ "switchcol",               switchcol },
-	{ "inplacerotate",           inplacerotate },
-	{ "incnstack",               incnstack },
-	{ "rotatelayoutaxis",        rotatelayoutaxis },
-	{ "setlayoutaxisex",         setlayoutaxisex },
-	{ "mirrorlayout",            mirrorlayout },
-	{ "setcfact",                setcfact },
-	{ "transferall",             transferall },
-	{ "tagmon",                  tagmon },
-	{ "zoom",                    zoom },
-	{ "incrgaps",                incrgaps },
-	{ "incrigaps",               incrigaps },
-	{ "incrogaps",               incrogaps },
-	{ "incrihgaps",              incrihgaps },
-	{ "incrivgaps",              incrivgaps },
-	{ "incrohgaps",              incrohgaps },
-	{ "incrovgaps",              incrovgaps },
-	{ "togglegaps",              togglegaps },
-	{ "defaultgaps",             defaultgaps },
-	{ "setgaps",                 setgapsex },
-	{ "view",                    view },
-	{ "viewall",                 viewallex },
-	{ "viewex",                  viewex },
-	{ "toggleview",              toggleview },
-	{ "shiftview",               shiftview },
-	{ "shiftviewclients",        shiftviewclients },
-	{ "self_restart",            self_restart },
-	{ "togglesticky",            togglesticky },
-	{ "cyclelayout",             cyclelayout },
-	{ "toggleviewex",            toggleviewex },
-	{ "tag",                     tag },
-	{ "tagall",                  tagallex },
-	{ "tagex",                   tagex },
-	{ "toggletag",               toggletag },
-	{ "toggletagex",             toggletagex },
-	{ "togglefullscreen",        togglefullscreen },
-	{ "togglefakefullscreen",    togglefakefullscreen },
-	{ "togglescratch",           togglescratch },
-	{ "killclient",              killclient },
-	{ "winview",                 winview },
-	{ "xrdb",                    xrdb },
-	{ "tagnextmonex",            tagnextmonex },
-	{ "tagprevmonex",            tagprevmonex },
-	{ "quit",                    quit },
-	{ "setlayout",               setlayout },
-	{ "setlayoutex",             setlayoutex },
+static const char *ipcsockpath = "/tmp/dwm.sock";
+static IPCCommand ipccommands[] = {
+	IPCCOMMAND( focusmon, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( focusstack, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incnmaster, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( killclient, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( quit, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setlayoutsafe, 1, {ARG_TYPE_PTR} ),
+	IPCCOMMAND( setmfact, 1, {ARG_TYPE_FLOAT} ),
+	IPCCOMMAND( setstatus, 1, {ARG_TYPE_STR} ),
+	IPCCOMMAND( tag, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( tagmon, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( togglebar, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( togglefloating, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( toggletag, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( toggleview, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( view, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( zoom, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setcfact, 1, {ARG_TYPE_FLOAT} ),
+	IPCCOMMAND( cyclelayout, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglefakefullscreen, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( floatpos, 1, {ARG_TYPE_STR} ),
+	IPCCOMMAND( incnstack, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( rotatelayoutaxis, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( setlayoutaxisex, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( mirrorlayout, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( inplacerotate, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglescratch, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( self_restart, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( shiftview, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( shiftviewclients, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglesticky, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( switchcol, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( tagnextmonex, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( tagprevmonex, 1, {ARG_TYPE_UINT} ),
+	IPCCOMMAND( togglefullscreen, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( transferall, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( incrgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrigaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrogaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrihgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrivgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrohgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( incrovgaps, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( togglegaps, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( defaultgaps, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( setgapsex, 1, {ARG_TYPE_SINT} ),
+	IPCCOMMAND( winview, 1, {ARG_TYPE_NONE} ),
+	IPCCOMMAND( xrdb, 1, {ARG_TYPE_NONE} ),
 };
+
+
