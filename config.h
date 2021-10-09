@@ -28,15 +28,15 @@ static const int vertpadbar              = 2;   /* vertical padding for statusba
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font:heavy:size=8:antialias=true:autohint=true", 
-	"Twemoji:size=7:antialias=true:autohint=true"
+	"Iosevka Nerd Font:bold:italic:size=10:antialias=true:autohint=true", 
+	"Twemoji:size=8:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -47,30 +47,30 @@ static char normbgcolor[]                = "#1A1B26";
 static char normbordercolor[]            = "#1A1B26";
 static char normfloatcolor[]             = "#9A7ECC";
 
-static char selfgcolor[]                 = "#A9B1D6";
-static char selbgcolor[]                 = "#ABB2BF";
+static char selfgcolor[]                 = "#1A1B26";
+static char selbgcolor[]                 = "#A9B1D6";
 static char selbordercolor[]             = "#61AFEF";
 static char selfloatcolor[]              = "#9A7ECC";
 
-static char titlenormfgcolor[]           = "#787c99";
+static char titlenormfgcolor[]           = "#A9B1D6";
 static char titlenormbgcolor[]           = "#1A1B26";
 static char titlenormbordercolor[]       = "#1A1B26";
 static char titlenormfloatcolor[]        = "#9A7ECC";
 
-static char titleselfgcolor[]            = "#A9B1D6";
+static char titleselfgcolor[]            = "#1A1B26";
 static char titleselbgcolor[]            = "#1A1B26";
 static char titleselbordercolor[]        = "#A9B1D6";
 static char titleselfloatcolor[]         = "#1A1B26";
 
-static char tagsnormfgcolor[]            = "#acb0d0";
+static char tagsnormfgcolor[]            = "#A9B1D6";
 static char tagsnormbgcolor[]            = "#1A1B26";
 static char tagsnormbordercolor[]        = "#1A1B26";
 static char tagsnormfloatcolor[]         = "#9A7ECC";
 
-static char tagsselfgcolor[]             = "#1A1B26";
-static char tagsselbgcolor[]             = "#D19A66";
-static char tagsselbordercolor[]         = "#D19A66";
-static char tagsselfloatcolor[]          = "#D19A66";
+static char tagsselfgcolor[]             = "#A9B1D6";
+static char tagsselbgcolor[]             = "#414868";
+static char tagsselbordercolor[]         = "#414868";
+static char tagsselfloatcolor[]          = "#4E5173";
 
 static char hidnormfgcolor[]             = "#c278b6";
 static char hidnormbgcolor[]             = "#222222";
@@ -82,39 +82,39 @@ static char urgbgcolor[]                 = "#222222";
 static char urgbordercolor[]             = "#ff0000";
 static char urgfloatcolor[]              = "#db8fd9";
 
-static char normTTBbgcolor[]             = "#330000";
-static char normLTRbgcolor[]             = "#330033";
-static char normMONObgcolor[]            = "#000033";
-static char normGRIDbgcolor[]            = "#003300";
-static char normGRD1bgcolor[]            = "#003300";
-static char normGRD2bgcolor[]            = "#003300";
-static char normGRDMbgcolor[]            = "#506600";
-static char normHGRDbgcolor[]            = "#b96600";
-static char normDWDLbgcolor[]            = "#003333";
-static char normSPRLbgcolor[]            = "#333300";
-static char normfloatbgcolor[]           = "#115577";
-static char actTTBbgcolor[]              = "#440000";
-static char actLTRbgcolor[]              = "#440044";
-static char actMONObgcolor[]             = "#000044";
-static char actGRIDbgcolor[]             = "#004400";
-static char actGRD1bgcolor[]             = "#004400";
-static char actGRD2bgcolor[]             = "#004400";
-static char actGRDMbgcolor[]             = "#507711";
-static char actHGRDbgcolor[]             = "#b97711";
-static char actDWDLbgcolor[]             = "#004444";
-static char actSPRLbgcolor[]             = "#444400";
-static char actfloatbgcolor[]            = "#116688";
-static char selTTBbgcolor[]              = "#550000";
-static char selLTRbgcolor[]              = "#550055";
-static char selMONObgcolor[]             = "#212171";
-static char selGRIDbgcolor[]             = "#005500";
-static char selGRD1bgcolor[]             = "#005500";
-static char selGRD2bgcolor[]             = "#005500";
-static char selGRDMbgcolor[]             = "#508822";
-static char selHGRDbgcolor[]             = "#b98822";
-static char selDWDLbgcolor[]             = "#005555";
-static char selSPRLbgcolor[]             = "#555500";
-static char selfloatbgcolor[]            = "#117799";
+static char normTTBbgcolor[]             = "#24283b";
+static char normLTRbgcolor[]             = "#24283b";
+static char normMONObgcolor[]            = "#24283b";
+static char normGRIDbgcolor[]            = "#24283b";
+static char normGRD1bgcolor[]            = "#24283b";
+static char normGRD2bgcolor[]            = "#24283b";
+static char normGRDMbgcolor[]            = "#24283b";
+static char normHGRDbgcolor[]            = "#24283b";
+static char normDWDLbgcolor[]            = "#24283b";
+static char normSPRLbgcolor[]            = "#24283b";
+static char normfloatbgcolor[]           = "#24283b";
+static char actTTBbgcolor[]              = "#24283b";
+static char actLTRbgcolor[]              = "#24283b";
+static char actMONObgcolor[]             = "#24283b";
+static char actGRIDbgcolor[]             = "#24283b";
+static char actGRD1bgcolor[]             = "#24283b";
+static char actGRD2bgcolor[]             = "#24283b";
+static char actGRDMbgcolor[]             = "#24283b";
+static char actHGRDbgcolor[]             = "#24283b";
+static char actDWDLbgcolor[]             = "#24283b";
+static char actSPRLbgcolor[]             = "#24283b";
+static char actfloatbgcolor[]            = "#24283b";
+static char selTTBbgcolor[]              = "#61AFEF";
+static char selLTRbgcolor[]              = "#61AFEF";
+static char selMONObgcolor[]             = "#61AFEF";
+static char selGRIDbgcolor[]             = "#61AFEF";
+static char selGRD1bgcolor[]             = "#61AFEF";
+static char selGRD2bgcolor[]             = "#61AFEF";
+static char selGRDMbgcolor[]             = "#61AFEF";
+static char selHGRDbgcolor[]             = "#61AFEF";
+static char selDWDLbgcolor[]             = "#61AFEF";
+static char selSPRLbgcolor[]             = "#61AFEF";
+static char selfloatbgcolor[]            = "#61AFEF";
 
 static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
@@ -175,17 +175,17 @@ static char *colors[][ColCount] = {
 	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
 	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
-	[SchemeFlexActTTB]   = { titleselfgcolor,  actTTBbgcolor,    actTTBbgcolor,        c000000 },
-	[SchemeFlexActLTR]   = { titleselfgcolor,  actLTRbgcolor,    actLTRbgcolor,        c000000 },
-	[SchemeFlexActMONO]  = { titleselfgcolor,  actMONObgcolor,   actMONObgcolor,       c000000 },
-	[SchemeFlexActGRID]  = { titleselfgcolor,  actGRIDbgcolor,   actGRIDbgcolor,       c000000 },
-	[SchemeFlexActGRD1]  = { titleselfgcolor,  actGRD1bgcolor,   actGRD1bgcolor,       c000000 },
-	[SchemeFlexActGRD2]  = { titleselfgcolor,  actGRD2bgcolor,   actGRD2bgcolor,       c000000 },
-	[SchemeFlexActGRDM]  = { titleselfgcolor,  actGRDMbgcolor,   actGRDMbgcolor,       c000000 },
-	[SchemeFlexActHGRD]  = { titleselfgcolor,  actHGRDbgcolor,   actHGRDbgcolor,       c000000 },
-	[SchemeFlexActDWDL]  = { titleselfgcolor,  actDWDLbgcolor,   actDWDLbgcolor,       c000000 },
-	[SchemeFlexActSPRL]  = { titleselfgcolor,  actSPRLbgcolor,   actSPRLbgcolor,       c000000 },
-	[SchemeFlexActFloat] = { titleselfgcolor,  actfloatbgcolor,  actfloatbgcolor,      c000000 },
+	[SchemeFlexActTTB]   = { titlenormfgcolor, actTTBbgcolor,    actTTBbgcolor,        c000000 },
+	[SchemeFlexActLTR]   = { titlenormfgcolor, actLTRbgcolor,    actLTRbgcolor,        c000000 },
+	[SchemeFlexActMONO]  = { titlenormfgcolor, actMONObgcolor,   actMONObgcolor,       c000000 },
+	[SchemeFlexActGRID]  = { titlenormfgcolor, actGRIDbgcolor,   actGRIDbgcolor,       c000000 },
+	[SchemeFlexActGRD1]  = { titlenormfgcolor, actGRD1bgcolor,   actGRD1bgcolor,       c000000 },
+	[SchemeFlexActGRD2]  = { titlenormfgcolor, actGRD2bgcolor,   actGRD2bgcolor,       c000000 },
+	[SchemeFlexActGRDM]  = { titlenormfgcolor, actGRDMbgcolor,   actGRDMbgcolor,       c000000 },
+	[SchemeFlexActHGRD]  = { titlenormfgcolor, actHGRDbgcolor,   actHGRDbgcolor,       c000000 },
+	[SchemeFlexActDWDL]  = { titlenormfgcolor, actDWDLbgcolor,   actDWDLbgcolor,       c000000 },
+	[SchemeFlexActSPRL]  = { titlenormfgcolor, actSPRLbgcolor,   actSPRLbgcolor,       c000000 },
+	[SchemeFlexActFloat] = { titlenormfgcolor, actfloatbgcolor,  actfloatbgcolor,      c000000 },
 	[SchemeFlexInaTTB]   = { titlenormfgcolor, normTTBbgcolor,   normTTBbgcolor,       c000000 },
 	[SchemeFlexInaLTR]   = { titlenormfgcolor, normLTRbgcolor,   normLTRbgcolor,       c000000 },
 	[SchemeFlexInaMONO]  = { titlenormfgcolor, normMONObgcolor,  normMONObgcolor,      c000000 },
@@ -214,9 +214,8 @@ static char *colors[][ColCount] = {
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const char *const autostart[] = {
-	"xrandr", "-s", "1920x1080", NULL,
-	"dwmblocks", NULL,
 	"shotkey", NULL,
+	"sh", "-c", "killall -q dwmblocks; dwmblocks &", NULL,
 	NULL /* terminate */
 };
 
@@ -224,14 +223,12 @@ static const char *const autostart[] = {
 const char *spcmd1[] = {TERM, "-n", "spterm", "-g", "120x30", NULL};
 const char *spcmd2[] = {TERM, "-n", "spcalc", "-f", "monospace:size=10", "-g", "50x20", "-e", "bc", "-lq", NULL};
 const char *spcmd3[] = {TERM, "-n", "spfm", "-g", "120x30", "-e", "lf-run", NULL };
-const char *spcmd4[] = {TERM, "-n", "spmusic", "-g", "120x30", "-e", "ncmpcpp", NULL };
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"spterm",      spcmd1},
 	{"spcalc",      spcmd2},
 	{"spfm",        spcmd3},
-	{"spmusic",     spcmd4},
 };
 
 /* Tags
@@ -321,7 +318,6 @@ static const Rule rules[] = {
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "spmusic", .tags = SPTAG(3), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "cheatsheet", .isfloating = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1)
@@ -346,7 +342,7 @@ static const BarRule barrules[] = {
 	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
 	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
   	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
-  	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
+	{ -1,       0,     BAR_ALIGN_LEFT,         width_pwrl_tags,         draw_pwrl_tags,         click_pwrl_tags,         "powerline_tags" },
   	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
 //	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
@@ -513,7 +509,7 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_BackSpace,     self_restart,           {0} }, // restart dusk
 	{ MODKEY|Ctrl,               XK_BackSpace,     quit,                   {0} }, // exit dusk
 
-	{ MODKEY,                    XK_Return,        zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
+	{ MODKEY,                    XK_m,             zoom,                   {0} }, // Swap selected stack client with master, or previously selected stack client with the master
 
 	{ MODKEY,                    XK_g,             togglefloating,         {0} }, // Toggle window from float to tiling and vice-versa
 	{ MODKEY|Shift,              XK_g,             floatpos,               {.v = "50% 50% 80% 80%" } }, // center client and take up 80% of the screen
@@ -537,10 +533,9 @@ static Key keys[] = {
 	{ MODKEY|Shift,              XK_a,             defaultgaps,            {0} }, // Reset gaps to default
 
 	// Scratch
-	SCRATCHKEYSHIFT(             XK_t,             0 )
+	SCRATCHKEYSHIFT(             XK_Return,        0 )
 	SCRATCHKEYS(                 XK_apostrophe,    1 )
 	SCRATCHKEYS(                 XK_r,             2 )
-	SCRATCHKEYS(                 XK_m,             3 )
 
 };
 
