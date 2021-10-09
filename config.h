@@ -6,6 +6,7 @@
 
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int barborderpx    = 4;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
@@ -16,7 +17,7 @@ static const unsigned int gappov         = 15;  /* vert outer gap between window
 static const int smartgaps_fact          = 0;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 26;   /* 0 means derive from font, >= 1 explicit height */
+static const int bar_height              = 22;   /* 0 means derive from font, >= 1 explicit height */
 static const int vertpad                 = 0;  /* vertical padding of bar */
 static const int sidepad                 = 0;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
@@ -77,10 +78,10 @@ static char hidnormbgcolor[]             = "#222222";
 static char hidselfgcolor[]              = "#D288C6";
 static char hidselbgcolor[]              = "#111111";
 
-static char urgfgcolor[]                 = "#bbbbbb";
-static char urgbgcolor[]                 = "#222222";
-static char urgbordercolor[]             = "#ff0000";
-static char urgfloatcolor[]              = "#db8fd9";
+static char urgfgcolor[]                 = "#E06C75";
+static char urgbgcolor[]                 = "#4E5173";
+static char urgbordercolor[]             = "#4E5173";
+static char urgfloatcolor[]              = "#9A7ECC";
 
 static char normTTBbgcolor[]             = "#24283b";
 static char normLTRbgcolor[]             = "#24283b";

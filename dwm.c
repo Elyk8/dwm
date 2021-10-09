@@ -1026,7 +1026,7 @@ createmon(void)
 		istopbar = !istopbar;
 		bar->showbar = 1;
 		bar->external = 0;
-		bar->borderpx = borderpx;
+		bar->borderpx = barborderpx;
 		bar->bh = bh + bar->borderpx * 2;
 		bar->borderscheme = SchemeNorm;
 	}
