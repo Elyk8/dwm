@@ -1875,8 +1875,7 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
-	if (((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
-		|| (&flextile == c->mon->lt[c->mon->sellt]->arrange && (
+	if (((&flextile == c->mon->lt[c->mon->sellt]->arrange && (
 			(c->mon->ltaxis[LAYOUT] == NO_SPLIT &&
 			 c->mon->ltaxis[MASTER] == MONOCLE) ||
 			(c->mon->ltaxis[STACK] == MONOCLE &&
