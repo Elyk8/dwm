@@ -37,7 +37,7 @@ static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
 	"JetBrains Mono Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true", 
-	"Twemoji:size=8.5:antialias=true:autohint=true"
+	"Twemoji:size=8:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -259,9 +259,9 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-	[ALTERNATIVE_TAGS]    = { "A", "B", "C", "D", "E", "F", "G", "H", "I" },
-	[ALT_TAGS_DECORATION] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "dev", "www", "sys", "doc", "vbox", "chat", "mus", "vid", "gfx" }, 
+	[ALTERNATIVE_TAGS]    = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[ALT_TAGS_DECORATION] = { "dev", "www", "sys", "doc", "vbox", "chat", "mus", "vid", "gfx" },
 };
 
 

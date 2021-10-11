@@ -39,8 +39,8 @@ XRENDER = -lXrender
 #PANGOLIB = `pkg-config --libs xft pango pangoxft`
 
 # Uncomment for the ipc patch / IPC_PATCH
-#YAJLLIBS = -lyajl
-#YAJLINC = -I/usr/include/yajl
+YAJLLIBS = -lyajl
+YAJLINC = -I/usr/include/yajl
 
 # Uncomment this for the rounded corners patch / ROUNDED_CORNERS_PATCH
 #XEXTLIB = -lXext
@@ -49,7 +49,7 @@ XRENDER = -lXrender
 XCBLIBS = -lX11-xcb -lxcb -lxcb-res
 
 # This is needed for the winicon or tag preview / BAR_WINICON_PATCH || TAGPREVIEW_PATCH
-IMLIB2LIBS = -lImlib2
+#IMLIB2LIBS = -lImlib2
 
 # includes and libs
 INCS = -I${X11INC} -I${FREETYPEINC} ${YAJLINC} ${PANGOINC}
