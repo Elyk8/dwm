@@ -14,7 +14,7 @@ static const unsigned int gappih         = 10;  /* horiz inner gap between windo
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
-static const int smartgaps_fact          = 3;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
+static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
 static const int bar_height              = 22;   /* 0 means derive from font, >= 1 explicit height */
@@ -36,12 +36,11 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font:bold:italic:size=8.5:antialias=true:autohint=true", 
+	"JetBrains Mono Nerd Font Mono:bold:italic:size=8.5:antialias=true:autohint=true", 
 	"Twemoji:size=8:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
-
 
 static char normfgcolor[]                = "#A9B1D6";
 static char normbgcolor[]                = "#1A1B26";
@@ -342,12 +341,12 @@ static const Rule rules[] = {
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
 	{ 'A',      0,     BAR_ALIGN_RIGHT,        width_systray,           draw_systray,           click_systray,           "systray" },
-  	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
+	{ -1,       0,     BAR_ALIGN_LEFT,         width_ltsymbol,          draw_ltsymbol,          click_ltsymbol,          "layout" },
 	{ -1,       0,     BAR_ALIGN_LEFT,         width_tags,              draw_tags,              click_tags,              "tags" },
-  	{  0,       0,     BAR_ALIGN_RIGHT_RIGHT,  width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
 	{ -1,       0,     BAR_ALIGN_NONE,         width_flexwintitle,      draw_flexwintitle,      click_flexwintitle,      "flexwintitle" },
-//	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
-	{ -1,       1,     BAR_ALIGN_RIGHT_RIGHT,  width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
+	{  0,       1,     BAR_ALIGN_CENTER,       width_status2d,          draw_status2d,          click_statuscmd,         "status2d" },
+	{ -1,       1,     BAR_ALIGN_LEFT,         width_wintitle_floating, draw_wintitle_floating, click_wintitle_floating, "wintitle_floating" },
+	{ -1,       1,     BAR_ALIGN_RIGHT_LEFT,   width_wintitle_hidden,   draw_wintitle_hidden,   click_wintitle_hidden,   "wintitle_hidden" },
 };
 
 /* layout(s) */
