@@ -6,7 +6,7 @@
 
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
-static const unsigned int barborderpx    = 4;   /* border pixel of windows */
+static const unsigned int barborderpx    = 3;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
@@ -17,7 +17,7 @@ static const unsigned int gappov         = 15;  /* vert outer gap between window
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
-static const int bar_height              = 22;   /* 0 means derive from font, >= 1 explicit height */
+static const int bar_height              = 24;   /* 0 means derive from font, >= 1 explicit height */
 static const int vertpad                 = 0;  /* vertical padding of bar */
 static const int sidepad                 = 0;  /* horizontal padding of bar */
 #define ICONSIZE 20    /* icon size */
@@ -36,8 +36,8 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font Mono:bold:italic:size=8.5:antialias=true:autohint=true", 
-	"Twemoji:size=8:antialias=true:autohint=true"
+	"JetBrains Mono Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true", 
+	"Twemoji:size=8.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -301,6 +301,7 @@ static const Rule rules[] = {
 	RULE(.role = "pop-up", .isfloating = 1)
 	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
 	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1)
+	RULE(.class = "CherryTomato", .tags = 1 << 6)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Firefox", .tags = 1 << 8)
 	RULE(.class = "Virt-manager", .tags = 1 << 8, .isfakefullscreen = 1)
@@ -431,11 +432,6 @@ static Key keys[] = {
 	TAGKEYS(                     XK_9,                                     8) // Tag 9
 	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
-
-	{ MODKEY,                    XK_Tab,           view,                   {0} }, // Toggle back to previously focused tag
-	{ MODKEY,                    XK_backslash,     view,                   {0} }, // Toggle back to previously focused tag
-	{ MODKEY|Shift,              XK_Tab,           shiftview,              { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY|Shift,              XK_backslash,     shiftview,              { .i = +1 } }, // Forward cycle through tags 
 
 	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags 
 	{ MODKEY,                    XK_e,             shiftviewclients,       { .i = +1 } }, // Forward cycle through tags 
