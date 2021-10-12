@@ -29,15 +29,15 @@ static const int vertpadbar              = 2;   /* vertical padding for statusba
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
+static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
-static int stickyindicatortype           = INDICATOR_BOTTOM_BAR;
+static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
 static const char *fonts[]               = {
-	"JetBrains Mono Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true", 
-	"Twemoji:size=8:antialias=true:autohint=true"
+	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
+	"Twemoji:size=7.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -82,17 +82,17 @@ static char urgbgcolor[]                 = "#4E5173";
 static char urgbordercolor[]             = "#4E5173";
 static char urgfloatcolor[]              = "#9A7ECC";
 
-static char normTTBbgcolor[]             = "#24283b";
-static char normLTRbgcolor[]             = "#24283b";
-static char normMONObgcolor[]            = "#24283b";
-static char normGRIDbgcolor[]            = "#24283b";
-static char normGRD1bgcolor[]            = "#24283b";
-static char normGRD2bgcolor[]            = "#24283b";
-static char normGRDMbgcolor[]            = "#24283b";
-static char normHGRDbgcolor[]            = "#24283b";
-static char normDWDLbgcolor[]            = "#24283b";
-static char normSPRLbgcolor[]            = "#24283b";
-static char normfloatbgcolor[]           = "#24283b";
+static char normTTBbgcolor[]             = "#1A1B26";
+static char normLTRbgcolor[]             = "#1A1B26";
+static char normMONObgcolor[]            = "#1A1B26";
+static char normGRIDbgcolor[]            = "#1A1B26";
+static char normGRD1bgcolor[]            = "#1A1B26";
+static char normGRD2bgcolor[]            = "#1A1B26";
+static char normGRDMbgcolor[]            = "#1A1B26";
+static char normHGRDbgcolor[]            = "#1A1B26";
+static char normDWDLbgcolor[]            = "#1A1B26";
+static char normSPRLbgcolor[]            = "#1A1B26";
+static char normfloatbgcolor[]           = "#1A1B26";
 static char actTTBbgcolor[]              = "#24283b";
 static char actLTRbgcolor[]              = "#24283b";
 static char actMONObgcolor[]             = "#24283b";
@@ -104,17 +104,17 @@ static char actHGRDbgcolor[]             = "#24283b";
 static char actDWDLbgcolor[]             = "#24283b";
 static char actSPRLbgcolor[]             = "#24283b";
 static char actfloatbgcolor[]            = "#24283b";
-static char selTTBbgcolor[]              = "#9ECE6A";
-static char selLTRbgcolor[]              = "#9ECE6A";
-static char selMONObgcolor[]             = "#9ECE6A";
-static char selGRIDbgcolor[]             = "#9ECE6A";
-static char selGRD1bgcolor[]             = "#9ECE6A";
-static char selGRD2bgcolor[]             = "#9ECE6A";
-static char selGRDMbgcolor[]             = "#9ECE6A";
-static char selHGRDbgcolor[]             = "#9ECE6A";
-static char selDWDLbgcolor[]             = "#9ECE6A";
-static char selSPRLbgcolor[]             = "#9ECE6A";
-static char selfloatbgcolor[]            = "#9ECE6A";
+static char selTTBbgcolor[]              = "#7AA2F7";
+static char selLTRbgcolor[]              = "#7AA2F7";
+static char selMONObgcolor[]             = "#7AA2F7";
+static char selGRIDbgcolor[]             = "#7AA2F7";
+static char selGRD1bgcolor[]             = "#7AA2F7";
+static char selGRD2bgcolor[]             = "#7AA2F7";
+static char selGRDMbgcolor[]             = "#7AA2F7";
+static char selHGRDbgcolor[]             = "#7AA2F7";
+static char selDWDLbgcolor[]             = "#7AA2F7";
+static char selSPRLbgcolor[]             = "#7AA2F7";
+static char selfloatbgcolor[]            = "#7AA2F7";
 
 static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
@@ -259,9 +259,9 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "dev", "www", "sys", "doc", "vbox", "chat", "mus", "vid", "gfx" }, 
+	[DEFAULT_TAGS]        = { "dev", "doc", "sys", "www", "vbox", "mat", "pom", "zoom", "dis" },
 	[ALTERNATIVE_TAGS]    = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-	[ALT_TAGS_DECORATION] = { "dev", "www", "sys", "doc", "vbox", "chat", "mus", "vid", "gfx" },
+	[ALT_TAGS_DECORATION] = { "dev", "doc", "sys", "www", "vbox", "mat", "pom", "zoom", "dis" },
 };
 
 
@@ -433,10 +433,10 @@ static Key keys[] = {
 	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
 
-	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY,                    XK_e,             shiftviewclients,       { .i = +1 } }, // Forward cycle through tags 
-	{ MODKEY|Shift,              XK_w,             shiftview,              { .i = -1 } }, // Backward cycle through tags 
-	{ MODKEY|Shift,              XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags 
+	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags
+	{ MODKEY,                    XK_e,             shiftviewclients,       { .i = +1 } }, // Forward cycle through tags
+	{ MODKEY|Shift,              XK_w,             shiftview,              { .i = -1 } }, // Backward cycle through tags
+	{ MODKEY|Shift,              XK_e,             shiftview,              { .i = +1 } }, // Forward cycle through tags
 
 	// Layouts management
 	LAYOUTSKEYS(                 XK_F1,                                    1)
