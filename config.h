@@ -216,6 +216,7 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 static const char *const autostart[] = {
 	"shotkey", NULL,
 	"sh", "-c", "killall -q dwmblocks; dwmblocks &", NULL,
+	"ntfd", NULL,
 	NULL /* terminate */
 };
 
@@ -259,9 +260,9 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "dev", "doc", "sys", "www", "vbox", "mat", "pom", "zoom", "dis" },
+	[DEFAULT_TAGS]        = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
 	[ALTERNATIVE_TAGS]    = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
-	[ALT_TAGS_DECORATION] = { "dev", "doc", "sys", "www", "vbox", "mat", "pom", "zoom", "dis" },
+	[ALT_TAGS_DECORATION] = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
 };
 
 
@@ -371,7 +372,7 @@ static const Layout layouts[] = {
 	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
- 	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
+	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
 	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
@@ -430,7 +431,9 @@ static Key keys[] = {
 	TAGKEYS(                     XK_7,                                     6) // Tag 7
 	TAGKEYS(                     XK_8,                                     7) // Tag 8
 	TAGKEYS(                     XK_9,                                     8) // Tag 9
-	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } }, // Display all tags
+	{
+		MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK }
+	},                                                                                            // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
 
 	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags
@@ -452,7 +455,9 @@ static Key keys[] = {
 	LAYOUTSKEYS(                 XK_F11,                                   11)
 	LAYOUTSKEYS(                 XK_F12,                                   12)
 
-	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{
+		MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 }
+	},                                                                                   // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY|Alt,                XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
 	{ MODKEY|Alt,                XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
