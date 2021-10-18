@@ -4,6 +4,12 @@
 #define TERM "st"
 #define TERMCLASS "St"
 
+// Define the default attach behaviour here: ATTACHABOVE, ATTACHASIDE, ATTACHBELOW, ATTACHBOTTOM
+#define ATTACHABOVE 0
+#define ATTACHASIDE 1
+#define ATTACHBELOW 0
+#define ATTACHBOTTOM 0
+
 /* appearance */
 static const unsigned int borderpx       = 2;   /* border pixel of windows */
 static const unsigned int barborderpx    = 3;   /* border pixel of windows */
@@ -29,12 +35,14 @@ static const int vertpadbar              = 2;   /* vertical padding for statusba
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_TOP_LEFT_SQUARE;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR_SLIM;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
-static int stickyindicatortype           = INDICATOR_BOTTOM_BAR_SLIM;
+static int stickyindicatortype           = INDICATOR_STICKY;
+static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
+static const XPoint stickyiconbb         = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
 	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
 	"Twemoji:size=7.5:antialias=true:autohint=true"
@@ -215,8 +223,8 @@ static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const char *const autostart[] = {
 	"shotkey", NULL,
-	"sh", "-c", "killall -q dwmblocks; dwmblocks &", NULL,
 	"ntfd", NULL,
+	"/bin/sh", "-c", "killall -q dwmblocks; sleep 0.2; dwmblocks &", NULL,
 	NULL /* terminate */
 };
 

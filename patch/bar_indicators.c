@@ -90,6 +90,9 @@ drawindicator(Monitor *m, Client *c, unsigned int occ, int x, int y, int w, int 
 		drw_rect(drw, x + boxs + boxw / 2, y + boxs, 1, boxw, filled, invert); // |
 		drw_rect(drw, x + boxs, y + boxs + boxw / 2, boxw + 1, 1, filled, invert); // ‒
 		break;
+	case INDICATOR_STICKY:
+		drw_polygon(drw, x + boxs + 8, m->sel->isfloating ? boxs * 2 + boxw : boxs, stickyiconbb.x, stickyiconbb.y, boxw, boxw * stickyiconbb.y / stickyiconbb.x, stickyicon, LENGTH(stickyicon), Nonconvex, m->sel->tags & m->tagset[m->seltags]);
+		break;
 	}
 }
 
