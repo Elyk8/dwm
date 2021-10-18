@@ -70,5 +70,4 @@ int drw_text(Drw *drw, int x, int y, unsigned int w, unsigned int h, unsigned in
 /* Map functions */
 void drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h);
 
-/* Polygon functions */
 void drw_polygon(Drw *drw, int x, int y, int ow, int oh, int sw, int sh, const XPoint *points, int npoints, int shape, int filled); /* wrapper function to scale and draw a polygon with X11 */

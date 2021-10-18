@@ -16,10 +16,10 @@ static const unsigned int barborderpx    = 3;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
-static const unsigned int gappih         = 10;  /* horiz inner gap between windows */
+static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
 static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 15;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 15;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
@@ -42,7 +42,7 @@ static int fakefsindicatortype           = INDICATOR_PLUS;
 static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
-static const XPoint stickyiconbb         = {4,8};	/* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
+static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
 	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
 	"Twemoji:size=7.5:antialias=true:autohint=true"
@@ -415,6 +415,10 @@ static const Layout layouts[] = {
 	{ MODKEY|Alt,                KEY,      setscratch,     {.ui = NUM } }, \
 	{ MODKEY|Alt|Shift,          KEY,      removescratch,  {.ui = NUM } }, \
 
+#define STACKKEYS(MOD,ACTION) \
+	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
+	{ MOD, XK_v,     ACTION##stack, {.i = PREVSEL } }, \
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 /* #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } } */
@@ -441,7 +445,7 @@ static Key keys[] = {
 	TAGKEYS(                     XK_9,                                     8) // Tag 9
 	{
 		MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK }
-	},                                                                                            // Display all tags
+	},                                                                                                                                                                                       // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
 
 	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags
@@ -463,9 +467,7 @@ static Key keys[] = {
 	LAYOUTSKEYS(                 XK_F11,                                   11)
 	LAYOUTSKEYS(                 XK_F12,                                   12)
 
-	{
-		MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 }
-	},                                                                                   // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY|Alt,                XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
 	{ MODKEY|Alt,                XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
@@ -476,8 +478,8 @@ static Key keys[] = {
 	{ MODKEY|Ctrl,               XK_m,             mirrorlayout,           {0} }, // flip the master and stack areas
 
 	// Clients management
-	{ MODKEY,                    XK_k,             focusstack,             {.i = -1 } }, // Focus client to the up
-	{ MODKEY,                    XK_j,             focusstack,             {.i = +1 } }, // Focus client to the down
+	STACKKEYS(MODKEY,                              focus)
+	STACKKEYS(MODKEY|ShiftMask,                    push)
 
 	{ MODKEY,                    XK_h,             setmfact,               {.f = -0.05} }, // Increase master horizontal weight
 	{ MODKEY,                    XK_l,             setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
@@ -506,9 +508,6 @@ static Key keys[] = {
 	{ MODKEY,                    XK_Right,         focusmon,               {.i = +1 } }, // Change focus to next monitor
 	{ MODKEY|Shift,              XK_Right,         tagmon,                 {.i = +1 } }, // Move tag to next monitor
 
-	{ MODKEY|Shift,              XK_j,             inplacerotate,          {.i = +2 } }, // Rotate stack and master clockwise
-	{ MODKEY|Shift,              XK_k,             inplacerotate,          {.i = -2 } }, // Rotate stack and master anticlockwise
-
 	{ MODKEY,                    XK_f,             switchcol,              {0} },
 	{ MODKEY|Shift,              XK_z,             showhideclient,         {0} }, // Hide/show client from the tag
 
@@ -530,8 +529,8 @@ static Key keys[] = {
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 
-	{ MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
-	/* { MODKEY,                    XK_space,         togglefullscreen,       {0} }, */
+	// { MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
+	{ MODKEY,                    XK_space,         togglefullscreen,       {0} },
 	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
 	// Gaps mamagement
@@ -585,10 +584,6 @@ static Button buttons[] = {
 	{ ClkClientWin,         MODKEY,               Button1,        moveorplace,    {.i = 0} },
 	{ ClkClientWin,         MODKEY,               Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,               Button3,        resizemouse,    {0} },
-	{ ClkClientWin,         MODKEY,               Button4,        inplacerotate,  {.i = +1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) clockwise
-	{ ClkClientWin,         MODKEY,               Button5,        inplacerotate,  {.i = -1 } }, // rotate clients within the respective area (master, primary stack, secondary stack) counter-clockwise
-	{ ClkClientWin,         MODKEY|Shift,         Button4,        inplacerotate,  {.i = +2 } }, // rotate all clients (clockwise)
-	{ ClkClientWin,         MODKEY|Shift,         Button5,        inplacerotate,  {.i = -2 } }, // rotate all clients (counter-clockwise)
 	{ ClkClientWin,         MODKEY|Shift,         Button3,        dragcfact,      {0} }, // Vertical resize of individual client window
 	{ ClkClientWin,         MODKEY|Shift,         Button1,        dragmfact,      {0} }, // Resize master and stack areas
 	{ ClkTagBar,            0,                    Button1,        view,           {0} },
@@ -608,8 +603,8 @@ static Signal signals[] = {
 	{ "incnmaster",              incnmaster },
 	{ "togglefloating",          togglefloating },
 	{ "focusmon",                focusmon },
+	{ "pushstack",               pushstack },
 	{ "switchcol",               switchcol },
-	{ "inplacerotate",           inplacerotate },
 	{ "incnstack",               incnstack },
 	{ "rotatelayoutaxis",        rotatelayoutaxis },
 	{ "setlayoutaxisex",         setlayoutaxisex },

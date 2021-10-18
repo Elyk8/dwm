@@ -35,16 +35,6 @@ sigstatusbar(const Arg *arg)
 	if ((statuspid = getstatusbarpid()) <= 0)
 		return;
 
-	// SIGUSR1
-	// sv.sival_int = (statussig << 8) | arg->i;
-	// if (sigqueue(statuspid, SIGUSR1, sv) == -1) {
-	// 	if (errno == ESRCH) {
-	// 		if (!getstatusbarpid())
-	// 			sigqueue(statuspid, SIGUSR1, sv);
-	// 	}
-	// }
-
-	// SIGRTMIN
 	sv.sival_int = arg->i;
 	sigqueue(statuspid, SIGRTMIN+statussig, sv);
 }

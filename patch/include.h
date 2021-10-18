@@ -20,7 +20,6 @@
 #include "bar_layoutmenu.h"
 
 /* Other patches */
-#include "attachx.h"
 #include "cfacts.h"
 #include "cool_autostart.h"
 #include "cyclelayouts.h"
@@ -30,7 +29,6 @@
 #include "fakefullscreenclient.h"
 #include "floatpos.h"
 #include "focusdir.h"
-#include "inplacerotate.h"
 #include "killunsel.h"
 #include "nomodbuttons.h"
 #include "pertag.h"
@@ -40,6 +38,7 @@
 #include "selfrestart.h"
 #include "shiftview.h"
 #include "shiftviewclients.h"
+#include "stacker.h"
 #include "sticky.h"
 #include "swallow.h"
 #include "swaptags.h"
@@ -48,6 +47,7 @@
 #include "togglefullscreen.h"
 #include "transferall.h"
 #include "vanitygaps.h"
+#include "warp.h"
 #include "winview.h"
 #include "xrdb.h"
 /* Layouts */

@@ -53,7 +53,7 @@ drawindicator(Monitor *m, Client *c, unsigned int occ, int x, int y, int w, int 
 	case INDICATOR_CLIENT_DOTS:
 		for (c = m->clients; c; c = c->next) {
 			if (c->tags & (1 << tag)) {
-				drw_rect(drw, x, 1 + (indn * 2), m->sel == c ? 10 : 3, 2, 8, invert);
+				drw_rect(drw, x, 1 + (indn * 2), m->sel == c ? 6 : 1, 1, 1, invert);
 				indn++;
 			}
 			if (h <= 1 + (indn * 2)) {

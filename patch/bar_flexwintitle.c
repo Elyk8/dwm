@@ -15,7 +15,7 @@
 #define FLEXWINTITLE_HIDDENWEIGHT 0  // hidden window title weight
 #endif
 #ifndef FLEXWINTITLE_FLOATWEIGHT
-#define FLEXWINTITLE_FLOATWEIGHT 0   // floating window title weight, set to 0 to not show floating windows
+#define FLEXWINTITLE_FLOATWEIGHT 15   // floating window title weight, set to 0 to not show floating windows
 #endif
 
 #define SCHEMEFOR(c) getschemefor(m, c, groupactive == c)
