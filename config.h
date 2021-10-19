@@ -44,85 +44,13 @@ static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
-	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
-	"Twemoji:size=7.5:antialias=true:autohint=true"
+	"JetBrainsMono Nerd Font:style:medium:size=9.5:antialias=true:autohint=true",
+	"Twemoji:size=8.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
-static char normfgcolor[]                = "#A9B1D6";
-static char normbgcolor[]                = "#1A1B26";
-static char normbordercolor[]            = "#1A1B26";
-static char normfloatcolor[]             = "#9A7ECC";
-
-static char selfgcolor[]                 = "#1A1B26";
-static char selbgcolor[]                 = "#A9B1D6";
-static char selbordercolor[]             = "#61AFEF";
-static char selfloatcolor[]              = "#9A7ECC";
-
-static char titlenormfgcolor[]           = "#A9B1D6";
-static char titlenormbgcolor[]           = "#1A1B26";
-static char titlenormbordercolor[]       = "#1A1B26";
-static char titlenormfloatcolor[]        = "#9A7ECC";
-
-static char titleselfgcolor[]            = "#1A1B26";
-static char titleselbgcolor[]            = "#1A1B26";
-static char titleselbordercolor[]        = "#A9B1D6";
-static char titleselfloatcolor[]         = "#1A1B26";
-
-static char tagsnormfgcolor[]            = "#A9B1D6";
-static char tagsnormbgcolor[]            = "#1A1B26";
-static char tagsnormbordercolor[]        = "#1A1B26";
-static char tagsnormfloatcolor[]         = "#9A7ECC";
-
-static char tagsselfgcolor[]             = "#A9B1D6";
-static char tagsselbgcolor[]             = "#414868";
-static char tagsselbordercolor[]         = "#414868";
-static char tagsselfloatcolor[]          = "#4E5173";
-
-static char hidnormfgcolor[]             = "#c278b6";
-static char hidnormbgcolor[]             = "#222222";
-static char hidselfgcolor[]              = "#D288C6";
-static char hidselbgcolor[]              = "#111111";
-
-static char urgfgcolor[]                 = "#E06C75";
-static char urgbgcolor[]                 = "#4E5173";
-static char urgbordercolor[]             = "#4E5173";
-static char urgfloatcolor[]              = "#9A7ECC";
-
-static char normTTBbgcolor[]             = "#1A1B26";
-static char normLTRbgcolor[]             = "#1A1B26";
-static char normMONObgcolor[]            = "#1A1B26";
-static char normGRIDbgcolor[]            = "#1A1B26";
-static char normGRD1bgcolor[]            = "#1A1B26";
-static char normGRD2bgcolor[]            = "#1A1B26";
-static char normGRDMbgcolor[]            = "#1A1B26";
-static char normHGRDbgcolor[]            = "#1A1B26";
-static char normDWDLbgcolor[]            = "#1A1B26";
-static char normSPRLbgcolor[]            = "#1A1B26";
-static char normfloatbgcolor[]           = "#1A1B26";
-static char actTTBbgcolor[]              = "#24283b";
-static char actLTRbgcolor[]              = "#24283b";
-static char actMONObgcolor[]             = "#24283b";
-static char actGRIDbgcolor[]             = "#24283b";
-static char actGRD1bgcolor[]             = "#24283b";
-static char actGRD2bgcolor[]             = "#24283b";
-static char actGRDMbgcolor[]             = "#24283b";
-static char actHGRDbgcolor[]             = "#24283b";
-static char actDWDLbgcolor[]             = "#24283b";
-static char actSPRLbgcolor[]             = "#24283b";
-static char actfloatbgcolor[]            = "#24283b";
-static char selTTBbgcolor[]              = "#7AA2F7";
-static char selLTRbgcolor[]              = "#7AA2F7";
-static char selMONObgcolor[]             = "#7AA2F7";
-static char selGRIDbgcolor[]             = "#7AA2F7";
-static char selGRD1bgcolor[]             = "#7AA2F7";
-static char selGRD2bgcolor[]             = "#7AA2F7";
-static char selGRDMbgcolor[]             = "#7AA2F7";
-static char selHGRDbgcolor[]             = "#7AA2F7";
-static char selDWDLbgcolor[]             = "#7AA2F7";
-static char selSPRLbgcolor[]             = "#7AA2F7";
-static char selfloatbgcolor[]            = "#7AA2F7";
+#include "themes/tokyonight.h"
 
 static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
@@ -370,6 +298,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
 	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
@@ -381,7 +310,6 @@ static const Layout layouts[] = {
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
 	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };
