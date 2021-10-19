@@ -31,11 +31,11 @@ static const int sidepad                 = 0;  /* horizontal padding of bar */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
 static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 2;   /* vertical padding for statusbar */
+static const int vertpadbar              = 0;   /* vertical padding for statusbar */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR_SLIM;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
@@ -44,7 +44,7 @@ static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
-	"JetBrainsMono Nerd Font:style:medium:size=9.5:antialias=true:autohint=true",
+	"Iosevka Nerd Font:style:bold:size=9.5:antialias=true:autohint=true",
 	"Twemoji:size=8.5:antialias=true:autohint=true"
 };
 
@@ -52,7 +52,7 @@ static char c000000[]                    = "#000000"; // placeholder value
 
 #include "themes/tokyonight.h"
 
-static const unsigned int baralpha = 0xf0;
+static const unsigned int baralpha = 0xf2;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -298,7 +298,6 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
 	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
@@ -310,6 +309,7 @@ static const Layout layouts[] = {
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
 	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };
@@ -457,8 +457,8 @@ static Key keys[] = {
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 
-	// { MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
-	{ MODKEY,                    XK_space,         togglefullscreen,       {0} },
+	{ MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
+	// { MODKEY,                    XK_space,         togglefullscreen,       {0} },
 	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
 	// Gaps mamagement

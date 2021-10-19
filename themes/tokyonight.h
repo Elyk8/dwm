@@ -13,9 +13,9 @@ static char titlenormbgcolor[]           = "#1A1B26";
 static char titlenormbordercolor[]       = "#1A1B26";
 static char titlenormfloatcolor[]        = "#9A7ECC";
 
-static char titleselfgcolor[]            = "#1A1B26";
+static char titleselfgcolor[]            = "#A9B1D6";
 static char titleselbgcolor[]            = "#1A1B26";
-static char titleselbordercolor[]        = "#A9B1D6";
+static char titleselbordercolor[]        = "#7AA2F7";
 static char titleselfloatcolor[]         = "#1A1B26";
 
 static char tagsnormfgcolor[]            = "#A9B1D6";
@@ -24,8 +24,8 @@ static char tagsnormbordercolor[]        = "#1A1B26";
 static char tagsnormfloatcolor[]         = "#9A7ECC";
 
 static char tagsselfgcolor[]             = "#A9B1D6";
-static char tagsselbgcolor[]             = "#414868";
-static char tagsselbordercolor[]         = "#414868";
+static char tagsselbgcolor[]             = "#393b53";
+static char tagsselbordercolor[]         = "#393b53";
 static char tagsselfloatcolor[]          = "#4E5173";
 
 static char hidnormfgcolor[]             = "#c278b6";
@@ -60,15 +60,14 @@ static char actHGRDbgcolor[]             = "#24283b";
 static char actDWDLbgcolor[]             = "#24283b";
 static char actSPRLbgcolor[]             = "#24283b";
 static char actfloatbgcolor[]            = "#24283b";
-static char selTTBbgcolor[]              = "#7AA2F7";
-static char selLTRbgcolor[]              = "#7AA2F7";
-static char selMONObgcolor[]             = "#7AA2F7";
-static char selGRIDbgcolor[]             = "#7AA2F7";
-static char selGRD1bgcolor[]             = "#7AA2F7";
-static char selGRD2bgcolor[]             = "#7AA2F7";
-static char selGRDMbgcolor[]             = "#7AA2F7";
-static char selHGRDbgcolor[]             = "#7AA2F7";
-static char selDWDLbgcolor[]             = "#7AA2F7";
-static char selSPRLbgcolor[]             = "#7AA2F7";
-static char selfloatbgcolor[]            = "#7AA2F7";
-
+static char selTTBbgcolor[]              = "#003366";
+static char selLTRbgcolor[]              = "#003366";
+static char selMONObgcolor[]             = "#003366";
+static char selGRIDbgcolor[]             = "#003366";
+static char selGRD1bgcolor[]             = "#003366";
+static char selGRD2bgcolor[]             = "#003366";
+static char selGRDMbgcolor[]             = "#003366";
+static char selHGRDbgcolor[]             = "#003366";
+static char selDWDLbgcolor[]             = "#003366";
+static char selSPRLbgcolor[]             = "#003366";
+static char selfloatbgcolor[]            = "#003366";
