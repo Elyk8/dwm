@@ -31,11 +31,11 @@ static const int sidepad                 = 0;  /* horizontal padding of bar */
 static int floatposgrid_x                = 5;  /* float grid columns */
 static int floatposgrid_y                = 5;  /* float grid rows */
 static const int horizpadbar             = 0;   /* horizontal padding for statusbar */
-static const int vertpadbar              = 0;   /* vertical padding for statusbar */
+static const int vertpadbar              = 2;   /* vertical padding for statusbar */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR_SLIM;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
@@ -44,15 +44,15 @@ static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
-	"Iosevka Nerd Font:style:bold:size=9.5:antialias=true:autohint=true",
-	"Twemoji:size=8.5:antialias=true:autohint=true"
+	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
+	"Twemoji:size=7.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
 
 #include "themes/tokyonight.h"
 
-static const unsigned int baralpha = 0xf2;
+static const unsigned int baralpha = 0xf0;
 static const unsigned int borderalpha = OPAQUE;
 static const unsigned int alphas[][3] = {
 	/*                       fg      bg        border     */
@@ -196,11 +196,23 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
-	[ALTERNATIVE_TAGS]    = { "1", "2", "3", "4", "5", "6", "7", "8", "9" },
+	[DEFAULT_TAGS]        = { "", "", "", "", "", "", "", "", "", },
+	[ALTERNATIVE_TAGS]    = {"", "", "", "", "", "", "", "", "", },
 	[ALT_TAGS_DECORATION] = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
 };
 
+static const char *tagsel[][2] = {
+	{ "#9400D3", tagsnormbgcolor },
+	{ "#4B0082", tagsnormbgcolor },
+	{ "#0000FF", tagsnormbgcolor },
+	{ "#00FF00", tagsnormbgcolor },
+	{ "#FFFF00", tagsnormbgcolor },
+	{ "#FF7F00", tagsnormbgcolor },
+	{ "#FF0000", tagsnormbgcolor },
+	{ "#000000", tagsnormbgcolor },
+	{ "#ffffff", tagsnormbgcolor },
+};
+static const unsigned int tagalpha[] = { OPAQUE, baralpha };
 
 /* There are two options when it comes to per-client rules:
  *  - a typical struct table or
@@ -457,8 +469,8 @@ static Key keys[] = {
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 
-	{ MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
-	// { MODKEY,                    XK_space,         togglefullscreen,       {0} },
+	// { MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
+	{ MODKEY,                    XK_space,         togglefullscreen,       {0} },
 	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
 	// Gaps mamagement
