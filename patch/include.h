@@ -33,6 +33,7 @@
 #include "nomodbuttons.h"
 #include "pertag.h"
 #include "placemouse.h"
+#include "reorganizetags.h"
 #include "restartsig.h"
 #include "scratchpad.h"
 #include "selfrestart.h"

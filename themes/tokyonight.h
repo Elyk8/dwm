@@ -18,7 +18,7 @@ static char titleselbgcolor[]            = "#1A1B26";
 static char titleselbordercolor[]        = "#7AA2F7";
 static char titleselfloatcolor[]         = "#1A1B26";
 
-static char tagsnormfgcolor[]            = "#A9B1D6";
+static char tagsnormfgcolor[]            = "#32344A";
 static char tagsnormbgcolor[]            = "#1A1B26";
 static char tagsnormbordercolor[]        = "#1A1B26";
 static char tagsnormfloatcolor[]         = "#9A7ECC";
@@ -71,3 +71,16 @@ static char selHGRDbgcolor[]             = "#003366";
 static char selDWDLbgcolor[]             = "#003366";
 static char selSPRLbgcolor[]             = "#003366";
 static char selfloatbgcolor[]            = "#003366";
+
+// colorful tags
+static const char *tagsel[][2] = {
+	{ "#FEC763", tagsnormbgcolor },
+	{ "#FF00FF", tagsnormbgcolor },
+	{ "#FF0099", tagsnormbgcolor },
+	{ "#FFFF33", tagsnormbgcolor },
+	{ "#FF0000", tagsnormbgcolor },
+	{ "#33FF00", tagsnormbgcolor },
+	{ "#FF6600", tagsnormbgcolor },
+	{ "#0062FF", tagsnormbgcolor },
+	{ "#4deeea", tagsnormbgcolor },
+};

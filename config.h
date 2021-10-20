@@ -35,7 +35,7 @@ static const int vertpadbar              = 2;   /* vertical padding for statusba
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int showsystray             = 1;   /* 0 means no systray */
 /* Indicators: see patch/bar_indicators.h for options */
-static int tagindicatortype              = INDICATOR_BOTTOM_BAR_SLIM;
+static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
 static int fakefsindicatortype           = INDICATOR_PLUS;
@@ -44,8 +44,8 @@ static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
-	"Iosevka Nerd Font Mono:bold:italic:size=9.5:antialias=true:autohint=true",
-	"Twemoji:size=7.5:antialias=true:autohint=true"
+	"Iosevka Nerd Font:bold:italic:size=9.5:antialias=true:autohint=true",
+	"Noto Color Emoji:size=7.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -183,6 +183,13 @@ static Sp scratchpads[] = {
  *         [DEFAULT_TAGS] = { "•" },
  *     }
  *
+ *
+ * static char *tagicons[][NUMTAGS] = {
+ * 	[DEFAULT_TAGS]        = { "", "", "", "", "", "", "", "", "", },
+ * 	[ALTERNATIVE_TAGS]    = {"", "", "", "", "", "", "", "", "", },
+ * 	[ALT_TAGS_DECORATION] = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
+ * };
+ *
  * The first example would result in the tags on the first monitor to be 1 through 9, while the
  * tags for the second monitor would be named A through I. A third monitor would start again at
  * 1 through 9 while the tags on a fourth monitor would also be named A through I. Note the tags
@@ -195,23 +202,11 @@ static Sp scratchpads[] = {
  * until it an icon matches. Similarly if there are two tag icons then it would alternate between
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
-static char *tagicons[][NUMTAGS] = {
-	[DEFAULT_TAGS]        = { "", "", "", "", "", "", "", "", "", },
-	[ALTERNATIVE_TAGS]    = {"", "", "", "", "", "", "", "", "", },
-	[ALT_TAGS_DECORATION] = { "dev", "doc", "obs", "www", "sys", "mat", "pom", "zoom", "dis" },
+static char *tagicons[][1] = {
+	[DEFAULT_TAGS]        = { " " },
+	[ALTERNATIVE_TAGS]    = { " " },
 };
 
-static const char *tagsel[][2] = {
-	{ "#9400D3", tagsnormbgcolor },
-	{ "#4B0082", tagsnormbgcolor },
-	{ "#0000FF", tagsnormbgcolor },
-	{ "#00FF00", tagsnormbgcolor },
-	{ "#FFFF00", tagsnormbgcolor },
-	{ "#FF7F00", tagsnormbgcolor },
-	{ "#FF0000", tagsnormbgcolor },
-	{ "#000000", tagsnormbgcolor },
-	{ "#ffffff", tagsnormbgcolor },
-};
 static const unsigned int tagalpha[] = { OPAQUE, baralpha };
 
 /* There are two options when it comes to per-client rules:
@@ -442,6 +437,8 @@ static Key keys[] = {
 	{ MODKEY,                    XK_Right,         focusdir,               {.i = 1 } }, // Focus client to the right
 	{ MODKEY,                    XK_Up,            focusdir,               {.i = 2 } }, // Focus client to the up
 	{ MODKEY,                    XK_Down,          focusdir,               {.i = 3 } }, // Focus client to the down
+
+	{ MODKEY|ControlMask,        XK_o,             reorganizetags,         {0} },
 
 	{ MODKEY,                    XK_Left,          focusmon,               {.i = -1 } }, // Change focus to previous monitor
 	{ MODKEY|Shift,              XK_Left,          tagmon,                 {.i = -1 } }, // Move tag to previous monitor
