@@ -823,7 +823,6 @@ clientmessage(XEvent *e)
 	XSetWindowAttributes swa;
 	XClientMessageEvent *cme = &e->xclient;
 	Client *c = wintoclient(cme->window);
-	unsigned int i;
 
 	if (showsystray && systray && cme->window == systray->win && cme->message_type == netatom[NetSystemTrayOP]) {
 		/* add systray icons */
@@ -877,20 +876,8 @@ clientmessage(XEvent *e)
 			)));
 		}
 	} else if (cme->message_type == netatom[NetActiveWindow]) {
-		if (c->tags & c->mon->tagset[c->mon->seltags])
-			focus(c);
-		else {
-			for (i = 0; i < NUMTAGS && !((1 << i) & c->tags); i++);
-			if (i < NUMTAGS) {
-				if (c != selmon->sel)
-					unfocus(selmon->sel, 0, NULL);
-				selmon = c->mon;
-				if (((1 << i) & TAGMASK) != selmon->tagset[selmon->seltags])
-					view(&((Arg) { .ui = 1 << i }));
-				focus(c);
-				restack(selmon);
-			}
-		}
+		if (c != selmon->sel && !c->isurgent)
+			seturgent(c, 1);
 	}
 }
 
@@ -1865,8 +1852,7 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldw = c->w; c->w = wc.width = w;
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
-	if (((nexttiled(c->mon->clients) == c && !nexttiled(c->next))
-		|| (&flextile == c->mon->lt[c->mon->sellt]->arrange && (
+	if (((&flextile == c->mon->lt[c->mon->sellt]->arrange && (
 			(c->mon->ltaxis[LAYOUT] == NO_SPLIT &&
 			 c->mon->ltaxis[MASTER] == MONOCLE) ||
 			(c->mon->ltaxis[STACK] == MONOCLE &&
@@ -2450,6 +2436,8 @@ tag(const Arg *arg)
 			selmon->sel->switchtag = 0;
 		focus(NULL);
 		arrange(selmon);
+		if ((arg->ui & TAGMASK) != selmon->tagset[selmon->seltags])
+			view(arg);
 	}
 }
 

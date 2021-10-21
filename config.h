@@ -45,7 +45,7 @@ static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, 
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
 	"Iosevka Nerd Font:bold:italic:size=9.5:antialias=true:autohint=true",
-	"Noto Color Emoji:size=7.5:antialias=true:autohint=true"
+	"Noto Color Emoji:size=8.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -238,35 +238,33 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "UTILITY", .isfloating = 1)
 	RULE(.wintype = WTYPE "TOOLBAR", .isfloating = 1)
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
-	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1)
-	RULE(.class = "Brave-browser-nightly", .tags = 1 << 3, .isfakefullscreen = 1)
-	RULE(.class = "Soffice", .isfakefullscreen = 1)
-	RULE(.class = "obsidian", .tags = 1 << 2, .isfakefullscreen = 1)
 	RULE(.role = "pop-up", .isfloating = 1)
 	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
-	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1)
-	RULE(.class = "CherryTomato", .tags = 1 << 6)
-	RULE(.class = "Gimp", .tags = 1 << 4)
-	RULE(.class = "Firefox", .tags = 1 << 8)
-	RULE(.class = "Virt-manager", .tags = 1 << 8, .isfakefullscreen = 1)
-	RULE(.class = "discord", .tags = 1 << 8, .isfakefullscreen = 1)
-	RULE(.class = "qBittorrent", .tags = 1 << 6)
-	RULE(.class = "Zathura", .noswallow = 1)
-	RULE(.class = "sioyek", .noswallow = 1)
-	RULE(.class = "Yad", .isfloating = 1)
+	RULE(.class = "Soffice", .isfakefullscreen = 1)
+	RULE(.class = TERMCLASS, .isterminal = 1, .tags = 1 << 0, .switchtag = 3)
+	RULE(.class = "obsidian", .tags = 1 << 2, .switchtag = 3)
+	RULE(.class = "VSCodium", .tags = 1 << 2, .switchtag = 3)
+	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1, .switchtag = 3)
 	RULE(.class = "MATLAB R2021b - academic use", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "MATLAB R2021b", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "MATLABWindow", .tags = 1 << 5, .noswallow = 1)
+	RULE(.class = "qBittorrent", .tags = 1 << 6, .switchtag = 3)
+	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1, .switchtag = 3)
+	RULE(.class = "Firefox", .tags = 1 << 8)
+	RULE(.class = "discord", .tags = 1 << 8, .isfakefullscreen = 1)
+	RULE(.class = "Gimp", .tags = 1 << 4)
+	RULE(.class = "Zathura", .noswallow = 1)
+	RULE(.class = "sioyek", .noswallow = 1)
+	RULE(.class = "Yad", .isfloating = 1)
 	RULE(.class = "Dragon-drag-and-drop", .noswallow = 1)
-	RULE(.class = TERMCLASS, .isterminal = 1)
 	RULE(.title = "Event Tester", .noswallow = 1)
-	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
-	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "cheatsheet", .isfloating = 1)
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1)
 	RULE(.title = "Picture-in-picture", .isfloating = 1)
+	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
 };
 
 
@@ -461,13 +459,16 @@ static Key keys[] = {
 
 	// Desktop management
 	{ MODKEY,                    XK_b,             togglebar,              {0} }, // Toggle dwmbar visibility. Affect all tags
+
+	{ MODKEY,                    XK_n,             winview,                {0} },
+
 	{ MODKEY|Shift,              XK_n,             togglealttag,           {0} },
 
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 
-	// { MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
-	{ MODKEY,                    XK_space,         togglefullscreen,       {0} },
+	{ MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
+	// { MODKEY,                    XK_space,         togglefullscreen,       {0} },
 	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
 
 	// Gaps mamagement
