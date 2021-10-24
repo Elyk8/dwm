@@ -13,7 +13,7 @@ dragcfact(const Arg *arg)
 		resizemouse(arg);
 		return;
 	}
-	if (c->isfullscreen && !c->fakefullscreen) /* no support resizing fullscreen windows by mouse */
+	if (c->isfullscreen) /* no support resizing fullscreen windows by mouse */
 		return;
 	restack(selmon);
 

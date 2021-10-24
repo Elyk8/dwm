@@ -16,10 +16,10 @@ static const unsigned int barborderpx    = 3;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
-static const unsigned int gappih         = 20;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 10;  /* vert inner gap between windows */
-static const unsigned int gappoh         = 10;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 30;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappih         = 30;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 20;  /* vert inner gap between windows */
+static const unsigned int gappoh         = 20;  /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov         = 40;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
@@ -38,8 +38,6 @@ static const int showsystray             = 1;   /* 0 means no systray */
 static int tagindicatortype              = INDICATOR_BOTTOM_BAR;
 static int tiledindicatortype            = INDICATOR_NONE;
 static int floatindicatortype            = INDICATOR_TOP_LEFT_LARGER_SQUARE;
-static int fakefsindicatortype           = INDICATOR_PLUS;
-static int floatfakefsindicatortype      = INDICATOR_PLUS_AND_LARGER_SQUARE;
 static int stickyindicatortype           = INDICATOR_STICKY;
 static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, {0,0} }; /* represents the icon as an array of vertices */
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
@@ -150,9 +148,7 @@ static char *colors[][ColCount] = {
 static const char *layoutmenu_cmd = "layoutmenu.sh";
 
 static const char *const autostart[] = {
-	"shotkey", NULL,
-	"ntfd", NULL,
-	"/bin/sh", "-c", "killall -q dwmblocks; sleep 0.2; dwmblocks &", NULL,
+	TERM, NULL,
 	NULL /* terminate */
 };
 
@@ -240,19 +236,19 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.role = "pop-up", .isfloating = 1)
 	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
-	RULE(.class = "Soffice", .isfakefullscreen = 1)
+	RULE(.class = "Soffice")
 	RULE(.class = TERMCLASS, .isterminal = 1)
 	RULE(.class = "CherryTomato", .tags = 1 << 6, .switchtag = 3)
 	RULE(.class = "obsidian", .tags = 1 << 2, .switchtag = 3)
 	RULE(.class = "VSCodium", .tags = 1 << 2, .switchtag = 3)
-	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1, .switchtag = 3)
+	RULE(.class = "Brave-browser", .tags = 1 << 3, .switchtag = 3)
 	RULE(.class = "MATLAB R2021b - academic use", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "MATLAB R2021b", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "MATLABWindow", .tags = 1 << 5, .noswallow = 1)
 	RULE(.class = "qBittorrent", .tags = 1 << 6, .switchtag = 3)
-	RULE(.class = "zoom", .tags = 1 << 7, .isfakefullscreen = 1, .switchtag = 3)
+	RULE(.class = "zoom", .tags = 1 << 7, .switchtag = 3)
 	RULE(.class = "Firefox", .tags = 1 << 8)
-	RULE(.class = "discord", .tags = 1 << 8, .isfakefullscreen = 1)
+	RULE(.class = "discord", .tags = 1 << 8)
 	RULE(.class = "Gimp", .tags = 1 << 4)
 	RULE(.class = "Zathura", .noswallow = 1)
 	RULE(.class = "sioyek", .noswallow = 1)
@@ -305,17 +301,17 @@ static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
 	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
+	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
+	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
+	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
+	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
 	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
 	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
 	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
-	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
-	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
 	{ "[]#",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // stackgrid
 	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
-	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
-	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
 	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };
@@ -468,9 +464,8 @@ static Key keys[] = {
 	{ MODKEY,                    XK_s,             togglesticky,           {0} }, // Make window appear on all tags
 
 
-	{ MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
-	// { MODKEY,                    XK_space,         togglefullscreen,       {0} },
-	{ MODKEY|Shift,              XK_space,         togglefakefullscreen,   {0} }, // Toggle fakefullscreen property of selected client
+	// { MODKEY,                    XK_space,         setlayout,              {.v = &layouts[12]} },
+	{ MODKEY,                    XK_space,         togglefullscreen,       {0} },
 
 	// Gaps mamagement
 	{ MODKEY,                    XK_z,             incrgaps,               {.i = +3 } }, // Increase gap size by 3
@@ -578,7 +573,6 @@ static Signal signals[] = {
 	{ "toggletag",               toggletag },
 	{ "toggletagex",             toggletagex },
 	{ "togglefullscreen",        togglefullscreen },
-	{ "togglefakefullscreen",    togglefakefullscreen },
 	{ "togglescratch",           togglescratch },
 	{ "killclient",              killclient },
 	{ "winview",                 winview },

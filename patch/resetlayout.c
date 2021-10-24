@@ -7,4 +7,3 @@ resetlayout(const Arg *arg)
 	setlayout(&default_layout);
 	setmfact(&default_mfact);
 }
-

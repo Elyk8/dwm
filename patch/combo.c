@@ -20,8 +20,6 @@ combotag(const Arg *arg)
 		}
 		focus(NULL);
 		arrange(selmon);
-		if ((arg->ui & TAGMASK) != selmon->tagset[selmon->seltags])
-			view(arg);
 	}
 }
 
