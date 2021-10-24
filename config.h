@@ -45,7 +45,7 @@ static const XPoint stickyicon[]         = { {0,0}, {4,0}, {4,8}, {2,6}, {0,8}, 
 static const XPoint stickyiconbb         = {4,8};   /* defines the bottom right corner of the polygon's bounding box (speeds up scaling) */
 static const char *fonts[]               = {
 	"Iosevka Nerd Font:bold:italic:size=9.5:antialias=true:autohint=true",
-	"Noto Color Emoji:size=8.5:antialias=true:autohint=true"
+	"JoyPixels:size=8.5:antialias=true:autohint=true"
 };
 
 static char c000000[]                    = "#000000"; // placeholder value
@@ -241,7 +241,8 @@ static const Rule rules[] = {
 	RULE(.role = "pop-up", .isfloating = 1)
 	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
 	RULE(.class = "Soffice", .isfakefullscreen = 1)
-	RULE(.class = TERMCLASS, .isterminal = 1, .tags = 1 << 0, .switchtag = 3)
+	RULE(.class = TERMCLASS, .isterminal = 1)
+	RULE(.class = "CherryTomato", .tags = 1 << 6, .switchtag = 3)
 	RULE(.class = "obsidian", .tags = 1 << 2, .switchtag = 3)
 	RULE(.class = "VSCodium", .tags = 1 << 2, .switchtag = 3)
 	RULE(.class = "Brave-browser", .tags = 1 << 3, .isfakefullscreen = 1, .switchtag = 3)

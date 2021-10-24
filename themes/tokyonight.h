@@ -72,15 +72,25 @@ static char selDWDLbgcolor[]             = "#003366";
 static char selSPRLbgcolor[]             = "#003366";
 static char selfloatbgcolor[]            = "#003366";
 
+static char color0[] = "#FEC763";
+static char color1[] = "#FF00FF";
+static char color2[] = "#FF0099";
+static char color3[] = "#FFFF33";
+static char color4[] = "#FF0000";
+static char color5[] = "#33FF00";
+static char color6[] = "#FF6600";
+static char color7[] = "#0062FF";
+static char color8[] = "#4deeea";
+
 // colorful tags
-static const char *tagsel[][2] = {
-	{ "#FEC763", tagsnormbgcolor },
-	{ "#FF00FF", tagsnormbgcolor },
-	{ "#FF0099", tagsnormbgcolor },
-	{ "#FFFF33", tagsnormbgcolor },
-	{ "#FF0000", tagsnormbgcolor },
-	{ "#33FF00", tagsnormbgcolor },
-	{ "#FF6600", tagsnormbgcolor },
-	{ "#0062FF", tagsnormbgcolor },
-	{ "#4deeea", tagsnormbgcolor },
+static char *tagsel[][2] = {
+	{ color0, tagsnormbgcolor },
+	{ color1, tagsnormbgcolor },
+	{ color2, tagsnormbgcolor },
+	{ color3, tagsnormbgcolor },
+	{ color4, tagsnormbgcolor },
+	{ color5, tagsnormbgcolor },
+	{ color6, tagsnormbgcolor },
+	{ color7, tagsnormbgcolor },
+	{ color8, tagsnormbgcolor },
 };
