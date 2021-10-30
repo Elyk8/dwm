@@ -11,15 +11,15 @@
 #define ATTACHBOTTOM 0
 
 /* appearance */
-static const unsigned int borderpx       = 2;   /* border pixel of windows */
+static const unsigned int borderpx       = 3;   /* border pixel of windows */
 static const unsigned int barborderpx    = 3;   /* border pixel of windows */
 static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
-static const unsigned int gappih         = 30;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 20;  /* vert inner gap between windows */
+static const unsigned int gappih         = 15;  /* horiz inner gap between windows */
+static const unsigned int gappiv         = 30;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 20;  /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov         = 40;  /* vert outer gap between windows and screen edge */
+static const unsigned int gappov         = 25;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
 static const int showbar                 = 1;   /* 0 means no bar */
 static const int topbar                  = 1;   /* 0 means bottom bar */
@@ -199,8 +199,8 @@ static Sp scratchpads[] = {
  * them. This works seamlessly with alternative tags and alttagsdecoration patches.
  */
 static char *tagicons[][1] = {
-	[DEFAULT_TAGS]        = { " " },
-	[ALTERNATIVE_TAGS]    = { " " },
+	[DEFAULT_TAGS]     = { " " },
+	[ALTERNATIVE_TAGS] = { " " },
 };
 
 static const unsigned int tagalpha[] = { OPAQUE, baralpha };
@@ -236,7 +236,6 @@ static const Rule rules[] = {
 	RULE(.wintype = WTYPE "SPLASH", .isfloating = 1)
 	RULE(.role = "pop-up", .isfloating = 1)
 	RULE(.role = "GtkFileChooserDialog", .isfloating = 1, .noswallow = 1)
-	RULE(.class = "Soffice")
 	RULE(.class = TERMCLASS, .isterminal = 1)
 	RULE(.class = "CherryTomato", .tags = 1 << 6, .switchtag = 3)
 	RULE(.class = "obsidian", .tags = 1 << 2, .switchtag = 3)
@@ -259,9 +258,12 @@ static const Rule rules[] = {
 	RULE(.instance = "Mansearch - Viewer", .isfloating = 1)
 	RULE(.instance = "weatherdisplay", .isfloating = 1)
 	RULE(.title = "Picture-in-picture", .isfloating = 1)
+	RULE(.title = "SafeEyes-0", .isfloating = 1, .noswallow = 1, .monitor = 0)
+	RULE(.title = "SafeEyes-1", .isfloating = 1, .noswallow = 1, .monitor = 1)
 	RULE(.instance = "spterm", .tags = SPTAG(0), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spcalc", .tags = SPTAG(1), .isfloating = 1, .isterminal = 1)
 	RULE(.instance = "spfm", .tags = SPTAG(2), .isfloating = 1, .isterminal = 1)
+	RULE(.instance = "music", .isfloating = 1, .isterminal = 1)
 };
 
 
@@ -299,19 +301,19 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
-	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // default tile layout
-	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // deck
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // monocle
-	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // fibonacci spiral
-	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // fibonacci dwindle
-	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // centeredmaster
-	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // floating master
-	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // columns
-	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // tatami mats
-	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // bstack
-	{ "[]#",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // stackgrid
-	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // gappless grid
-	{ "><>",      NULL,             { -1, -1 } },    /* no layout function means floating behavior */
+	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // Tile Layout (default)
+	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // Deck
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // Monocle
+	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // Fibonacci spiral
+	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // Fibonacci dwindle
+	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // Centered Master
+	{ ">M>",      flextile,         { -1, -1, FLOATING_MASTER, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // Floating Master
+	{ "|||",      flextile,         { -1, -1, NO_SPLIT, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // Columns
+	{ "||T",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TATAMI, 0, NULL } }, // Tatami Mats
+	{ "TTT",      flextile,         { -1, -1, SPLIT_HORIZONTAL, LEFT_TO_RIGHT, LEFT_TO_RIGHT, 0, NULL } }, // Bstack
+	{ "[]#",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, GAPPLESSGRID, 0, NULL } }, // Stackgrid
+	{ ":::",      flextile,         { -1, -1, NO_SPLIT, GAPPLESSGRID, GAPPLESSGRID, 0, NULL } }, // Gapless grid
+	{ "><>",      NULL,             { -1, -1 } }, // Floating
 	{ NULL,       NULL,             {0} },    /* end of layouts marker for cyclelayouts */
 	// { "||=",      flextile,         { -1, -1, SPLIT_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, 0, NULL } }, // columns (col) layout
 };

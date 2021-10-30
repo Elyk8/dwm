@@ -33,7 +33,6 @@
 #include "pertag.c"
 #include "placemouse.c"
 #include "reorganizetags.c"
-#include "resetlayout.c"
 #include "restartsig.c"
 #include "scratchpad.c"
 #include "selfrestart.c"

@@ -1540,7 +1540,6 @@ manage(Window w, XWindowAttributes *wa)
 	updateicon(c);
 	updatetitle(c);
 
-
 	if (XGetTransientForHint(dpy, w, &trans) && (t = wintoclient(trans))) {
 		c->mon = t->mon;
 		c->tags = t->tags;
@@ -1848,8 +1847,6 @@ resizeclient(Client *c, int x, int y, int w, int h)
 	c->oldh = c->h; c->h = wc.height = h;
 	wc.border_width = c->bw;
 
-	if ((nexttiled(c->mon->clients) == c) && !(nexttiled(c->next)))
-		resetlayout(NULL);
 
 	XConfigureWindow(dpy, c->win, CWX|CWY|CWWidth|CWHeight|CWBorderWidth, &wc);
 	configure(c);
@@ -2101,8 +2098,8 @@ setfullscreen(Client *c, int fullscreen)
 		c->oldstate = c->isfloating;
 		c->bw = 0;
 		c->isfloating = 1;
-		resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
 		XRaiseWindow(dpy, c->win);
+		resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
 	} else if (!fullscreen && c->isfullscreen){
 		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
 			PropModeReplace, (unsigned char*)0, 0);
@@ -2113,19 +2110,17 @@ setfullscreen(Client *c, int fullscreen)
 		c->y = c->oldy;
 		c->w = c->oldw;
 		c->h = c->oldh;
-		resizeclient(c, c->x, c->y, c->w, c->h);
 		arrange(c->mon);
+		resizeclient(c, c->x, c->y, c->w, c->h);
 	}
 }
 
 void
 setlayout(const Arg *arg)
 {
-	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt]) {
 		selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
 		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag];
-	}
-	if (arg && arg->v)
+	if (arg && arg->v && arg->v != selmon->lt[selmon->sellt ^ 1])
 		selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
 	selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt];
 
