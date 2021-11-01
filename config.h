@@ -17,7 +17,7 @@ static const unsigned int snap           = 2;   /* snap pixel */
 static const int swallowfloating         = 0;   /* 1 means swallow floating windows by default */
 static int nomodbuttons                  = 1;   /* allow client mouse button bindings that have no modifier */
 static const unsigned int gappih         = 15;  /* horiz inner gap between windows */
-static const unsigned int gappiv         = 30;  /* vert inner gap between windows */
+static const unsigned int gappiv         = 20;  /* vert inner gap between windows */
 static const unsigned int gappoh         = 20;  /* horiz outer gap between windows and screen edge */
 static const unsigned int gappov         = 25;  /* vert outer gap between windows and screen edge */
 static const int smartgaps_fact          = 1;   /* gap factor when there is only one client; 0 = no gaps, 3 = 3x outer gaps */
@@ -106,7 +106,7 @@ static char *colors[][ColCount] = {
 	[SchemeTitleSel]     = { titleselfgcolor,  titleselbgcolor,  titleselbordercolor,  titleselfloatcolor },
 	[SchemeTagsNorm]     = { tagsnormfgcolor,  tagsnormbgcolor,  tagsnormbordercolor,  tagsnormfloatcolor },
 	[SchemeTagsSel]      = { tagsselfgcolor,   tagsselbgcolor,   tagsselbordercolor,   tagsselfloatcolor },
-	[SchemeHidNorm]      = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
+	[SchemeHidNorm]  = { hidnormfgcolor,   hidnormbgcolor,   c000000,              c000000 },
 	[SchemeHidSel]       = { hidselfgcolor,    hidselbgcolor,    c000000,              c000000 },
 	[SchemeUrg]          = { urgfgcolor,       urgbgcolor,       urgbordercolor,       urgfloatcolor },
 	[SchemeFlexActTTB]   = { titlenormfgcolor, actTTBbgcolor,    actTTBbgcolor,        c000000 },
@@ -278,7 +278,7 @@ static const Rule rules[] = {
  *    bar - bar index, 0 is default, 1 is extrabar
  *    alignment - how the module is aligned compared to other modules
  *    widthfunc, drawfunc, clickfunc - providing bar module width, draw and click functions
- *    name - does nothing, intended for visual clue and for logging / debugging
+   j *    name - does nothing, intended for visual clue and for logging / debugging
  */
 static const BarRule barrules[] = {
 	/* monitor  bar    alignment               widthfunc                drawfunc                clickfunc                name */
@@ -301,9 +301,9 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function, { nmaster, nstack, layout, master axis, stack axis, secondary stack axis, symbol func } */
+	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // Monocle
 	{ "[]=",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, TOP_TO_BOTTOM, 0, NULL } }, // Tile Layout (default)
 	{ "[D]",      flextile,         { -1, -1, SPLIT_VERTICAL, TOP_TO_BOTTOM, MONOCLE, 0, NULL } }, // Deck
-	{ "[M]",      flextile,         { -1, -1, NO_SPLIT, MONOCLE, MONOCLE, 0, NULL } }, // Monocle
 	{ "(@)",      flextile,         { -1, -1, NO_SPLIT, SPIRAL, SPIRAL, 0, NULL } }, // Fibonacci spiral
 	{ "[\\]",     flextile,         { -1, -1, NO_SPLIT, DWINDLE, DWINDLE, 0, NULL } }, // Fibonacci dwindle
 	{ "|M|",      flextile,         { -1, -1, SPLIT_CENTERED_VERTICAL, LEFT_TO_RIGHT, TOP_TO_BOTTOM, TOP_TO_BOTTOM, NULL } }, // Centered Master
@@ -348,9 +348,9 @@ static const Layout layouts[] = {
 	{ MODKEY|Alt|Shift,          KEY,      removescratch,  {.ui = NUM } }, \
 
 #define STACKKEYS(MOD,ACTION) \
-	{ MOD, XK_j,     ACTION##stack, {.i = INC(+1) } }, \
-	{ MOD, XK_k,     ACTION##stack, {.i = INC(-1) } }, \
-	{ MOD, XK_v,     ACTION##stack, {.i = PREVSEL } }, \
+	{ MOD, XK_j,     ACTION ## stack, {.i = INC(+1) } }, \
+	{ MOD, XK_k,     ACTION ## stack, {.i = INC(-1) } }, \
+	{ MOD, XK_v,     ACTION ## stack, {.i = PREVSEL } }, \
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 /* #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } } */
@@ -375,9 +375,7 @@ static Key keys[] = {
 	TAGKEYS(                     XK_7,                                     6) // Tag 7
 	TAGKEYS(                     XK_8,                                     7) // Tag 8
 	TAGKEYS(                     XK_9,                                     8) // Tag 9
-	{
-		MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK }
-	},                                                                                                                                                                                       // Display all tags
+	{ MODKEY,                    XK_0,             view,                   {.ui = ~SPTAGMASK } },                                                                                                                                                                                                                                                                                  // Display all tags
 	{ MODKEY|Shift,              XK_0,             tag,                    {.ui = ~SPTAGMASK } }, // Make all windows in current tag appear on all tags
 
 	{ MODKEY,                    XK_w,             shiftviewclients,       { .i = -1 } }, // Backward cycle through tags
@@ -399,7 +397,9 @@ static Key keys[] = {
 	LAYOUTSKEYS(                 XK_F11,                                   11)
 	LAYOUTSKEYS(                 XK_F12,                                   12)
 
-	{ MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
+	{
+		MODKEY,                    XK_bracketleft,   rotatelayoutaxis,       {.i = -1 }
+	},                                                                                   // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY,                    XK_bracketright,  rotatelayoutaxis,       {.i = +1 } }, // cycle through the available layout splits (horizontal, vertical, centered, no split, etc.)
 	{ MODKEY|Alt,                XK_bracketleft,   rotatelayoutaxis,       {.i = -2 } }, // cycle through the available tiling arrangements for the master area
 	{ MODKEY|Alt,                XK_bracketright,  rotatelayoutaxis,       {.i = +2 } }, // cycle through the available tiling arrangements for the master area
@@ -413,7 +413,9 @@ static Key keys[] = {
 	STACKKEYS(MODKEY,                              focus)
 	STACKKEYS(MODKEY|ShiftMask,                    push)
 
-	{ MODKEY,                    XK_h,             setmfact,               {.f = -0.05} }, // Increase master horizontal weight
+	{
+		MODKEY,                    XK_h,             setmfact,               {.f = -0.05}
+	},                                                                                     // Increase master horizontal weight
 	{ MODKEY,                    XK_l,             setmfact,               {.f = +0.05} }, // Decrease master horizontal weight
 	{ MODKEY|Shift,              XK_h,             setcfact,               {.f = +0.25} }, // Increase client vertical weight
 	{ MODKEY|Shift,              XK_l,             setcfact,               {.f = -0.25} }, // Decrease client vertical weight
