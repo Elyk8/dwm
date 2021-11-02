@@ -1,0 +1,24 @@
+#!/bin/sh
+
+icon="🎶"
+pidof -x musicup >/dev/null 2>&1 || musicup >/dev/null 2>&1 &
+
+case $BLOCK_BUTTON in
+	1) setsid -f "$TERMINAL" -e ncmpcpp ;;
+	2) notify-send "🎵 Music module" "\- Shows mpd song playing.
+- ⏸ when paused.
+- Left click opens ncmpcpp.
+- Right click pauses.
+- Scroll changes volume." ;;
+	3) mpc toggle >/dev/null 2>&1 ;;
+	4) mpc volume +3 >/dev/null 2>&1 ;;
+	5) mpc volume -3 >/dev/null 2>&1 ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" $0 ;;
+esac
+
+mpc | grep -q "\[paused\]" && icon="⏸"
+currentSong="$(mpc -f "%title% - %Artist%" current)"
+volume="$(mpc volume | grep -o '[0-9]\+%')"
+
+[ -z "$currentSong" ] && exit
+echo "^b#32344A^ $icon $currentSong $volume ^d^"

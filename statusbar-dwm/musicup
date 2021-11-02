@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# This loop will update the music statusbar module whenever a command changes the
+# music player's status. mpd must be running on X's start for this to work.
+
+dbus-monitor "path=/org/mpris/MediaPlayer2,member=PropertiesChanged" |
+	while read line; do
+		sb-refresh sb-music
+	done &
+
+count=0
+while [ $count -lt 3 ]; do
+	if mpc idle >/dev/null; then
+		sb-refresh sb-music
+	else
+		( (count++))
+		sleep $count
+	fi
+done &

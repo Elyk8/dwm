@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case $BLOCK_BUTTON in
+  1) dm-beats ;;
+  # 2) ;;
+	3) notify-send "☕️🎶 Radio module" "\- Shows live music playing.
+- Left click open menu or stop music.";;
+	# 4)    ;;
+	# 5)    ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" $0 ;;
+esac
+
+pidof -x dm-beats >/dev/null 2>&1 && echo "☕️🎶 Playing Radio"

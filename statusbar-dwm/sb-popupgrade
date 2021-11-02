@@ -1,0 +1,11 @@
+#!/bin/sh
+
+printf "Beginning upgrade.\\n"
+
+paru -Syu
+
+printf "\\nUpgrade complete.\\nPress <Enter> to exit window.\\n\\n"
+read -r _
+
+sb-refresh sb-pacpackages
+

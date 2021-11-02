@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# Prints the current volume or 🔇 if muted.
+
+case $BLOCK_BUTTON in
+	1) setsid -f pavucontrol ;;
+	2) notify-send "📢 Volume module" "\- Shows volume 🔊, 🔇 if muted.
+- Middle click to mute.
+- Scroll to change." ;;
+    3) pamixer -t ;;
+	4) pamixer -i 3 ;;
+	5) pamixer -d 3 ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" $0 ;;
+esac
+
+vol="$(pamixer --get-volume)"
+
+if [ $(pamixer --get-mute) = true ]; then
+  icon="🔇"
+elif [ "$vol" -gt "70" ]; then
+	icon="🔊"
+elif [ "$vol" -lt "20" ]; then
+	icon="🔈"
+else
+	icon="🔉"
+fi
+
+echo "^b#32344A^ $icon$vol% ^d^"
